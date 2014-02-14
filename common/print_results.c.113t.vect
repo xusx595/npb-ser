@@ -1,0 +1,100 @@
+
+;; Function print_results (print_results, funcdef_no=14, decl_uid=3738, symbol_order=14)
+
+print_results (char * name, char class, int n1, int n2, int n3, int niter, double t, double mops, char * optype, logical verified, char * npbversion, char * compiletime, char * cs1, char * cs2, char * cs3, char * cs4, char * cs5, char * cs6, char * cs7)
+{
+  int j;
+  char size[16];
+  int _9;
+  int _13;
+  char _14;
+  char _15;
+  double _17;
+  double _19;
+  char _21;
+  int prephitmp_59;
+
+  <bb 2>:
+  printf ("\n\n %s Benchmark Completed.\n", name_6(D));
+  _9 = (int) class_8(D);
+  printf (" Class           =             %12c\n", _9);
+  _13 = n2_11(D) | n3_12(D);
+  if (_13 == 0)
+    goto <bb 3>;
+  else
+    goto <bb 9>;
+
+  <bb 3>:
+  _14 = *name_6(D);
+  if (_14 == 69)
+    goto <bb 4>;
+  else
+    goto <bb 8>;
+
+  <bb 4>:
+  _15 = MEM[(char *)name_6(D) + 1B];
+  if (_15 == 80)
+    goto <bb 5>;
+  else
+    goto <bb 8>;
+
+  <bb 5>:
+  _17 = (double) n1_16(D);
+  _19 = pow (2.0e+0, _17);
+  sprintf (&size, "%15.0lf", _19);
+  _21 = size[14];
+  if (_21 == 46)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  size[14] = 32;
+
+  <bb 7>:
+  # prephitmp_59 = PHI <15(5), 14(6)>
+  size[prephitmp_59] = 0;
+  printf (" Size            =          %15s\n", &size);
+  goto <bb 10>;
+
+  <bb 8>:
+  printf (" Size            =             %12d\n", n1_16(D));
+  goto <bb 10>;
+
+  <bb 9>:
+  printf (" Size            =           %4dx%4dx%4d\n", n1_16(D), n2_11(D), n3_12(D));
+
+  <bb 10>:
+  printf (" Iterations      =             %12d\n", niter_28(D));
+  printf (" Time in seconds =             %12.2lf\n", t_30(D));
+  printf (" Mop/s total     =          %15.2lf\n", mops_32(D));
+  printf (" Operation type  = %24s\n", optype_34(D));
+  if (verified_36(D) != 0)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  printf (" Verification    =             %12s\n", "SUCCESSFUL");
+  goto <bb 13>;
+
+  <bb 12>:
+  printf (" Verification    =             %12s\n", "UNSUCCESSFUL");
+
+  <bb 13>:
+  printf (" Version         =             %12s\n", npbversion_39(D));
+  printf (" Compile date    =             %12s\n", compiletime_41(D));
+  printf ("\n Compile options:\n    CC           = %s\n", cs1_43(D));
+  printf ("    CLINK        = %s\n", cs2_45(D));
+  printf ("    C_LIB        = %s\n", cs3_47(D));
+  printf ("    C_INC        = %s\n", cs4_49(D));
+  printf ("    CFLAGS       = %s\n", cs5_51(D));
+  printf ("    CLINKFLAGS   = %s\n", cs6_53(D));
+  printf ("    RAND         = %s\n", cs7_55(D));
+  __builtin_puts (&"\n--------------------------------------\n Please send all errors/feedbacks to:\n Center for Manycore Programming\n cmp@aces.snu.ac.kr\n http://aces.snu.ac.kr\n--------------------------------------\n"[0]);
+  size ={v} {CLOBBER};
+  return;
+
+}
+
+

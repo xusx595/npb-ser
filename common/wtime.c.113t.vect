@@ -1,0 +1,55 @@
+
+;; Function wtime_ (wtime_, funcdef_no=0, decl_uid=2411, symbol_order=0)
+
+wtime_ (double * t)
+{
+  struct timeval tv;
+  static int sec = -1;
+  int sec.1;
+  int sec.0;
+  long int _5;
+  long int _10;
+  long int _11;
+  double _12;
+  long int _13;
+  double _14;
+  double _15;
+  double _16;
+  __time_t pretmp_26;
+  __time_t prephitmp_27;
+  int prephitmp_28;
+
+  <bb 2>:
+  gettimeofday (&tv, 0B);
+  sec.0_4 = sec;
+  if (sec.0_4 < 0)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  pretmp_26 = tv.tv_sec;
+  goto <bb 5>;
+
+  <bb 4>:
+  _5 = tv.tv_sec;
+  sec.1_6 = (int) _5;
+  sec = sec.1_6;
+
+  <bb 5>:
+  # prephitmp_27 = PHI <pretmp_26(3), _5(4)>
+  # prephitmp_28 = PHI <sec.0_4(3), sec.1_6(4)>
+  _10 = (long int) prephitmp_28;
+  _11 = prephitmp_27 - _10;
+  _12 = (double) _11;
+  _13 = tv.tv_usec;
+  _14 = (double) _13;
+  _15 = _14 * 9.99999999999999954748111825886258685613938723690807819366e-7;
+  _16 = _12 + _15;
+  *t_17(D) = _16;
+  tv ={v} {CLOBBER};
+  return;
+
+}
+
+

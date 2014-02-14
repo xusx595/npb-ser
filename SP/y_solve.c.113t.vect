@@ -1,0 +1,1428 @@
+
+;; Function y_solve (y_solve, funcdef_no=0, decl_uid=2322, symbol_order=0)
+
+y_solve ()
+{
+  double fac2;
+  double fac1;
+  double ru1;
+  int m;
+  int j2;
+  int j1;
+  int k;
+  int j;
+  int i;
+  double comz6.21;
+  double comz1.20;
+  double comz4.19;
+  double comz5.18;
+  double c2dtty1.17;
+  double dtty1.16;
+  double dtty2.15;
+  double iftmp.14;
+  double iftmp.13;
+  double dy1.12;
+  double dymax.11;
+  double iftmp.10;
+  double dy5.9;
+  double c1c5.8;
+  double dy3.7;
+  double con43.6;
+  double iftmp.5;
+  double iftmp.4;
+  double c3c4.3;
+  int ny2.2;
+  int nx2.1;
+  <unnamed type> timeron.0;
+  int _65;
+  int _66;
+  int _69;
+  double _74;
+  double _77;
+  double _80;
+  double _82;
+  double _84;
+  double _86;
+  double _88;
+  int _96;
+  double _97;
+  double _98;
+  double _99;
+  double _101;
+  double _102;
+  double _104;
+  double _106;
+  double _107;
+  double _110;
+  double _111;
+  double _112;
+  double _113;
+  double _114;
+  double _118;
+  double _120;
+  double _122;
+  double _124;
+  double _126;
+  double _128;
+  double _130;
+  double _131;
+  double _133;
+  double _135;
+  double _137;
+  double _138;
+  double _140;
+  double _141;
+  int _144;
+  double _146;
+  double _148;
+  double _150;
+  double _152;
+  double _154;
+  double _156;
+  double _158;
+  double _159;
+  double _161;
+  double _162;
+  double _166;
+  double _168;
+  double _170;
+  double _172;
+  double _174;
+  double _176;
+  double _178;
+  double _179;
+  double _182;
+  double _183;
+  double _185;
+  double _186;
+  double _188;
+  int _189;
+  double _190;
+  double _194;
+  double _196;
+  double _198;
+  double _200;
+  double _201;
+  double _203;
+  double _205;
+  double _207;
+  double _208;
+  double _209;
+  double _211;
+  double _214;
+  double _217;
+  double _225;
+  double _227;
+  double _228;
+  double _230;
+  double _231;
+  double _237;
+  double _238;
+  double _239;
+  double _240;
+  double _241;
+  double _243;
+  double _244;
+  double _245;
+  double _246;
+  double _247;
+  double _256;
+  double _257;
+  double _258;
+  double _259;
+  double _260;
+  double _262;
+  double _263;
+  double _264;
+  double _265;
+  double _266;
+  double _278;
+  double _280;
+  double _281;
+  double _283;
+  double _284;
+  double _290;
+  double _291;
+  double _292;
+  double _293;
+  double _294;
+  double _296;
+  double _297;
+  double _298;
+  double _299;
+  double _300;
+  double _309;
+  double _318;
+  double _320;
+  double _321;
+  double _323;
+  double _324;
+  double _326;
+  double _327;
+  double _329;
+  double _330;
+  double _331;
+  double _332;
+  double _333;
+  double _335;
+  double _336;
+  double _337;
+  double _338;
+  double _339;
+  double _341;
+  double _342;
+  double _343;
+  double _344;
+  double _346;
+  double _347;
+  double _348;
+  double _349;
+  double _350;
+  double _352;
+  double _353;
+  double _354;
+  double _355;
+  double _356;
+  double _358;
+  double _359;
+  double _360;
+  double _361;
+  double _362;
+  double _364;
+  double _366;
+  double _367;
+  double _369;
+  double _370;
+  double _372;
+  double _373;
+  double _375;
+  double _376;
+  double _377;
+  double _378;
+  double _379;
+  double _381;
+  double _382;
+  double _383;
+  double _384;
+  double _385;
+  double _387;
+  double _388;
+  double _389;
+  double _390;
+  double _392;
+  double _393;
+  double _394;
+  double _395;
+  double _396;
+  double _398;
+  double _399;
+  double _400;
+  double _401;
+  double _402;
+  double _404;
+  double _405;
+  double _406;
+  double _407;
+  double _408;
+  double _413;
+  double _415;
+  double _416;
+  double _418;
+  double _419;
+  double _421;
+  double _422;
+  double _424;
+  double _425;
+  double _426;
+  double _427;
+  double _428;
+  double _430;
+  double _431;
+  double _432;
+  double _433;
+  double _434;
+  double _436;
+  double _437;
+  double _438;
+  double _439;
+  double _441;
+  double _443;
+  double _444;
+  double _446;
+  double _447;
+  double _449;
+  double _450;
+  double _452;
+  double _453;
+  double _454;
+  double _455;
+  double _456;
+  double _458;
+  double _459;
+  double _460;
+  double _461;
+  double _462;
+  double _464;
+  double _465;
+  double _466;
+  double _467;
+  double _469;
+  double _470;
+  double _471;
+  double _473;
+  double _474;
+  double _475;
+  double _487;
+  double _488;
+  double _489;
+  double _490;
+  double _491;
+  double _493;
+  double _494;
+  double _495;
+  double _496;
+  double _497;
+  int _503;
+  double _514;
+  double _515;
+  double _516;
+  double _517;
+  double _518;
+  double _519;
+  double _520;
+  double _521;
+  double _522;
+  double _524;
+  double _525;
+  double _526;
+  double _527;
+  double _528;
+  double _529;
+  double _530;
+  double _531;
+  double _532;
+  double _542;
+  double _543;
+  double _544;
+  double _545;
+  double _546;
+  double _547;
+  double _548;
+  double _549;
+  double _550;
+  double _555;
+  double _557;
+  double _558;
+  double _559;
+  double _561;
+  double _562;
+  double _563;
+  double _568;
+  double _570;
+  double _571;
+  double _572;
+  double _574;
+  double _575;
+  double _576;
+  double _581;
+  double _582;
+  double _583;
+  double _584;
+  double _585;
+  int _589;
+  double _590;
+  double _592;
+  double _593;
+  double _594;
+  double _599;
+  double _601;
+  double _602;
+  double _603;
+  double _608;
+  double _609;
+  double _614;
+  double _615;
+  double _620;
+  double _621;
+  double _626;
+  double _627;
+  double _628;
+  double _629;
+  double _630;
+  double _635;
+  double _637;
+  double _638;
+  double _639;
+  double _644;
+  double _646;
+  double _647;
+  double _648;
+  double _653;
+  double _654;
+  int _658;
+  double _659;
+  double _660;
+  double _665;
+  double _666;
+  double _671;
+  double _672;
+  double _673;
+  double _674;
+  double _675;
+  double _680;
+  double _682;
+  double _683;
+  double _684;
+  double _689;
+  double _691;
+  double _692;
+  double _693;
+  double _698;
+  double _699;
+  double _700;
+  double _701;
+  double _702;
+  double _707;
+  double _709;
+  double _710;
+  double _711;
+  double _716;
+  double _718;
+  double _719;
+  double _720;
+  double _725;
+  double _726;
+  double _731;
+  double _732;
+  double _737;
+  double _738;
+  int pretmp_778;
+  int prephitmp_779;
+  int pretmp_780;
+  int prephitmp_781;
+  int pretmp_783;
+  int prephitmp_784;
+  int pretmp_829;
+  int prephitmp_830;
+  double pretmp_831;
+  int pretmp_833;
+  int pretmp_835;
+  int _839;
+  int _840;
+  double pretmp_842;
+  double pretmp_844;
+  double pretmp_846;
+  double pretmp_848;
+  int pretmp_850;
+  int _853;
+  double pretmp_854;
+  double pretmp_856;
+  double pretmp_858;
+  int pretmp_861;
+  int pretmp_864;
+  int _865;
+  int _866;
+  double pretmp_869;
+  double pretmp_871;
+  double pretmp_873;
+  double pretmp_875;
+  double pretmp_878;
+  double pretmp_880;
+  double pretmp_882;
+  double pretmp_885;
+  double pretmp_899;
+  double pretmp_901;
+  double pretmp_903;
+  double pretmp_905;
+  double pretmp_907;
+  double pretmp_909;
+  double pretmp_911;
+
+  <bb 2>:
+  timeron.0_63 = timeron;
+  if (timeron.0_63 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  timer_start (7);
+
+  <bb 4>:
+  _589 = grid_points[2];
+  if (_589 > 2)
+    goto <bb 5>;
+  else
+    goto <bb 104>;
+
+  <bb 5>:
+
+  <bb 6>:
+  # k_304 = PHI <k_536(103), 1(5)>
+  nx2.1_67 = nx2;
+  ny2.2_68 = ny2;
+  _69 = ny2.2_68 + 1;
+  lhsinitj (_69, nx2.1_67);
+  _658 = grid_points[0];
+  _503 = _658 + -1;
+  if (_503 > 1)
+    goto <bb 7>;
+  else
+    goto <bb 33>;
+
+  <bb 7>:
+  pretmp_861 = grid_points[1];
+  pretmp_864 = pretmp_861 + -1;
+  pretmp_899 = c3c4;
+  pretmp_901 = con43;
+  pretmp_903 = dy3;
+  pretmp_905 = c1c5;
+  pretmp_907 = dy5;
+  pretmp_909 = dymax;
+  pretmp_911 = dy1;
+  pretmp_878 = dtty2;
+  pretmp_880 = -pretmp_878;
+  pretmp_882 = dtty1;
+  pretmp_885 = c2dtty1;
+
+  <bb 8>:
+  # i_510 = PHI <i_117(27), 1(7)>
+  if (pretmp_861 > 0)
+    goto <bb 9>;
+  else
+    goto <bb 21>;
+
+  <bb 9>:
+
+  <bb 10>:
+  # j_311 = PHI <j_91(19), 0(9)>
+  _74 = rho_i[k_304][j_311][i_510];
+  ru1_76 = _74 * pretmp_899;
+  _77 = vs[k_304][j_311][i_510];
+  cv[j_311] = _77;
+  _80 = ru1_76 * pretmp_901;
+  _82 = _80 + pretmp_903;
+  _84 = ru1_76 * pretmp_905;
+  _86 = _84 + pretmp_907;
+  if (_82 > _86)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+
+  <bb 12>:
+  # iftmp.5_29 = PHI <_82(11), _86(10)>
+  _88 = ru1_76 + pretmp_909;
+  if (_88 > pretmp_911)
+    goto <bb 107>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  if (iftmp.5_29 > pretmp_911)
+    goto <bb 14>;
+  else
+    goto <bb 16>;
+
+  <bb 14>:
+  if (_82 > _86)
+    goto <bb 15>;
+  else
+    goto <bb 18>;
+
+  <bb 15>:
+  goto <bb 18>;
+
+  <bb 16>:
+  if (_88 > pretmp_911)
+    goto <bb 17>;
+  else
+    goto <bb 18>;
+
+  <bb 17>:
+
+  <bb 18>:
+  # iftmp.4_28 = PHI <_86(14), pretmp_911(16), _88(17), _82(15), _88(107)>
+  rhoq[j_311] = iftmp.4_28;
+  j_91 = j_311 + 1;
+  if (j_91 < pretmp_861)
+    goto <bb 19>;
+  else
+    goto <bb 20>;
+
+  <bb 19>:
+  goto <bb 10>;
+
+  <bb 20>:
+
+  <bb 21>:
+  if (pretmp_864 > 1)
+    goto <bb 22>;
+  else
+    goto <bb 26>;
+
+  <bb 22>:
+
+  <bb 23>:
+  # j_312 = PHI <j_109(24), 1(22)>
+  lhs[j_312][i_510][0] = 0.0;
+  _96 = j_312 + -1;
+  _97 = cv[_96];
+  _98 = _97 * pretmp_880;
+  _99 = rhoq[_96];
+  _101 = _99 * pretmp_882;
+  _102 = _98 - _101;
+  lhs[j_312][i_510][1] = _102;
+  _104 = rhoq[j_312];
+  _106 = _104 * pretmp_885;
+  _107 = _106 + 1.0e+0;
+  lhs[j_312][i_510][2] = _107;
+  j_109 = j_312 + 1;
+  _110 = cv[j_109];
+  _111 = _110 * pretmp_878;
+  _112 = rhoq[j_109];
+  _113 = _112 * pretmp_882;
+  _114 = _111 - _113;
+  lhs[j_312][i_510][3] = _114;
+  lhs[j_312][i_510][4] = 0.0;
+  if (j_109 < pretmp_864)
+    goto <bb 24>;
+  else
+    goto <bb 25>;
+
+  <bb 24>:
+  goto <bb 23>;
+
+  <bb 25>:
+
+  <bb 26>:
+  i_117 = i_510 + 1;
+  if (i_117 < _503)
+    goto <bb 27>;
+  else
+    goto <bb 28>;
+
+  <bb 27>:
+  goto <bb 8>;
+
+  <bb 28>:
+  _866 = _503;
+  _840 = pretmp_864;
+  _839 = pretmp_861;
+  if (_503 > 1)
+    goto <bb 29>;
+  else
+    goto <bb 34>;
+
+  <bb 29>:
+  pretmp_869 = comz5;
+  pretmp_871 = comz4;
+  pretmp_873 = comz1;
+  pretmp_875 = comz6;
+
+  <bb 30>:
+  # i_511 = PHI <i_143(32), 1(29)>
+  _118 = lhs[1][i_511][2];
+  _120 = _118 + pretmp_869;
+  lhs[1][i_511][2] = _120;
+  _122 = lhs[1][i_511][3];
+  _124 = _122 - pretmp_871;
+  lhs[1][i_511][3] = _124;
+  _126 = lhs[1][i_511][4];
+  _128 = _126 + pretmp_873;
+  lhs[1][i_511][4] = _128;
+  _130 = lhs[2][i_511][1];
+  _131 = _130 - pretmp_871;
+  lhs[2][i_511][1] = _131;
+  _133 = lhs[2][i_511][2];
+  _135 = _133 + pretmp_875;
+  lhs[2][i_511][2] = _135;
+  _137 = lhs[2][i_511][3];
+  _138 = _137 - pretmp_871;
+  lhs[2][i_511][3] = _138;
+  _140 = lhs[2][i_511][4];
+  _141 = _140 + pretmp_873;
+  lhs[2][i_511][4] = _141;
+  i_143 = i_511 + 1;
+  if (i_143 < _503)
+    goto <bb 32>;
+  else
+    goto <bb 31>;
+
+  <bb 31>:
+  _189 = pretmp_861;
+  _144 = pretmp_864;
+  goto <bb 34>;
+
+  <bb 32>:
+  goto <bb 30>;
+
+  <bb 33>:
+  pretmp_778 = grid_points[1];
+  pretmp_780 = pretmp_778 + -1;
+
+  <bb 34>:
+  # prephitmp_779 = PHI <pretmp_861(31), pretmp_861(28), pretmp_778(33)>
+  # prephitmp_781 = PHI <pretmp_864(31), pretmp_864(28), pretmp_780(33)>
+  j_591 = prephitmp_779 + -3;
+  if (j_591 > 3)
+    goto <bb 35>;
+  else
+    goto <bb 44>;
+
+  <bb 35>:
+  pretmp_854 = comz4;
+  pretmp_856 = comz1;
+  pretmp_858 = comz6;
+
+  <bb 36>:
+  # j_313 = PHI <j_165(42), 3(35)>
+  if (_503 > 1)
+    goto <bb 37>;
+  else
+    goto <bb 41>;
+
+  <bb 37>:
+
+  <bb 38>:
+  # i_512 = PHI <i_164(39), 1(37)>
+  _146 = lhs[j_313][i_512][0];
+  _148 = _146 + pretmp_856;
+  lhs[j_313][i_512][0] = _148;
+  _150 = lhs[j_313][i_512][1];
+  _152 = _150 - pretmp_854;
+  lhs[j_313][i_512][1] = _152;
+  _154 = lhs[j_313][i_512][2];
+  _156 = _154 + pretmp_858;
+  lhs[j_313][i_512][2] = _156;
+  _158 = lhs[j_313][i_512][3];
+  _159 = _158 - pretmp_854;
+  lhs[j_313][i_512][3] = _159;
+  _161 = lhs[j_313][i_512][4];
+  _162 = _161 + pretmp_856;
+  lhs[j_313][i_512][4] = _162;
+  i_164 = i_512 + 1;
+  if (i_164 < _503)
+    goto <bb 39>;
+  else
+    goto <bb 40>;
+
+  <bb 39>:
+  goto <bb 38>;
+
+  <bb 40>:
+
+  <bb 41>:
+  j_165 = j_313 + 1;
+  if (j_165 < j_591)
+    goto <bb 42>;
+  else
+    goto <bb 43>;
+
+  <bb 42>:
+  goto <bb 36>;
+
+  <bb 43>:
+
+  <bb 44>:
+  if (_503 > 1)
+    goto <bb 45>;
+  else
+    goto <bb 49>;
+
+  <bb 45>:
+  pretmp_842 = comz5;
+  pretmp_844 = comz4;
+  pretmp_846 = comz1;
+  pretmp_848 = comz6;
+  pretmp_850 = prephitmp_779 + -2;
+
+  <bb 46>:
+  # i_513 = PHI <i_192(48), 1(45)>
+  _166 = lhs[j_591][i_513][0];
+  _168 = _166 + pretmp_846;
+  lhs[j_591][i_513][0] = _168;
+  _170 = lhs[j_591][i_513][1];
+  _172 = _170 - pretmp_844;
+  lhs[j_591][i_513][1] = _172;
+  _174 = lhs[j_591][i_513][2];
+  _176 = _174 + pretmp_848;
+  lhs[j_591][i_513][2] = _176;
+  _178 = lhs[j_591][i_513][3];
+  _179 = _178 - pretmp_844;
+  lhs[j_591][i_513][3] = _179;
+  _182 = lhs[pretmp_850][i_513][0];
+  _183 = _182 + pretmp_846;
+  lhs[pretmp_850][i_513][0] = _183;
+  _185 = lhs[pretmp_850][i_513][1];
+  _186 = _185 - pretmp_844;
+  lhs[pretmp_850][i_513][1] = _186;
+  _188 = lhs[pretmp_850][i_513][2];
+  _190 = _188 + pretmp_842;
+  lhs[pretmp_850][i_513][2] = _190;
+  i_192 = i_513 + 1;
+  if (i_192 < _503)
+    goto <bb 48>;
+  else
+    goto <bb 47>;
+
+  <bb 47>:
+  _865 = pretmp_850;
+  goto <bb 50>;
+
+  <bb 48>:
+  goto <bb 46>;
+
+  <bb 49>:
+  pretmp_783 = prephitmp_779 + -2;
+
+  <bb 50>:
+  # prephitmp_784 = PHI <pretmp_850(47), pretmp_783(49)>
+  if (prephitmp_781 > 1)
+    goto <bb 51>;
+  else
+    goto <bb 61>;
+
+  <bb 51>:
+  pretmp_831 = dtty2;
+
+  <bb 52>:
+  # j_314 = PHI <prephitmp_830(59), 1(51)>
+  if (_503 > 1)
+    goto <bb 53>;
+  else
+    goto <bb 57>;
+
+  <bb 53>:
+  pretmp_833 = j_314 + -1;
+  pretmp_835 = j_314 + 1;
+
+  <bb 54>:
+  # i_480 = PHI <i_220(56), 1(53)>
+  _194 = lhs[j_314][i_480][0];
+  lhsp[j_314][i_480][0] = _194;
+  _196 = lhs[j_314][i_480][1];
+  _198 = speed[k_304][pretmp_833][i_480];
+  _200 = _198 * pretmp_831;
+  _201 = _196 - _200;
+  lhsp[j_314][i_480][1] = _201;
+  _203 = lhs[j_314][i_480][2];
+  lhsp[j_314][i_480][2] = _203;
+  _205 = lhs[j_314][i_480][3];
+  _207 = speed[k_304][pretmp_835][i_480];
+  _208 = _207 * pretmp_831;
+  _209 = _205 + _208;
+  lhsp[j_314][i_480][3] = _209;
+  _211 = lhs[j_314][i_480][4];
+  lhsp[j_314][i_480][4] = _211;
+  lhsm[j_314][i_480][0] = _194;
+  _214 = _196 + _200;
+  lhsm[j_314][i_480][1] = _214;
+  lhsm[j_314][i_480][2] = _203;
+  _217 = _205 - _208;
+  lhsm[j_314][i_480][3] = _217;
+  lhsm[j_314][i_480][4] = _211;
+  i_220 = i_480 + 1;
+  if (i_220 < _503)
+    goto <bb 56>;
+  else
+    goto <bb 55>;
+
+  <bb 55>:
+  _853 = pretmp_835;
+  goto <bb 58>;
+
+  <bb 56>:
+  goto <bb 54>;
+
+  <bb 57>:
+  pretmp_829 = j_314 + 1;
+
+  <bb 58>:
+  # prephitmp_830 = PHI <pretmp_835(55), pretmp_829(57)>
+  if (prephitmp_781 > prephitmp_830)
+    goto <bb 59>;
+  else
+    goto <bb 60>;
+
+  <bb 59>:
+  goto <bb 52>;
+
+  <bb 60>:
+
+  <bb 61>:
+  goto <bb 69>;
+
+  <bb 62>:
+  j_223 = j_16 + 1;
+  j2_224 = j_16 + 2;
+  if (_503 > 1)
+    goto <bb 63>;
+  else
+    goto <bb 67>;
+
+  <bb 63>:
+
+  <bb 64>:
+  # i_481 = PHI <i_275(65), 1(63)>
+  _225 = lhs[j_16][i_481][2];
+  fac1_226 = 1.0e+0 / _225;
+  _227 = lhs[j_16][i_481][3];
+  _228 = _227 * fac1_226;
+  lhs[j_16][i_481][3] = _228;
+  _230 = lhs[j_16][i_481][4];
+  _231 = _230 * fac1_226;
+  lhs[j_16][i_481][4] = _231;
+  _725 = rhs[k_304][j_16][i_481][0];
+  _726 = _725 * fac1_226;
+  rhs[k_304][j_16][i_481][0] = _726;
+  _731 = rhs[k_304][j_16][i_481][1];
+  _732 = _731 * fac1_226;
+  rhs[k_304][j_16][i_481][1] = _732;
+  _737 = rhs[k_304][j_16][i_481][2];
+  _738 = _737 * fac1_226;
+  rhs[k_304][j_16][i_481][2] = _738;
+  _237 = lhs[j_223][i_481][2];
+  _238 = lhs[j_223][i_481][1];
+  _239 = lhs[j_16][i_481][3];
+  _240 = _238 * _239;
+  _241 = _237 - _240;
+  lhs[j_223][i_481][2] = _241;
+  _243 = lhs[j_223][i_481][3];
+  _244 = lhs[j_223][i_481][1];
+  _245 = lhs[j_16][i_481][4];
+  _246 = _244 * _245;
+  _247 = _243 - _246;
+  lhs[j_223][i_481][3] = _247;
+  _698 = rhs[k_304][j_223][i_481][0];
+  _699 = lhs[j_223][i_481][1];
+  _700 = rhs[k_304][j_16][i_481][0];
+  _701 = _699 * _700;
+  _702 = _698 - _701;
+  rhs[k_304][j_223][i_481][0] = _702;
+  _707 = rhs[k_304][j_223][i_481][1];
+  _709 = rhs[k_304][j_16][i_481][1];
+  _710 = _699 * _709;
+  _711 = _707 - _710;
+  rhs[k_304][j_223][i_481][1] = _711;
+  _716 = rhs[k_304][j_223][i_481][2];
+  _718 = rhs[k_304][j_16][i_481][2];
+  _719 = _699 * _718;
+  _720 = _716 - _719;
+  rhs[k_304][j_223][i_481][2] = _720;
+  _256 = lhs[j2_224][i_481][1];
+  _257 = lhs[j2_224][i_481][0];
+  _258 = lhs[j_16][i_481][3];
+  _259 = _257 * _258;
+  _260 = _256 - _259;
+  lhs[j2_224][i_481][1] = _260;
+  _262 = lhs[j2_224][i_481][2];
+  _263 = lhs[j2_224][i_481][0];
+  _264 = lhs[j_16][i_481][4];
+  _265 = _263 * _264;
+  _266 = _262 - _265;
+  lhs[j2_224][i_481][2] = _266;
+  _671 = rhs[k_304][j2_224][i_481][0];
+  _672 = lhs[j2_224][i_481][0];
+  _673 = rhs[k_304][j_16][i_481][0];
+  _674 = _672 * _673;
+  _675 = _671 - _674;
+  rhs[k_304][j2_224][i_481][0] = _675;
+  _680 = rhs[k_304][j2_224][i_481][1];
+  _682 = rhs[k_304][j_16][i_481][1];
+  _683 = _672 * _682;
+  _684 = _680 - _683;
+  rhs[k_304][j2_224][i_481][1] = _684;
+  _689 = rhs[k_304][j2_224][i_481][2];
+  _691 = rhs[k_304][j_16][i_481][2];
+  _692 = _672 * _691;
+  _693 = _689 - _692;
+  rhs[k_304][j2_224][i_481][2] = _693;
+  i_275 = i_481 + 1;
+  if (i_275 < _503)
+    goto <bb 65>;
+  else
+    goto <bb 66>;
+
+  <bb 65>:
+  goto <bb 64>;
+
+  <bb 66>:
+
+  <bb 67>:
+
+  <bb 68>:
+
+  <bb 69>:
+  # j_16 = PHI <0(61), j_223(68)>
+  if (j_16 < prephitmp_784)
+    goto <bb 62>;
+  else
+    goto <bb 70>;
+
+  <bb 70>:
+  j_841 = prephitmp_784;
+  if (_503 > 1)
+    goto <bb 71>;
+  else
+    goto <bb 75>;
+
+  <bb 71>:
+
+  <bb 72>:
+  # i_482 = PHI <i_315(73), 1(71)>
+  _278 = lhs[prephitmp_784][i_482][2];
+  fac1_279 = 1.0e+0 / _278;
+  _280 = lhs[prephitmp_784][i_482][3];
+  _281 = _280 * fac1_279;
+  lhs[prephitmp_784][i_482][3] = _281;
+  _283 = lhs[prephitmp_784][i_482][4];
+  _284 = _283 * fac1_279;
+  lhs[prephitmp_784][i_482][4] = _284;
+  _653 = rhs[k_304][prephitmp_784][i_482][0];
+  _654 = _653 * fac1_279;
+  rhs[k_304][prephitmp_784][i_482][0] = _654;
+  _659 = rhs[k_304][prephitmp_784][i_482][1];
+  _660 = _659 * fac1_279;
+  rhs[k_304][prephitmp_784][i_482][1] = _660;
+  _665 = rhs[k_304][prephitmp_784][i_482][2];
+  _666 = _665 * fac1_279;
+  rhs[k_304][prephitmp_784][i_482][2] = _666;
+  _290 = lhs[prephitmp_781][i_482][2];
+  _291 = lhs[prephitmp_781][i_482][1];
+  _292 = lhs[prephitmp_784][i_482][3];
+  _293 = _291 * _292;
+  _294 = _290 - _293;
+  lhs[prephitmp_781][i_482][2] = _294;
+  _296 = lhs[prephitmp_781][i_482][3];
+  _297 = lhs[prephitmp_781][i_482][1];
+  _298 = lhs[prephitmp_784][i_482][4];
+  _299 = _297 * _298;
+  _300 = _296 - _299;
+  lhs[prephitmp_781][i_482][3] = _300;
+  _626 = rhs[k_304][prephitmp_781][i_482][0];
+  _627 = lhs[prephitmp_781][i_482][1];
+  _628 = rhs[k_304][prephitmp_784][i_482][0];
+  _629 = _627 * _628;
+  _630 = _626 - _629;
+  rhs[k_304][prephitmp_781][i_482][0] = _630;
+  _635 = rhs[k_304][prephitmp_781][i_482][1];
+  _637 = rhs[k_304][prephitmp_784][i_482][1];
+  _638 = _627 * _637;
+  _639 = _635 - _638;
+  rhs[k_304][prephitmp_781][i_482][1] = _639;
+  _644 = rhs[k_304][prephitmp_781][i_482][2];
+  _646 = rhs[k_304][prephitmp_784][i_482][2];
+  _647 = _627 * _646;
+  _648 = _644 - _647;
+  rhs[k_304][prephitmp_781][i_482][2] = _648;
+  _309 = lhs[prephitmp_781][i_482][2];
+  fac2_310 = 1.0e+0 / _309;
+  _608 = rhs[k_304][prephitmp_781][i_482][0];
+  _609 = _608 * fac2_310;
+  rhs[k_304][prephitmp_781][i_482][0] = _609;
+  _614 = rhs[k_304][prephitmp_781][i_482][1];
+  _615 = _614 * fac2_310;
+  rhs[k_304][prephitmp_781][i_482][1] = _615;
+  _620 = rhs[k_304][prephitmp_781][i_482][2];
+  _621 = _620 * fac2_310;
+  rhs[k_304][prephitmp_781][i_482][2] = _621;
+  i_315 = i_482 + 1;
+  if (i_315 < _503)
+    goto <bb 73>;
+  else
+    goto <bb 74>;
+
+  <bb 73>:
+  goto <bb 72>;
+
+  <bb 74>:
+
+  <bb 75>:
+  if (prephitmp_784 > 0)
+    goto <bb 76>;
+  else
+    goto <bb 85>;
+
+  <bb 76>:
+
+  <bb 77>:
+  # j_302 = PHI <j_316(83), 0(76)>
+  j_316 = j_302 + 1;
+  j2_317 = j_302 + 2;
+  if (_503 > 1)
+    goto <bb 78>;
+  else
+    goto <bb 82>;
+
+  <bb 78>:
+
+  <bb 79>:
+  # i_483 = PHI <i_410(80), 1(78)>
+  _318 = lhsp[j_302][i_483][2];
+  fac1_319 = 1.0e+0 / _318;
+  _320 = lhsp[j_302][i_483][3];
+  _321 = _320 * fac1_319;
+  lhsp[j_302][i_483][3] = _321;
+  _323 = lhsp[j_302][i_483][4];
+  _324 = _323 * fac1_319;
+  lhsp[j_302][i_483][4] = _324;
+  _326 = rhs[k_304][j_302][i_483][3];
+  _327 = _326 * fac1_319;
+  rhs[k_304][j_302][i_483][3] = _327;
+  _329 = lhsp[j_316][i_483][2];
+  _330 = lhsp[j_316][i_483][1];
+  _331 = lhsp[j_302][i_483][3];
+  _332 = _330 * _331;
+  _333 = _329 - _332;
+  lhsp[j_316][i_483][2] = _333;
+  _335 = lhsp[j_316][i_483][3];
+  _336 = lhsp[j_316][i_483][1];
+  _337 = lhsp[j_302][i_483][4];
+  _338 = _336 * _337;
+  _339 = _335 - _338;
+  lhsp[j_316][i_483][3] = _339;
+  _341 = rhs[k_304][j_316][i_483][3];
+  _342 = lhsp[j_316][i_483][1];
+  _343 = _327 * _342;
+  _344 = _341 - _343;
+  rhs[k_304][j_316][i_483][3] = _344;
+  _346 = lhsp[j2_317][i_483][1];
+  _347 = lhsp[j2_317][i_483][0];
+  _348 = lhsp[j_302][i_483][3];
+  _349 = _347 * _348;
+  _350 = _346 - _349;
+  lhsp[j2_317][i_483][1] = _350;
+  _352 = lhsp[j2_317][i_483][2];
+  _353 = lhsp[j2_317][i_483][0];
+  _354 = lhsp[j_302][i_483][4];
+  _355 = _353 * _354;
+  _356 = _352 - _355;
+  lhsp[j2_317][i_483][2] = _356;
+  _358 = rhs[k_304][j2_317][i_483][3];
+  _359 = lhsp[j2_317][i_483][0];
+  _360 = rhs[k_304][j_302][i_483][3];
+  _361 = _359 * _360;
+  _362 = _358 - _361;
+  rhs[k_304][j2_317][i_483][3] = _362;
+  _364 = lhsm[j_302][i_483][2];
+  fac1_365 = 1.0e+0 / _364;
+  _366 = lhsm[j_302][i_483][3];
+  _367 = _366 * fac1_365;
+  lhsm[j_302][i_483][3] = _367;
+  _369 = lhsm[j_302][i_483][4];
+  _370 = _369 * fac1_365;
+  lhsm[j_302][i_483][4] = _370;
+  _372 = rhs[k_304][j_302][i_483][4];
+  _373 = _372 * fac1_365;
+  rhs[k_304][j_302][i_483][4] = _373;
+  _375 = lhsm[j_316][i_483][2];
+  _376 = lhsm[j_316][i_483][1];
+  _377 = lhsm[j_302][i_483][3];
+  _378 = _376 * _377;
+  _379 = _375 - _378;
+  lhsm[j_316][i_483][2] = _379;
+  _381 = lhsm[j_316][i_483][3];
+  _382 = lhsm[j_316][i_483][1];
+  _383 = lhsm[j_302][i_483][4];
+  _384 = _382 * _383;
+  _385 = _381 - _384;
+  lhsm[j_316][i_483][3] = _385;
+  _387 = rhs[k_304][j_316][i_483][4];
+  _388 = lhsm[j_316][i_483][1];
+  _389 = _373 * _388;
+  _390 = _387 - _389;
+  rhs[k_304][j_316][i_483][4] = _390;
+  _392 = lhsm[j2_317][i_483][1];
+  _393 = lhsm[j2_317][i_483][0];
+  _394 = lhsm[j_302][i_483][3];
+  _395 = _393 * _394;
+  _396 = _392 - _395;
+  lhsm[j2_317][i_483][1] = _396;
+  _398 = lhsm[j2_317][i_483][2];
+  _399 = lhsm[j2_317][i_483][0];
+  _400 = lhsm[j_302][i_483][4];
+  _401 = _399 * _400;
+  _402 = _398 - _401;
+  lhsm[j2_317][i_483][2] = _402;
+  _404 = rhs[k_304][j2_317][i_483][4];
+  _405 = lhsm[j2_317][i_483][0];
+  _406 = rhs[k_304][j_302][i_483][4];
+  _407 = _405 * _406;
+  _408 = _404 - _407;
+  rhs[k_304][j2_317][i_483][4] = _408;
+  i_410 = i_483 + 1;
+  if (i_410 < _503)
+    goto <bb 80>;
+  else
+    goto <bb 81>;
+
+  <bb 80>:
+  goto <bb 79>;
+
+  <bb 81>:
+
+  <bb 82>:
+  if (j_316 < prephitmp_784)
+    goto <bb 83>;
+  else
+    goto <bb 84>;
+
+  <bb 83>:
+  goto <bb 77>;
+
+  <bb 84>:
+
+  <bb 85>:
+  if (_503 > 1)
+    goto <bb 86>;
+  else
+    goto <bb 92>;
+
+  <bb 86>:
+
+  <bb 87>:
+  # i_484 = PHI <i_477(88), 1(86)>
+  _413 = lhsp[prephitmp_784][i_484][2];
+  fac1_414 = 1.0e+0 / _413;
+  _415 = lhsp[prephitmp_784][i_484][3];
+  _416 = _415 * fac1_414;
+  lhsp[prephitmp_784][i_484][3] = _416;
+  _418 = lhsp[prephitmp_784][i_484][4];
+  _419 = _418 * fac1_414;
+  lhsp[prephitmp_784][i_484][4] = _419;
+  _421 = rhs[k_304][prephitmp_784][i_484][3];
+  _422 = _421 * fac1_414;
+  rhs[k_304][prephitmp_784][i_484][3] = _422;
+  _424 = lhsp[prephitmp_781][i_484][2];
+  _425 = lhsp[prephitmp_781][i_484][1];
+  _426 = lhsp[prephitmp_784][i_484][3];
+  _427 = _425 * _426;
+  _428 = _424 - _427;
+  lhsp[prephitmp_781][i_484][2] = _428;
+  _430 = lhsp[prephitmp_781][i_484][3];
+  _431 = lhsp[prephitmp_781][i_484][1];
+  _432 = lhsp[prephitmp_784][i_484][4];
+  _433 = _431 * _432;
+  _434 = _430 - _433;
+  lhsp[prephitmp_781][i_484][3] = _434;
+  _436 = rhs[k_304][prephitmp_781][i_484][3];
+  _437 = lhsp[prephitmp_781][i_484][1];
+  _438 = _422 * _437;
+  _439 = _436 - _438;
+  rhs[k_304][prephitmp_781][i_484][3] = _439;
+  _441 = lhsm[prephitmp_784][i_484][2];
+  fac1_442 = 1.0e+0 / _441;
+  _443 = lhsm[prephitmp_784][i_484][3];
+  _444 = _443 * fac1_442;
+  lhsm[prephitmp_784][i_484][3] = _444;
+  _446 = lhsm[prephitmp_784][i_484][4];
+  _447 = _446 * fac1_442;
+  lhsm[prephitmp_784][i_484][4] = _447;
+  _449 = rhs[k_304][prephitmp_784][i_484][4];
+  _450 = _449 * fac1_442;
+  rhs[k_304][prephitmp_784][i_484][4] = _450;
+  _452 = lhsm[prephitmp_781][i_484][2];
+  _453 = lhsm[prephitmp_781][i_484][1];
+  _454 = lhsm[prephitmp_784][i_484][3];
+  _455 = _453 * _454;
+  _456 = _452 - _455;
+  lhsm[prephitmp_781][i_484][2] = _456;
+  _458 = lhsm[prephitmp_781][i_484][3];
+  _459 = lhsm[prephitmp_781][i_484][1];
+  _460 = lhsm[prephitmp_784][i_484][4];
+  _461 = _459 * _460;
+  _462 = _458 - _461;
+  lhsm[prephitmp_781][i_484][3] = _462;
+  _464 = rhs[k_304][prephitmp_781][i_484][4];
+  _465 = lhsm[prephitmp_781][i_484][1];
+  _466 = _450 * _465;
+  _467 = _464 - _466;
+  rhs[k_304][prephitmp_781][i_484][4] = _467;
+  _469 = rhs[k_304][prephitmp_781][i_484][3];
+  _470 = lhsp[prephitmp_781][i_484][2];
+  _471 = _469 / _470;
+  rhs[k_304][prephitmp_781][i_484][3] = _471;
+  _473 = rhs[k_304][prephitmp_781][i_484][4];
+  _474 = lhsm[prephitmp_781][i_484][2];
+  _475 = _473 / _474;
+  rhs[k_304][prephitmp_781][i_484][4] = _475;
+  i_477 = i_484 + 1;
+  if (i_477 < _503)
+    goto <bb 88>;
+  else
+    goto <bb 108>;
+
+  <bb 88>:
+  goto <bb 87>;
+
+  <bb 89>:
+  # i_485 = PHI <i_499(90), 1(108)>
+  _581 = rhs[k_304][prephitmp_784][i_485][0];
+  _582 = lhs[prephitmp_784][i_485][3];
+  _583 = rhs[k_304][prephitmp_781][i_485][0];
+  _584 = _582 * _583;
+  _585 = _581 - _584;
+  rhs[k_304][prephitmp_784][i_485][0] = _585;
+  _590 = rhs[k_304][prephitmp_784][i_485][1];
+  _592 = rhs[k_304][prephitmp_781][i_485][1];
+  _593 = _582 * _592;
+  _594 = _590 - _593;
+  rhs[k_304][prephitmp_784][i_485][1] = _594;
+  _599 = rhs[k_304][prephitmp_784][i_485][2];
+  _601 = rhs[k_304][prephitmp_781][i_485][2];
+  _602 = _582 * _601;
+  _603 = _599 - _602;
+  rhs[k_304][prephitmp_784][i_485][2] = _603;
+  _487 = rhs[k_304][prephitmp_784][i_485][3];
+  _488 = lhsp[prephitmp_784][i_485][3];
+  _489 = rhs[k_304][prephitmp_781][i_485][3];
+  _490 = _488 * _489;
+  _491 = _487 - _490;
+  rhs[k_304][prephitmp_784][i_485][3] = _491;
+  _493 = rhs[k_304][prephitmp_784][i_485][4];
+  _494 = lhsm[prephitmp_784][i_485][3];
+  _495 = rhs[k_304][prephitmp_781][i_485][4];
+  _496 = _494 * _495;
+  _497 = _493 - _496;
+  rhs[k_304][prephitmp_784][i_485][4] = _497;
+  i_499 = i_485 + 1;
+  if (i_499 < _503)
+    goto <bb 90>;
+  else
+    goto <bb 91>;
+
+  <bb 90>:
+  goto <bb 89>;
+
+  <bb 91>:
+
+  <bb 92>:
+  if (j_591 >= 0)
+    goto <bb 93>;
+  else
+    goto <bb 102>;
+
+  <bb 93>:
+
+  <bb 94>:
+  # j_303 = PHI <j_535(100), j_591(93)>
+  j1_501 = j_303 + 1;
+  j2_502 = j_303 + 2;
+  if (_503 > 1)
+    goto <bb 95>;
+  else
+    goto <bb 99>;
+
+  <bb 95>:
+
+  <bb 96>:
+  # i_486 = PHI <i_534(97), 1(95)>
+  _542 = rhs[k_304][j_303][i_486][0];
+  _543 = lhs[j_303][i_486][3];
+  _544 = rhs[k_304][j1_501][i_486][0];
+  _545 = _543 * _544;
+  _546 = _542 - _545;
+  _547 = lhs[j_303][i_486][4];
+  _548 = rhs[k_304][j2_502][i_486][0];
+  _549 = _547 * _548;
+  _550 = _546 - _549;
+  rhs[k_304][j_303][i_486][0] = _550;
+  _555 = rhs[k_304][j_303][i_486][1];
+  _557 = rhs[k_304][j1_501][i_486][1];
+  _558 = _543 * _557;
+  _559 = _555 - _558;
+  _561 = rhs[k_304][j2_502][i_486][1];
+  _562 = _547 * _561;
+  _563 = _559 - _562;
+  rhs[k_304][j_303][i_486][1] = _563;
+  _568 = rhs[k_304][j_303][i_486][2];
+  _570 = rhs[k_304][j1_501][i_486][2];
+  _571 = _543 * _570;
+  _572 = _568 - _571;
+  _574 = rhs[k_304][j2_502][i_486][2];
+  _575 = _547 * _574;
+  _576 = _572 - _575;
+  rhs[k_304][j_303][i_486][2] = _576;
+  _514 = rhs[k_304][j_303][i_486][3];
+  _515 = lhsp[j_303][i_486][3];
+  _516 = rhs[k_304][j1_501][i_486][3];
+  _517 = _515 * _516;
+  _518 = _514 - _517;
+  _519 = lhsp[j_303][i_486][4];
+  _520 = rhs[k_304][j2_502][i_486][3];
+  _521 = _519 * _520;
+  _522 = _518 - _521;
+  rhs[k_304][j_303][i_486][3] = _522;
+  _524 = rhs[k_304][j_303][i_486][4];
+  _525 = lhsm[j_303][i_486][3];
+  _526 = rhs[k_304][j1_501][i_486][4];
+  _527 = _525 * _526;
+  _528 = _524 - _527;
+  _529 = lhsm[j_303][i_486][4];
+  _530 = rhs[k_304][j2_502][i_486][4];
+  _531 = _529 * _530;
+  _532 = _528 - _531;
+  rhs[k_304][j_303][i_486][4] = _532;
+  i_534 = i_486 + 1;
+  if (_503 > i_534)
+    goto <bb 97>;
+  else
+    goto <bb 98>;
+
+  <bb 97>:
+  goto <bb 96>;
+
+  <bb 98>:
+
+  <bb 99>:
+  j_535 = j_303 + -1;
+  if (j_535 >= 0)
+    goto <bb 100>;
+  else
+    goto <bb 101>;
+
+  <bb 100>:
+  goto <bb 94>;
+
+  <bb 101>:
+
+  <bb 102>:
+  k_536 = k_304 + 1;
+  _65 = grid_points[2];
+  _66 = _65 + -1;
+  if (_66 > k_536)
+    goto <bb 103>;
+  else
+    goto <bb 104>;
+
+  <bb 103>:
+  goto <bb 6>;
+
+  <bb 104>:
+  timeron.0_537 = timeron;
+  if (timeron.0_537 != 0)
+    goto <bb 105>;
+  else
+    goto <bb 106>;
+
+  <bb 105>:
+  timer_stop (7);
+
+  <bb 106>:
+  pinvr ();
+  return;
+
+  <bb 107>:
+  if (iftmp.5_29 > _88)
+    goto <bb 14>;
+  else
+    goto <bb 18>;
+
+  <bb 108>:
+  goto <bb 89>;
+
+}
+
+

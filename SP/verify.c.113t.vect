@@ -1,0 +1,849 @@
+
+;; Function verify (verify, funcdef_no=14, decl_uid=3880, symbol_order=14)
+
+Removing basic block 79
+Removing basic block 88
+Removing basic block 97
+Merging blocks 2 and 101
+Merging blocks 5 and 92
+Merging blocks 44 and 83
+Merging blocks 85 and 47
+Merging blocks 86 and 85
+Merging blocks 94 and 8
+Merging blocks 95 and 94
+Merging blocks 103 and 5
+Merging blocks 104 and 103
+Merging blocks 2 and 105
+Merging blocks 44 and 87
+Merging blocks 84 and 82
+Merging blocks 102 and 100
+Merging blocks 104 and 96
+verify (int no_time_steps, char * Class, logical * verified)
+{
+  vector(4) double * vectp_xcr.47;
+  vector(4) double * vectp_xcr.46;
+  vector(4) double vect_cst_.45;
+  vector(4) double vect__25.44;
+  vector(4) double vect__23.43;
+  vector(4) double * vectp_xcr.42;
+  vector(4) double * vectp_xcr.41;
+  unsigned int tmp.40;
+  int tmp.39;
+  unsigned int niters.38;
+  vector(4) double * vectp_xceref.37;
+  vector(4) double * vectp_xceref.36;
+  vector(4) double vect_cst_.35;
+  vector(4) double * vectp_xcrref.34;
+  vector(4) double * vectp_xcrref.33;
+  vector(4) double vect_cst_.32;
+  unsigned int tmp.31;
+  int tmp.30;
+  unsigned int niters.29;
+  vector(4) double * vectp_xcedif.28;
+  vector(4) double * vectp_xcedif.27;
+  vector(4) double vect__139.26;
+  vector(4) double vect__138.25;
+  vector(4) double vect__137.24;
+  vector(4) double vect__136.23;
+  vector(4) double * vectp_xceref.22;
+  vector(4) double * vectp_xceref.21;
+  vector(4) double vect__135.20;
+  vector(4) double * vectp_xce.19;
+  vector(4) double * vectp_xce.18;
+  vector(4) double * vectp_xcrdif.17;
+  vector(4) double * vectp_xcrdif.16;
+  vector(4) double vect__133.15;
+  vector(4) double vect__132.14;
+  vector(4) double vect__131.13;
+  vector(4) double vect__130.12;
+  vector(4) double * vectp_xcrref.11;
+  vector(4) double * vectp_xcrref.10;
+  vector(4) double vect__129.9;
+  vector(4) double * vectp_xcr.8;
+  vector(4) double * vectp_xcr.7;
+  unsigned int tmp.6;
+  int tmp.5;
+  unsigned int niters.4;
+  int m;
+  double dtref;
+  double xcr[5];
+  double xce[5];
+  double xcedif[5];
+  double xcrdif[5];
+  double xceref[5];
+  double xcrref[5];
+  double dt.0;
+  unsigned int ivtmp_3;
+  unsigned int ivtmp_4;
+  unsigned int ivtmp_8;
+  double _23;
+  unsigned int ivtmp_24;
+  double _25;
+  unsigned int ivtmp_26;
+  unsigned int ivtmp_33;
+  int _35;
+  int _36;
+  int _37;
+  int _50;
+  int _51;
+  int _63;
+  int _64;
+  int _76;
+  int _77;
+  int _89;
+  int _90;
+  int _102;
+  int _103;
+  int _115;
+  int _116;
+  double _129;
+  double _130;
+  double _131;
+  double _132;
+  double _133;
+  double _135;
+  double _136;
+  double _137;
+  double _138;
+  double _139;
+  unsigned int ivtmp_140;
+  unsigned int ivtmp_142;
+  int _143;
+  double _147;
+  double _148;
+  _Bool _149;
+  <unnamed type> _150;
+  char _155;
+  char _158;
+  double _159;
+  int _160;
+  double _162;
+  double _163;
+  double _164;
+  int _165;
+  double _168;
+  double _169;
+  int _170;
+  unsigned int ivtmp_172;
+  char _173;
+  char _176;
+  double _177;
+  int _178;
+  double _180;
+  double _181;
+  double _182;
+  int _183;
+  double _186;
+  double _187;
+  int _188;
+  unsigned int ivtmp_190;
+  char _191;
+  <unnamed type> _194;
+  unsigned int ivtmp_203;
+  unsigned int ivtmp_207;
+  unsigned int ivtmp_250;
+  unsigned int ivtmp_255;
+  double _258;
+  double _259;
+  double _260;
+  double _261;
+  double _262;
+  double _264;
+  double _265;
+  double _266;
+  double _267;
+  double _268;
+  unsigned int ivtmp_269;
+  double pretmp_271;
+  unsigned int ivtmp_272;
+  char pretmp_275;
+  char prephitmp_276;
+  unsigned int ivtmp_286;
+  unsigned int ivtmp_287;
+  unsigned int ivtmp_288;
+  unsigned int ivtmp_289;
+  unsigned int ivtmp_290;
+  unsigned int ivtmp_291;
+  int prephitmp_293;
+  int prephitmp_295;
+  unsigned int ivtmp_299;
+  double _300;
+  double _301;
+  unsigned int ivtmp_304;
+  unsigned int ivtmp_309;
+  unsigned int ivtmp_323;
+
+  <bb 2>:
+  error_norm (&xce);
+  compute_rhs ();
+  rhs_norm (&xcr);
+  pretmp_271 = dt;
+  vectp_xcr.42_313 = &xcr;
+  vect_cst_.45_317 = {pretmp_271, pretmp_271, pretmp_271, pretmp_271};
+  vectp_xcr.47_319 = &xcr;
+  goto <bb 4>;
+
+  <bb 3>:
+
+  <bb 4>:
+  # m_219 = PHI <m_27(3), 0(2)>
+  # ivtmp_287 = PHI <ivtmp_286(3), 5(2)>
+  # vectp_xcr.41_314 = PHI <vectp_xcr.41_315(3), vectp_xcr.42_313(2)>
+  # vectp_xcr.46_320 = PHI <vectp_xcr.46_321(3), vectp_xcr.47_319(2)>
+  # ivtmp_26 = PHI <ivtmp_323(3), 0(2)>
+  vect__23.43_316 = MEM[(double[5] *)vectp_xcr.41_314];
+  _23 = xcr[m_219];
+  vect__25.44_318 = vect__23.43_316 / vect_cst_.45_317;
+  _25 = _23 / pretmp_271;
+  MEM[(double[5] *)vectp_xcr.46_320] = vect__25.44_318;
+  m_27 = m_219 + 1;
+  ivtmp_286 = ivtmp_287 - 1;
+  vectp_xcr.41_315 = vectp_xcr.41_314 + 32;
+  vectp_xcr.46_321 = vectp_xcr.46_320 + 32;
+  ivtmp_323 = ivtmp_26 + 1;
+  if (ivtmp_323 < 1)
+    goto <bb 3>;
+  else
+    goto <bb 7>;
+
+  <bb 5>:
+  # m_297 = PHI <m_303(6), 4(7)>
+  # ivtmp_299 = PHI <ivtmp_304(6), 1(7)>
+  _300 = xcr[m_297];
+  _301 = _300 / pretmp_271;
+  xcr[m_297] = _301;
+  m_303 = m_297 + 1;
+  ivtmp_304 = ivtmp_299 - 1;
+  if (ivtmp_304 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 8>;
+
+  <bb 6>:
+  goto <bb 5>;
+
+  <bb 7>:
+  # m_306 = PHI <m_27(4)>
+  # ivtmp_309 = PHI <ivtmp_286(4)>
+  goto <bb 5>;
+
+  <bb 8>:
+  *Class_28(D) = 85;
+  *verified_30(D) = 1;
+  vect_cst_.32_283 = { 1.0e+0, 1.0e+0, 1.0e+0, 1.0e+0 };
+  vectp_xcrref.34_282 = &xcrref;
+  vect_cst_.35_32 = { 1.0e+0, 1.0e+0, 1.0e+0, 1.0e+0 };
+  vectp_xceref.37_278 = &xceref;
+  goto <bb 10>;
+
+  <bb 9>:
+
+  <bb 10>:
+  # m_222 = PHI <m_34(9), 0(8)>
+  # ivtmp_289 = PHI <ivtmp_288(9), 5(8)>
+  # vectp_xcrref.33_281 = PHI <vectp_xcrref.33_280(9), vectp_xcrref.34_282(8)>
+  # vectp_xceref.36_277 = PHI <vectp_xceref.36_274(9), vectp_xceref.37_278(8)>
+  # ivtmp_33 = PHI <ivtmp_272(9), 0(8)>
+  MEM[(double[5] *)vectp_xcrref.33_281] = vect_cst_.32_283;
+  MEM[(double[5] *)vectp_xceref.36_277] = vect_cst_.35_32;
+  m_34 = m_222 + 1;
+  ivtmp_288 = ivtmp_289 - 1;
+  vectp_xcrref.33_280 = vectp_xcrref.33_281 + 32;
+  vectp_xceref.36_274 = vectp_xceref.36_277 + 32;
+  ivtmp_272 = ivtmp_33 + 1;
+  if (ivtmp_272 < 1)
+    goto <bb 9>;
+  else
+    goto <bb 13>;
+
+  <bb 11>:
+  # m_205 = PHI <m_10(12), m_7(14)>
+  # ivtmp_203 = PHI <ivtmp_8(12), ivtmp_4(14)>
+  xcrref[m_205] = 1.0e+0;
+  xceref[m_205] = 1.0e+0;
+  m_10 = m_205 + 1;
+  ivtmp_8 = ivtmp_203 - 1;
+  if (ivtmp_8 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 15>;
+
+  <bb 12>:
+  goto <bb 11>;
+
+  <bb 13>:
+  # m_6 = PHI <m_34(10)>
+  # ivtmp_3 = PHI <ivtmp_288(10)>
+
+  <bb 14>:
+  # m_7 = PHI <4(13)>
+  # ivtmp_4 = PHI <1(13)>
+  goto <bb 11>;
+
+  <bb 15>:
+  _35 = grid_points[0];
+  if (_35 == 12)
+    goto <bb 16>;
+  else
+    goto <bb 20>;
+
+  <bb 16>:
+  _36 = grid_points[1];
+  if (_36 == 12)
+    goto <bb 17>;
+  else
+    goto <bb 30>;
+
+  <bb 17>:
+  _37 = grid_points[2];
+  if (_37 == 12)
+    goto <bb 18>;
+  else
+    goto <bb 30>;
+
+  <bb 18>:
+  if (no_time_steps_38(D) == 100)
+    goto <bb 19>;
+  else
+    goto <bb 30>;
+
+  <bb 19>:
+  *Class_28(D) = 83;
+  xcrref[0] = 2.74703154513394783020618916680177790112793445587158203125e-2;
+  xcrref[1] = 1.036074670528541741276740140165202319622039794921875e-2;
+  xcrref[2] = 1.62357450650955324744639796108458540402352809906005859375e-2;
+  xcrref[3] = 1.58405572244556154537509229385250364430248737335205078125e-2;
+  xcrref[4] = 3.484904060936246106283675771919661201536655426025390625e-2;
+  xceref[0] = 2.72892585573772253684787791883081808919087052345275878906e-5;
+  xceref[1] = 1.03644466408372853147377284921404339002037886530160903931e-5;
+  xceref[2] = 1.61547982871664709124837761011761472218495327979326248169e-5;
+  xceref[3] = 1.57507049944801015952181022505840246594743803143501281738e-5;
+  xceref[4] = 3.41776661833905308894056285229368086220347322523593902588e-5;
+  goto <bb 51>;
+
+  <bb 20>:
+  if (_35 == 36)
+    goto <bb 21>;
+  else
+    goto <bb 25>;
+
+  <bb 21>:
+  _50 = grid_points[1];
+  if (_50 == 36)
+    goto <bb 22>;
+  else
+    goto <bb 35>;
+
+  <bb 22>:
+  _51 = grid_points[2];
+  if (_51 == 36)
+    goto <bb 23>;
+  else
+    goto <bb 35>;
+
+  <bb 23>:
+  if (no_time_steps_38(D) == 400)
+    goto <bb 24>;
+  else
+    goto <bb 35>;
+
+  <bb 24>:
+  *Class_28(D) = 87;
+  xcrref[0] = 1.8932537335840000924935822013139841146767139434814453125e-3;
+  xcrref[1] = 1.71707544777499994869893185089892995165428146719932556152e-4;
+  xcrref[2] = 2.7781533509359999890506176534188398363767191767692565918e-4;
+  xcrref[3] = 2.88747540998400000714779745081273176765535026788711547852e-4;
+  xcrref[4] = 3.1436111612419999350453991837639478035271167755126953125e-3;
+  xceref[0] = 7.54208859953399939199045198812143553368514403700828552246e-5;
+  xceref[1] = 6.51285225308600036997182594622479712143103824928402900696e-6;
+  xceref[2] = 1.04909228568800000114561929431822306924004806205630302429e-5;
+  xceref[3] = 1.12883867153500003438840182390379140997538343071937561035e-5;
+  xceref[4] = 1.21284563977300000547042413412412997786304913461208343506e-4;
+  goto <bb 51>;
+
+  <bb 25>:
+  if (_35 == 64)
+    goto <bb 26>;
+  else
+    goto <bb 30>;
+
+  <bb 26>:
+  _63 = grid_points[1];
+  if (_63 == 64)
+    goto <bb 27>;
+  else
+    goto <bb 40>;
+
+  <bb 27>:
+  _64 = grid_points[2];
+  if (_64 == 64)
+    goto <bb 28>;
+  else
+    goto <bb 40>;
+
+  <bb 28>:
+  if (no_time_steps_38(D) == 400)
+    goto <bb 29>;
+  else
+    goto <bb 40>;
+
+  <bb 29>:
+  *Class_28(D) = 65;
+  xcrref[0] = 2.47998223993001953857628905097953975200653076171875e+0;
+  xcrref[1] = 1.1276337964368832178507773278397507965564727783203125e+0;
+  xcrref[2] = 1.5028977888770491677661311769043095409870147705078125e+0;
+  xcrref[3] = 1.4217816211695180061980181562830694019794464111328125e+0;
+  xcrref[4] = 2.12921130351382803524984410614706575870513916015625e+0;
+  xceref[0] = 1.09001402978205501250602571516878924740012735128402709961e-4;
+  xceref[1] = 3.7343951769282091707712056827261903890757821500301361084e-5;
+  xceref[2] = 5.0092785406541629974769974653625581595406401902437210083e-5;
+  xceref[3] = 4.76710939395282530983873059415856232590158469974994659424e-5;
+  xceref[4] = 1.36216133992130011701529590517623091727728024125099182129e-4;
+  goto <bb 51>;
+
+  <bb 30>:
+  if (_35 == 102)
+    goto <bb 31>;
+  else
+    goto <bb 35>;
+
+  <bb 31>:
+  _76 = grid_points[1];
+  if (_76 == 102)
+    goto <bb 32>;
+  else
+    goto <bb 45>;
+
+  <bb 32>:
+  _77 = grid_points[2];
+  if (_77 == 102)
+    goto <bb 33>;
+  else
+    goto <bb 45>;
+
+  <bb 33>:
+  if (no_time_steps_38(D) == 400)
+    goto <bb 34>;
+  else
+    goto <bb 45>;
+
+  <bb 34>:
+  *Class_28(D) = 66;
+  xcrref[0] = 6.90329357999799952949615544639527797698974609375e+1;
+  xcrref[1] = 3.0951344880840000683974722051061689853668212890625e+1;
+  xcrref[2] = 4.103336647017000160531097208149731159210205078125e+1;
+  xcrref[3] = 3.864769009604000160607029101811349391937255859375e+1;
+  xcrref[4] = 5.643482272595999660325105651281774044036865234375e+1;
+  xceref[0] = 9.81000619018800035231464562457404099404811859130859375e-3;
+  xceref[1] = 1.02282790566999995732211381493925728136673569679260253906e-3;
+  xceref[2] = 1.72059791169200003088657346950185456080362200736999511719e-3;
+  xceref[3] = 1.69447942823099995980629106639980818727053701877593994141e-3;
+  xceref[4] = 1.84745626398100000475910320574257639236748218536376953125e-2;
+  goto <bb 51>;
+
+  <bb 35>:
+  if (_35 == 162)
+    goto <bb 36>;
+  else
+    goto <bb 40>;
+
+  <bb 36>:
+  _89 = grid_points[1];
+  if (_89 == 162)
+    goto <bb 37>;
+  else
+    goto <bb 50>;
+
+  <bb 37>:
+  _90 = grid_points[2];
+  if (_90 == 162)
+    goto <bb 38>;
+  else
+    goto <bb 50>;
+
+  <bb 38>:
+  if (no_time_steps_38(D) == 400)
+    goto <bb 39>;
+  else
+    goto <bb 50>;
+
+  <bb 39>:
+  *Class_28(D) = 67;
+  xcrref[0] = 5.881691581828999915160238742828369140625e+2;
+  xcrref[1] = 2.45441760356900005035640788264572620391845703125e+2;
+  xcrref[2] = 3.2938291918509997913133702240884304046630859375e+2;
+  xcrref[3] = 3.081924971890999813695088960230350494384765625e+2;
+  xcrref[4] = 4.5972237991759999431451433338224887847900390625e+2;
+  xceref[0] = 2.5981205001829998924023357176338322460651397705078125e-1;
+  xceref[1] = 2.59088892231499993978882656620044144801795482635498046875e-2;
+  xceref[2] = 5.132886416319999700608178727634367533028125762939453125e-2;
+  xceref[3] = 4.806073419454000295036877332677249796688556671142578125e-2;
+  xceref[4] = 5.483377491301000272727605988620780408382415771484375e-1;
+  goto <bb 51>;
+
+  <bb 40>:
+  if (_35 == 408)
+    goto <bb 41>;
+  else
+    goto <bb 45>;
+
+  <bb 41>:
+  _102 = grid_points[1];
+  if (_102 == 408)
+    goto <bb 42>;
+  else
+    goto <bb 50>;
+
+  <bb 42>:
+  _103 = grid_points[2];
+  if (_103 == 408)
+    goto <bb 43>;
+  else
+    goto <bb 50>;
+
+  <bb 43>:
+  if (no_time_steps_38(D) == 500)
+    goto <bb 44>;
+  else
+    goto <bb 50>;
+
+  <bb 44>:
+  *Class_28(D) = 68;
+  xcrref[0] = 1.0446962168870000823517329990863800048828125e+4;
+  xcrref[1] = 3.20442776257800005623721517622470855712890625e+3;
+  xcrref[2] = 4.6486807330319998072809539735317230224609375e+3;
+  xcrref[3] = 4.23892328369700044277124106884002685546875e+3;
+  xcrref[4] = 7.58841203613600009703077375888824462890625e+3;
+  xceref[0] = 5.089471423668999960909786750562489032745361328125e+0;
+  xceref[1] = 5.323514855894000419311851146630942821502685546875e-1;
+  xceref[2] = 1.1870510089710000212193108382052741944789886474609375e+0;
+  xceref[3] = 1.0837349519379999573942541246651671826839447021484375e+0;
+  xceref[4] = 1.16410833856800000063458355725742876529693603515625e+1;
+  goto <bb 51>;
+
+  <bb 45>:
+  if (_35 == 1020)
+    goto <bb 46>;
+  else
+    goto <bb 50>;
+
+  <bb 46>:
+  _115 = grid_points[1];
+  if (_115 == 1020)
+    goto <bb 47>;
+  else
+    goto <bb 50>;
+
+  <bb 47>:
+  _116 = grid_points[2];
+  if (_116 == 1020)
+    goto <bb 48>;
+  else
+    goto <bb 50>;
+
+  <bb 48>:
+  if (no_time_steps_38(D) == 500)
+    goto <bb 49>;
+  else
+    goto <bb 50>;
+
+  <bb 49>:
+  *Class_28(D) = 69;
+  xcrref[0] = 6.255387422609000350348651409149169921875e+4;
+  xcrref[1] = 1.495317020011999920825473964214324951171875e+4;
+  xcrref[2] = 2.347595750585999849135987460613250732421875e+4;
+  xcrref[3] = 2.09109978353400001651607453823089599609375e+4;
+  xcrref[4] = 4.7704128412179998122155666351318359375e+4;
+  xceref[0] = 6.74273516490899993414132040925323963165283203125e+1;
+  xceref[1] = 5.39065603693800010631775876390747725963592529296875e+0;
+  xceref[2] = 1.6806471964770000937505756155587732791900634765625e+1;
+  xceref[3] = 1.5369631264569999729019400547258555889129638671875e+1;
+  xceref[4] = 1.57533014615599995522643439471721649169921875e+2;
+  goto <bb 51>;
+
+  <bb 50>:
+  *verified_30(D) = 0;
+  pretmp_275 = *Class_28(D);
+
+  <bb 51>:
+  # dtref_1 = PHI <1.499999999999999944488848768742172978818416595458984375e-2(19), 1.50000000000000003122502256758252769941464066505432128906e-3(24), 1.50000000000000003122502256758252769941464066505432128906e-3(29), 1.00000000000000002081668171172168513294309377670288085938e-3(34), 6.70000000000000022620794126737564511131495237350463867188e-4(39), 2.99999999999999973718939338951372519659344106912612915039e-4(44), 1.00000000000000004792173602385929598312941379845142364502e-4(49), 0.0(50)>
+  # prephitmp_276 = PHI <83(19), 87(24), 65(29), 66(34), 67(39), 68(44), 69(49), pretmp_275(50)>
+  vectp_xcr.8_246 = &xcr;
+  vectp_xcrref.11_242 = &xcrref;
+  vectp_xcrdif.17_235 = &xcrdif;
+  vectp_xce.19_134 = &xce;
+  vectp_xceref.22_225 = &xceref;
+  vectp_xcedif.28_211 = &xcedif;
+  goto <bb 53>;
+
+  <bb 52>:
+
+  <bb 53>:
+  # m_214 = PHI <m_141(52), 0(51)>
+  # ivtmp_291 = PHI <ivtmp_290(52), 5(51)>
+  # vectp_xcr.7_245 = PHI <vectp_xcr.7_244(52), vectp_xcr.8_246(51)>
+  # vectp_xcrref.10_241 = PHI <vectp_xcrref.10_240(52), vectp_xcrref.11_242(51)>
+  # vectp_xcrdif.16_234 = PHI <vectp_xcrdif.16_231(52), vectp_xcrdif.17_235(51)>
+  # vectp_xce.18_229 = PHI <vectp_xce.18_228(52), vectp_xce.19_134(51)>
+  # vectp_xceref.21_220 = PHI <vectp_xceref.21_218(52), vectp_xceref.22_225(51)>
+  # vectp_xcedif.27_210 = PHI <vectp_xcedif.27_209(52), vectp_xcedif.28_211(51)>
+  # ivtmp_140 = PHI <ivtmp_207(52), 0(51)>
+  vect__129.9_243 = MEM[(double[5] *)vectp_xcr.7_245];
+  _129 = xcr[m_214];
+  vect__130.12_239 = MEM[(double[5] *)vectp_xcrref.10_241];
+  _130 = xcrref[m_214];
+  vect__131.13_238 = vect__129.9_243 - vect__130.12_239;
+  _131 = _129 - _130;
+  vect__132.14_237 = vect__131.13_238 / vect__130.12_239;
+  _132 = _131 / _130;
+  vect__133.15_236 = ABS_EXPR <vect__132.14_237>;
+  _133 = ABS_EXPR <_132>;
+  MEM[(double[5] *)vectp_xcrdif.16_234] = vect__133.15_236;
+  vect__135.20_227 = MEM[(double[5] *)vectp_xce.18_229];
+  _135 = xce[m_214];
+  vect__136.23_217 = MEM[(double[5] *)vectp_xceref.21_220];
+  _136 = xceref[m_214];
+  vect__137.24_216 = vect__135.20_227 - vect__136.23_217;
+  _137 = _135 - _136;
+  vect__138.25_215 = vect__137.24_216 / vect__136.23_217;
+  _138 = _137 / _136;
+  vect__139.26_212 = ABS_EXPR <vect__138.25_215>;
+  _139 = ABS_EXPR <_138>;
+  MEM[(double[5] *)vectp_xcedif.27_210] = vect__139.26_212;
+  m_141 = m_214 + 1;
+  ivtmp_290 = ivtmp_291 - 1;
+  vectp_xcr.7_244 = vectp_xcr.7_245 + 32;
+  vectp_xcrref.10_240 = vectp_xcrref.10_241 + 32;
+  vectp_xcrdif.16_231 = vectp_xcrdif.16_234 + 32;
+  vectp_xce.18_228 = vectp_xce.18_229 + 32;
+  vectp_xceref.21_218 = vectp_xceref.21_220 + 32;
+  vectp_xcedif.27_209 = vectp_xcedif.27_210 + 32;
+  ivtmp_207 = ivtmp_140 + 1;
+  if (ivtmp_207 < 1)
+    goto <bb 52>;
+  else
+    goto <bb 56>;
+
+  <bb 54>:
+  # m_284 = PHI <m_256(55), 4(56)>
+  # ivtmp_269 = PHI <ivtmp_255(55), 1(56)>
+  _268 = xcr[m_284];
+  _267 = xcrref[m_284];
+  _266 = _268 - _267;
+  _265 = _266 / _267;
+  _264 = ABS_EXPR <_265>;
+  xcrdif[m_284] = _264;
+  _262 = xce[m_284];
+  _261 = xceref[m_284];
+  _260 = _262 - _261;
+  _259 = _260 / _261;
+  _258 = ABS_EXPR <_259>;
+  xcedif[m_284] = _258;
+  m_256 = m_284 + 1;
+  ivtmp_255 = ivtmp_269 - 1;
+  if (ivtmp_255 != 0)
+    goto <bb 55>;
+  else
+    goto <bb 57>;
+
+  <bb 55>:
+  goto <bb 54>;
+
+  <bb 56>:
+  # m_253 = PHI <m_141(53)>
+  # ivtmp_250 = PHI <ivtmp_290(53)>
+  goto <bb 54>;
+
+  <bb 57>:
+  if (prephitmp_276 != 85)
+    goto <bb 58>;
+  else
+    goto <bb 60>;
+
+  <bb 58>:
+  _143 = (int) prephitmp_276;
+  printf (" Verification being performed for class %c\n", _143);
+  printf (" accuracy setting for epsilon = %20.13E\n", 1.00000000000000002092256083012847267532663408928783610463e-8);
+  dt.0_146 = dt;
+  _147 = dt.0_146 - dtref_1;
+  _148 = ABS_EXPR <_147>;
+  _149 = _148 <= 1.00000000000000002092256083012847267532663408928783610463e-8;
+  _150 = (<unnamed type>) _149;
+  *verified_30(D) = _150;
+  if (_149 != 0)
+    goto <bb 61>;
+  else
+    goto <bb 59>;
+
+  <bb 59>:
+  *Class_28(D) = 85;
+  printf (" DT does not match the reference value of %15.8E\n", dtref_1);
+  goto <bb 61>;
+
+  <bb 60>:
+  __builtin_puts (&" Unknown class"[0]);
+
+  <bb 61>:
+  _155 = *Class_28(D);
+  if (_155 != 85)
+    goto <bb 62>;
+  else
+    goto <bb 63>;
+
+  <bb 62>:
+  __builtin_puts (&" Comparison of RMS-norms of residual"[0]);
+  goto <bb 64>;
+
+  <bb 63>:
+  __builtin_puts (&" RMS-norms of residual"[0]);
+
+  <bb 64>:
+  goto <bb 66>;
+
+  <bb 65>:
+
+  <bb 66>:
+  # m_232 = PHI <prephitmp_293(65), 0(64)>
+  # ivtmp_172 = PHI <ivtmp_190(65), 5(64)>
+  _158 = *Class_28(D);
+  if (_158 == 85)
+    goto <bb 67>;
+  else
+    goto <bb 68>;
+
+  <bb 67>:
+  _159 = xcr[m_232];
+  _160 = m_232 + 1;
+  printf ("          %2d%20.13E\n", _160, _159);
+  goto <bb 71>;
+
+  <bb 68>:
+  _162 = xcrdif[m_232];
+  if (_162 <= 1.00000000000000002092256083012847267532663408928783610463e-8)
+    goto <bb 69>;
+  else
+    goto <bb 70>;
+
+  <bb 69>:
+  _163 = xcrref[m_232];
+  _164 = xcr[m_232];
+  _165 = m_232 + 1;
+  printf ("          %2d%20.13E%20.13E%20.13E\n", _165, _164, _163, _162);
+  goto <bb 71>;
+
+  <bb 70>:
+  *verified_30(D) = 0;
+  _168 = xcrref[m_232];
+  _169 = xcr[m_232];
+  _170 = m_232 + 1;
+  printf (" FAILURE: %2d%20.13E%20.13E%20.13E\n", _170, _169, _168, _162);
+
+  <bb 71>:
+  # prephitmp_293 = PHI <_160(67), _165(69), _170(70)>
+  ivtmp_190 = ivtmp_172 - 1;
+  if (ivtmp_190 != 0)
+    goto <bb 65>;
+  else
+    goto <bb 72>;
+
+  <bb 72>:
+  _173 = *Class_28(D);
+  if (_173 != 85)
+    goto <bb 73>;
+  else
+    goto <bb 74>;
+
+  <bb 73>:
+  __builtin_puts (&" Comparison of RMS-norms of solution error"[0]);
+  goto <bb 75>;
+
+  <bb 74>:
+  __builtin_puts (&" RMS-norms of solution error"[0]);
+
+  <bb 75>:
+  goto <bb 77>;
+
+  <bb 76>:
+
+  <bb 77>:
+  # m_221 = PHI <prephitmp_295(76), 0(75)>
+  # ivtmp_24 = PHI <ivtmp_142(76), 5(75)>
+  _176 = *Class_28(D);
+  if (_176 == 85)
+    goto <bb 78>;
+  else
+    goto <bb 79>;
+
+  <bb 78>:
+  _177 = xce[m_221];
+  _178 = m_221 + 1;
+  printf ("          %2d%20.13E\n", _178, _177);
+  goto <bb 82>;
+
+  <bb 79>:
+  _180 = xcedif[m_221];
+  if (_180 <= 1.00000000000000002092256083012847267532663408928783610463e-8)
+    goto <bb 80>;
+  else
+    goto <bb 81>;
+
+  <bb 80>:
+  _181 = xceref[m_221];
+  _182 = xce[m_221];
+  _183 = m_221 + 1;
+  printf ("          %2d%20.13E%20.13E%20.13E\n", _183, _182, _181, _180);
+  goto <bb 82>;
+
+  <bb 81>:
+  *verified_30(D) = 0;
+  _186 = xceref[m_221];
+  _187 = xce[m_221];
+  _188 = m_221 + 1;
+  printf (" FAILURE: %2d%20.13E%20.13E%20.13E\n", _188, _187, _186, _180);
+
+  <bb 82>:
+  # prephitmp_295 = PHI <_178(78), _183(80), _188(81)>
+  ivtmp_142 = ivtmp_24 - 1;
+  if (ivtmp_142 != 0)
+    goto <bb 76>;
+  else
+    goto <bb 83>;
+
+  <bb 83>:
+  _191 = *Class_28(D);
+  if (_191 == 85)
+    goto <bb 84>;
+  else
+    goto <bb 85>;
+
+  <bb 84>:
+  __builtin_puts (&" No reference values provided"[0]);
+  __builtin_puts (&" No verification performed"[0]);
+  goto <bb 88>;
+
+  <bb 85>:
+  _194 = *verified_30(D);
+  if (_194 != 0)
+    goto <bb 86>;
+  else
+    goto <bb 87>;
+
+  <bb 86>:
+  __builtin_puts (&" Verification Successful"[0]);
+  goto <bb 88>;
+
+  <bb 87>:
+  __builtin_puts (&" Verification failed"[0]);
+
+  <bb 88>:
+  xcrref ={v} {CLOBBER};
+  xceref ={v} {CLOBBER};
+  xcrdif ={v} {CLOBBER};
+  xcedif ={v} {CLOBBER};
+  xce ={v} {CLOBBER};
+  xcr ={v} {CLOBBER};
+  return;
+
+}
+
+

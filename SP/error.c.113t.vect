@@ -1,0 +1,474 @@
+
+;; Function error_norm (error_norm, funcdef_no=3, decl_uid=2329, symbol_order=3)
+
+error_norm (double * rms)
+{
+  double add;
+  double u_exact[5];
+  double zeta;
+  double eta;
+  double xi;
+  int d;
+  int m;
+  int k;
+  int j;
+  int i;
+  double dnxm1.2;
+  double dnym1.1;
+  double dnzm1.0;
+  unsigned int ivtmp_16;
+  double _23;
+  double _27;
+  int _30;
+  double _31;
+  double _64;
+  unsigned int ivtmp_69;
+  long unsigned int _70;
+  long unsigned int _71;
+  double * _72;
+  double _73;
+  int _75;
+  double _76;
+  double _77;
+  int _83;
+  int _87;
+  double _88;
+  double _89;
+  int _99;
+  double _100;
+  double _101;
+  double _106;
+  double _107;
+  double _112;
+  double _113;
+  double _114;
+  double _119;
+  double _120;
+  double _125;
+  double _126;
+  double _127;
+  double _132;
+  double _133;
+  double _138;
+  double _139;
+  double _140;
+  double _145;
+  double _146;
+  double _151;
+  double _152;
+  double _153;
+  double _158;
+  double _159;
+  double _164;
+  double _165;
+  double _166;
+  int prephitmp_210;
+  int pretmp_214;
+  int prephitmp_215;
+  int prephitmp_217;
+  int prephitmp_220;
+  int prephitmp_221;
+  int prephitmp_222;
+  int prephitmp_223;
+  int _224;
+  int prephitmp_227;
+  int _228;
+  int prephitmp_229;
+  int _230;
+  int pretmp_233;
+  int prephitmp_234;
+  int pretmp_235;
+  int prephitmp_236;
+  int pretmp_237;
+  int prephitmp_238;
+  int pretmp_239;
+  int prephitmp_240;
+  int prephitmp_242;
+  int prephitmp_244;
+  int pretmp_245;
+  int prephitmp_246;
+  int pretmp_247;
+  int prephitmp_248;
+  int pretmp_249;
+  int prephitmp_250;
+  int pretmp_251;
+  int prephitmp_252;
+
+  <bb 2>:
+  __builtin_memset (rms_18(D), 0, 40);
+  _83 = grid_points[2];
+  if (_83 > 0)
+    goto <bb 3>;
+  else
+    goto <bb 20>;
+
+  <bb 3>:
+  pretmp_237 = grid_points[1];
+  pretmp_251 = grid_points[0];
+
+  <bb 4>:
+  # k_97 = PHI <k_48(16), 0(3)>
+  # prephitmp_220 = PHI <prephitmp_240(16), _83(3)>
+  # prephitmp_238 = PHI <prephitmp_223(16), pretmp_237(3)>
+  # prephitmp_252 = PHI <prephitmp_242(16), pretmp_251(3)>
+  _23 = (double) k_97;
+  dnzm1.0_24 = dnzm1;
+  zeta_25 = _23 * dnzm1.0_24;
+  if (prephitmp_238 > 0)
+    goto <bb 5>;
+  else
+    goto <bb 14>;
+
+  <bb 5>:
+
+  <bb 6>:
+  # j_96 = PHI <j_47(13), 0(5)>
+  # prephitmp_227 = PHI <prephitmp_246(13), prephitmp_238(5)>
+  # prephitmp_244 = PHI <prephitmp_229(13), prephitmp_252(5)>
+  _27 = (double) j_96;
+  dnym1.1_28 = dnym1;
+  eta_29 = _27 * dnym1.1_28;
+  if (prephitmp_244 > 0)
+    goto <bb 7>;
+  else
+    goto <bb 11>;
+
+  <bb 7>:
+
+  <bb 8>:
+  # i_95 = PHI <i_46(10), 0(7)>
+  _31 = (double) i_95;
+  dnxm1.2_32 = dnxm1;
+  xi_33 = _31 * dnxm1.2_32;
+  exact_solution (xi_33, eta_29, zeta_25, &u_exact);
+  _106 = u[k_97][j_96][i_95][0];
+  _107 = u_exact[0];
+  add_108 = _106 - _107;
+  _112 = *rms_18(D);
+  _113 = add_108 * add_108;
+  _114 = _112 + _113;
+  *rms_18(D) = _114;
+  _119 = u[k_97][j_96][i_95][1];
+  _120 = u_exact[1];
+  add_121 = _119 - _120;
+  _125 = MEM[(double *)rms_18(D) + 8B];
+  _126 = add_121 * add_121;
+  _127 = _125 + _126;
+  MEM[(double *)rms_18(D) + 8B] = _127;
+  _132 = u[k_97][j_96][i_95][2];
+  _133 = u_exact[2];
+  add_134 = _132 - _133;
+  _138 = MEM[(double *)rms_18(D) + 16B];
+  _139 = add_134 * add_134;
+  _140 = _138 + _139;
+  MEM[(double *)rms_18(D) + 16B] = _140;
+  _145 = u[k_97][j_96][i_95][3];
+  _146 = u_exact[3];
+  add_147 = _145 - _146;
+  _151 = MEM[(double *)rms_18(D) + 24B];
+  _152 = add_147 * add_147;
+  _153 = _151 + _152;
+  MEM[(double *)rms_18(D) + 24B] = _153;
+  _158 = u[k_97][j_96][i_95][4];
+  _159 = u_exact[4];
+  add_160 = _158 - _159;
+  _164 = MEM[(double *)rms_18(D) + 32B];
+  _165 = add_160 * add_160;
+  _166 = _164 + _165;
+  MEM[(double *)rms_18(D) + 32B] = _166;
+  i_46 = i_95 + 1;
+  _30 = grid_points[0];
+  if (_30 > i_46)
+    goto <bb 10>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  # _224 = PHI <_30(8)>
+  pretmp_245 = grid_points[1];
+  goto <bb 11>;
+
+  <bb 10>:
+  goto <bb 8>;
+
+  <bb 11>:
+  # prephitmp_229 = PHI <_224(9), prephitmp_244(6)>
+  # prephitmp_246 = PHI <pretmp_245(9), prephitmp_227(6)>
+  j_47 = j_96 + 1;
+  if (j_47 < prephitmp_246)
+    goto <bb 13>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  # _228 = PHI <prephitmp_246(11)>
+  # prephitmp_221 = PHI <prephitmp_229(11)>
+  pretmp_239 = grid_points[2];
+  goto <bb 14>;
+
+  <bb 13>:
+  goto <bb 6>;
+
+  <bb 14>:
+  # prephitmp_223 = PHI <_228(12), prephitmp_238(4)>
+  # prephitmp_240 = PHI <pretmp_239(12), prephitmp_220(4)>
+  # prephitmp_242 = PHI <prephitmp_221(12), prephitmp_252(4)>
+  k_48 = k_97 + 1;
+  if (k_48 < prephitmp_240)
+    goto <bb 16>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  # _230 = PHI <prephitmp_240(14)>
+  # prephitmp_222 = PHI <prephitmp_223(14)>
+  # prephitmp_217 = PHI <prephitmp_242(14)>
+  goto <bb 21>;
+
+  <bb 16>:
+  goto <bb 4>;
+
+  <bb 17>:
+  pretmp_214 = grid_points[2];
+  pretmp_235 = grid_points[1];
+  pretmp_249 = grid_points[0];
+
+  <bb 18>:
+  # m_60 = PHI <m_66(17), 0(21)>
+  # prephitmp_215 = PHI <pretmp_214(17), prephitmp_210(21)>
+  # prephitmp_236 = PHI <pretmp_235(17), prephitmp_234(21)>
+  # prephitmp_250 = PHI <pretmp_249(17), prephitmp_248(21)>
+  # ivtmp_69 = PHI <ivtmp_16(17), 5(21)>
+  _70 = (long unsigned int) m_60;
+  _71 = _70 * 8;
+  _72 = rms_18(D) + _71;
+  _73 = *_72;
+  _75 = prephitmp_250 + -2;
+  _76 = (double) _75;
+  _77 = _73 / _76;
+  _87 = prephitmp_236 + -2;
+  _88 = (double) _87;
+  _89 = _77 / _88;
+  _99 = prephitmp_215 + -2;
+  _100 = (double) _99;
+  _101 = _89 / _100;
+  *_72 = _101;
+  _64 = sqrt (_101);
+  *_72 = _64;
+  m_66 = m_60 + 1;
+  ivtmp_16 = ivtmp_69 - 1;
+  if (ivtmp_16 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  u_exact ={v} {CLOBBER};
+  return;
+
+  <bb 20>:
+  pretmp_233 = grid_points[1];
+  pretmp_247 = grid_points[0];
+
+  <bb 21>:
+  # prephitmp_210 = PHI <_230(15), _83(20)>
+  # prephitmp_234 = PHI <prephitmp_222(15), pretmp_233(20)>
+  # prephitmp_248 = PHI <prephitmp_217(15), pretmp_247(20)>
+  goto <bb 18>;
+
+}
+
+
+
+;; Function rhs_norm (rhs_norm, funcdef_no=4, decl_uid=2331, symbol_order=4)
+
+rhs_norm (double * rms)
+{
+  double add;
+  int m;
+  int d;
+  int k;
+  int j;
+  int i;
+  int nz2.5;
+  int ny2.4;
+  int nx2.3;
+  int pretmp_4;
+  unsigned int ivtmp_16;
+  double _52;
+  unsigned int ivtmp_56;
+  long unsigned int _57;
+  long unsigned int _58;
+  double * _59;
+  double _60;
+  int _61;
+  int _62;
+  double _63;
+  double _64;
+  int _73;
+  int _74;
+  double _75;
+  double _76;
+  int pretmp_78;
+  int _85;
+  int _86;
+  double _87;
+  double _88;
+  double _98;
+  double _99;
+  double _109;
+  double _110;
+  double _120;
+  double _121;
+  double _131;
+  double _132;
+  double _142;
+  double _143;
+  double pretmp_149;
+  double prephitmp_150;
+  double pretmp_151;
+  double prephitmp_152;
+  double pretmp_153;
+  double prephitmp_154;
+  double pretmp_155;
+  double prephitmp_156;
+  double pretmp_157;
+  double prephitmp_158;
+
+  <bb 2>:
+  __builtin_memset (rms_18(D), 0, 40);
+  nz2.5_70 = nz2;
+  if (nz2.5_70 > 0)
+    goto <bb 3>;
+  else
+    goto <bb 20>;
+
+  <bb 3>:
+  pretmp_4 = ny2;
+  pretmp_78 = nx2;
+
+  <bb 4>:
+  # k_83 = PHI <k_36(15), 1(3)>
+  if (pretmp_4 > 0)
+    goto <bb 5>;
+  else
+    goto <bb 14>;
+
+  <bb 5>:
+
+  <bb 6>:
+  # j_82 = PHI <j_35(12), 1(5)>
+  if (pretmp_78 > 0)
+    goto <bb 7>;
+  else
+    goto <bb 11>;
+
+  <bb 7>:
+  pretmp_149 = *rms_18(D);
+  pretmp_151 = MEM[(double *)rms_18(D) + 8B];
+  pretmp_153 = MEM[(double *)rms_18(D) + 16B];
+  pretmp_155 = MEM[(double *)rms_18(D) + 24B];
+  pretmp_157 = MEM[(double *)rms_18(D) + 32B];
+
+  <bb 8>:
+  # i_81 = PHI <i_34(9), 1(7)>
+  # prephitmp_150 = PHI <_99(9), pretmp_149(7)>
+  # prephitmp_152 = PHI <_110(9), pretmp_151(7)>
+  # prephitmp_154 = PHI <_121(9), pretmp_153(7)>
+  # prephitmp_156 = PHI <_132(9), pretmp_155(7)>
+  # prephitmp_158 = PHI <_143(9), pretmp_157(7)>
+  add_93 = rhs[k_83][j_82][i_81][0];
+  _98 = add_93 * add_93;
+  _99 = _98 + prephitmp_150;
+  *rms_18(D) = _99;
+  add_104 = rhs[k_83][j_82][i_81][1];
+  _109 = add_104 * add_104;
+  _110 = _109 + prephitmp_152;
+  MEM[(double *)rms_18(D) + 8B] = _110;
+  add_115 = rhs[k_83][j_82][i_81][2];
+  _120 = add_115 * add_115;
+  _121 = _120 + prephitmp_154;
+  MEM[(double *)rms_18(D) + 16B] = _121;
+  add_126 = rhs[k_83][j_82][i_81][3];
+  _131 = add_126 * add_126;
+  _132 = _131 + prephitmp_156;
+  MEM[(double *)rms_18(D) + 24B] = _132;
+  add_137 = rhs[k_83][j_82][i_81][4];
+  _142 = add_137 * add_137;
+  _143 = _142 + prephitmp_158;
+  MEM[(double *)rms_18(D) + 32B] = _143;
+  i_34 = i_81 + 1;
+  if (i_34 <= pretmp_78)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  goto <bb 8>;
+
+  <bb 10>:
+
+  <bb 11>:
+  j_35 = j_82 + 1;
+  if (pretmp_4 >= j_35)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+  goto <bb 6>;
+
+  <bb 13>:
+
+  <bb 14>:
+  k_36 = k_83 + 1;
+  if (k_36 <= nz2.5_70)
+    goto <bb 15>;
+  else
+    goto <bb 19>;
+
+  <bb 15>:
+  goto <bb 4>;
+
+  <bb 16>:
+
+  <bb 17>:
+  # m_48 = PHI <m_54(16), 0(20)>
+  # ivtmp_56 = PHI <ivtmp_16(16), 5(20)>
+  _57 = (long unsigned int) m_48;
+  _58 = _57 * 8;
+  _59 = rms_18(D) + _58;
+  _60 = *_59;
+  _61 = grid_points[0];
+  _62 = _61 + -2;
+  _63 = (double) _62;
+  _64 = _60 / _63;
+  _73 = grid_points[1];
+  _74 = _73 + -2;
+  _75 = (double) _74;
+  _76 = _64 / _75;
+  _85 = grid_points[2];
+  _86 = _85 + -2;
+  _87 = (double) _86;
+  _88 = _76 / _87;
+  *_59 = _88;
+  _52 = sqrt (_88);
+  *_59 = _52;
+  m_54 = m_48 + 1;
+  ivtmp_16 = ivtmp_56 - 1;
+  if (ivtmp_16 != 0)
+    goto <bb 16>;
+  else
+    goto <bb 18>;
+
+  <bb 18>:
+  return;
+
+  <bb 19>:
+
+  <bb 20>:
+  goto <bb 17>;
+
+}
+
+

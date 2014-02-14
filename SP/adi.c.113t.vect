@@ -1,0 +1,17 @@
+
+;; Function adi (adi, funcdef_no=0, decl_uid=2318, symbol_order=0)
+
+adi ()
+{
+  <bb 2>:
+  compute_rhs ();
+  txinvr ();
+  x_solve ();
+  y_solve ();
+  z_solve ();
+  add ();
+  return;
+
+}
+
+

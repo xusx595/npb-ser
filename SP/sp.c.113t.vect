@@ -1,0 +1,453 @@
+
+;; Function main (main, funcdef_no=20, decl_uid=3497, symbol_order=142) (executed once)
+
+main (int argc, char * * argv)
+{
+  struct FILE * fp;
+  char * t_names[16];
+  char Class;
+  logical verified;
+  double trecs[16];
+  double tmax;
+  double t;
+  double mflops;
+  int n3;
+  int step;
+  int niter;
+  int i;
+  <unnamed type> timeron.7;
+  char Class.6;
+  <unnamed type> verified.5;
+  int nz2.4;
+  int ny2.3;
+  int nx2.2;
+  int niter.1;
+  double dt.0;
+  unsigned int ivtmp_1;
+  unsigned int ivtmp_18;
+  int _47;
+  int _50;
+  int _59;
+  int _60;
+  int _61;
+  int _67;
+  int _68;
+  int _69;
+  int _87;
+  int _96;
+  int _97;
+  int _98;
+  int _99;
+  int _101;
+  int _102;
+  double _103;
+  double _105;
+  double _106;
+  double _107;
+  double _108;
+  double _109;
+  double _110;
+  double _111;
+  double _112;
+  double _114;
+  double _115;
+  double _116;
+  int _120;
+  int _121;
+  int _122;
+  int _124;
+  double _128;
+  double _132;
+  double _133;
+  double _134;
+  char * _135;
+  double _137;
+  double _138;
+  double _139;
+  double _140;
+  double _142;
+  double _143;
+  double _145;
+  double _147;
+  double _148;
+  double _150;
+  double _151;
+  double _152;
+  double _153;
+  double _155;
+  double _156;
+  double _158;
+  double _159;
+  double _161;
+  double _162;
+  int _165;
+  int _166;
+  unsigned int ivtmp_176;
+  unsigned int ivtmp_178;
+  unsigned int ivtmp_179;
+  unsigned int ivtmp_180;
+
+  <bb 2>:
+  fp_22 = fopen ("timer.flag", "r");
+  if (fp_22 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  timeron = 1;
+  t_names[1] = "total";
+  t_names[2] = "rhsx";
+  t_names[3] = "rhsy";
+  t_names[4] = "rhsz";
+  t_names[5] = "rhs";
+  t_names[6] = "xsolve";
+  t_names[7] = "ysolve";
+  t_names[8] = "zsolve";
+  t_names[9] = "redist1";
+  t_names[10] = "redist2";
+  t_names[14] = "tzetar";
+  t_names[13] = "ninvr";
+  t_names[12] = "pinvr";
+  t_names[11] = "txinvr";
+  t_names[15] = "add";
+  fclose (fp_22);
+  goto <bb 5>;
+
+  <bb 4>:
+  timeron = 0;
+
+  <bb 5>:
+  __builtin_puts (&"\n\n NAS Parallel Benchmarks (NPB3.3-SER-C) - SP Benchmark\n"[0]);
+  fp_43 = fopen ("inputsp.data", "r");
+  if (fp_43 != 0B)
+    goto <bb 6>;
+  else
+    goto <bb 13>;
+
+  <bb 6>:
+  __builtin_puts (&" Reading from input file inputsp.data"[0]);
+  fscanf (fp_43, "%d", &niter);
+
+  <bb 7>:
+  _47 = fgetc (fp_43);
+  if (_47 != 10)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  goto <bb 7>;
+
+  <bb 9>:
+  fscanf (fp_43, "%lf", &dt);
+
+  <bb 10>:
+  _50 = fgetc (fp_43);
+  if (_50 != 10)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  goto <bb 10>;
+
+  <bb 12>:
+  fscanf (fp_43, "%d%d%d", &grid_points[0], &grid_points[1], &grid_points[2]);
+  fclose (fp_43);
+  goto <bb 14>;
+
+  <bb 13>:
+  __builtin_puts (&" No input file inputsp.data. Using compiled defaults"[0]);
+  niter = 400;
+  dt = 1.50000000000000003122502256758252769941464066505432128906e-3;
+  grid_points[0] = 64;
+  grid_points[1] = 64;
+  grid_points[2] = 64;
+
+  <bb 14>:
+  _59 = grid_points[2];
+  _60 = grid_points[1];
+  _61 = grid_points[0];
+  printf (" Size: %4dx%4dx%4d\n", _61, _60, _59);
+  dt.0_63 = dt;
+  niter.1_64 = niter;
+  printf (" Iterations: %4d    dt: %10.6f\n", niter.1_64, dt.0_63);
+  __builtin_putchar (10);
+  _67 = grid_points[0];
+  if (_67 > 64)
+    goto <bb 17>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _68 = grid_points[1];
+  if (_68 > 64)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+  _69 = grid_points[2];
+  if (_69 > 64)
+    goto <bb 17>;
+  else
+    goto <bb 18>;
+
+  <bb 17>:
+  _165 = grid_points[2];
+  _166 = grid_points[1];
+  printf (" %d, %d, %d\n", _67, _166, _165);
+  __builtin_puts (&" Problem size too big for compiled array sizes"[0]);
+  goto <bb 48>;
+
+  <bb 18>:
+  nx2.2_70 = _67 + -2;
+  nx2 = nx2.2_70;
+  ny2.3_72 = _68 + -2;
+  ny2 = ny2.3_72;
+  nz2.4_74 = _69 + -2;
+  nz2 = nz2.4_74;
+  set_constants ();
+  goto <bb 20>;
+
+  <bb 19>:
+
+  <bb 20>:
+  # i_184 = PHI <i_78(19), 1(18)>
+  # ivtmp_176 = PHI <ivtmp_18(19), 15(18)>
+  timer_clear (i_184);
+  i_78 = i_184 + 1;
+  ivtmp_18 = ivtmp_176 - 1;
+  if (ivtmp_18 != 0)
+    goto <bb 19>;
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+  exact_rhs ();
+  initialize ();
+  adi ();
+  initialize ();
+  goto <bb 23>;
+
+  <bb 22>:
+
+  <bb 23>:
+  # i_185 = PHI <i_84(22), 1(21)>
+  # ivtmp_179 = PHI <ivtmp_178(22), 15(21)>
+  timer_clear (i_185);
+  i_84 = i_185 + 1;
+  ivtmp_178 = ivtmp_179 - 1;
+  if (ivtmp_178 != 0)
+    goto <bb 22>;
+  else
+    goto <bb 24>;
+
+  <bb 24>:
+  timer_start (1);
+  niter.1_3 = niter;
+  if (niter.1_3 > 0)
+    goto <bb 25>;
+  else
+    goto <bb 31>;
+
+  <bb 25>:
+
+  <bb 26>:
+  # step_2 = PHI <step_90(30), 1(25)>
+  _87 = step_2 % 20;
+  if (_87 == 0)
+    goto <bb 28>;
+  else
+    goto <bb 27>;
+
+  <bb 27>:
+  if (step_2 == 1)
+    goto <bb 28>;
+  else
+    goto <bb 29>;
+
+  <bb 28>:
+  printf (" Time step %4d\n", step_2);
+
+  <bb 29>:
+  adi ();
+  step_90 = step_2 + 1;
+  niter.1_86 = niter;
+  if (niter.1_86 >= step_90)
+    goto <bb 30>;
+  else
+    goto <bb 31>;
+
+  <bb 30>:
+  goto <bb 26>;
+
+  <bb 31>:
+  timer_stop (1);
+  tmax_93 = timer_read (1);
+  niter.1_94 = niter;
+  verify (niter.1_94, &Class, &verified);
+  if (tmax_93 != 0.0)
+    goto <bb 32>;
+  else
+    goto <bb 33>;
+
+  <bb 32>:
+  _96 = grid_points[0];
+  _97 = grid_points[1];
+  _98 = _96 * _97;
+  _99 = grid_points[2];
+  n3_100 = _98 * _99;
+  _101 = _96 + _97;
+  _102 = _99 + _101;
+  _103 = (double) _102;
+  t_104 = _103 / 3.0e+0;
+  _105 = (double) n3_100;
+  _106 = _105 * 8.811739999999999781721271574497222900390625e+2;
+  _107 = t_104 * t_104;
+  _108 = _107 * 4.68390999999999985448084771633148193359375e+3;
+  _109 = _106 - _108;
+  _110 = t_104 * 1.14845e+4;
+  _111 = _109 + _110;
+  _112 = _111 - 1.92724000000000014551915228366851806640625e+4;
+  niter.1_113 = niter;
+  _114 = (double) niter.1_113;
+  _115 = _112 * _114;
+  _116 = tmax_93 * 1.0e+6;
+  mflops_117 = _115 / _116;
+
+  <bb 33>:
+  # mflops_6 = PHI <mflops_117(32), 0.0(31)>
+  verified.5_118 = verified;
+  niter.1_119 = niter;
+  _120 = grid_points[2];
+  _121 = grid_points[1];
+  _122 = grid_points[0];
+  Class.6_123 = Class;
+  _124 = (int) Class.6_123;
+  print_results ("SP", _124, _122, _121, _120, niter.1_119, tmax_93, mflops_6, "          floating point", verified.5_118, "3.3.1", "13 Sep 2013", "gcc", "$(CC)", "-lm", "-I../common", "-Wall -O3 -mcmodel=medium -fdump-tree-vect ...", "-O3 -mcmodel=medium", "(none)");
+  timeron.7_126 = timeron;
+  if (timeron.7_126 != 0)
+    goto <bb 49>;
+  else
+    goto <bb 34>;
+
+  <bb 34>:
+  goto <bb 48>;
+
+  <bb 35>:
+
+  <bb 36>:
+  # i_186 = PHI <i_130(35), 1(49)>
+  # ivtmp_1 = PHI <ivtmp_180(35), 15(49)>
+  _128 = timer_read (i_186);
+  trecs[i_186] = _128;
+  i_130 = i_186 + 1;
+  ivtmp_180 = ivtmp_1 - 1;
+  if (ivtmp_180 != 0)
+    goto <bb 35>;
+  else
+    goto <bb 37>;
+
+  <bb 37>:
+  if (tmax_93 == 0.0)
+    goto <bb 39>;
+  else
+    goto <bb 38>;
+
+  <bb 38>:
+
+  <bb 39>:
+  # tmax_7 = PHI <tmax_93(38), 1.0e+0(37)>
+  __builtin_puts (&"  SECTION   Time (secs)"[0]);
+  goto <bb 41>;
+
+  <bb 40>:
+  # i_4 = PHI <i_164(47), i_5(50)>
+
+  <bb 41>:
+  # i_175 = PHI <i_4(40), 1(39)>
+  _132 = trecs[i_175];
+  _133 = _132 * 1.0e+2;
+  _134 = _133 / tmax_7;
+  _135 = t_names[i_175];
+  printf ("  %-8s:%9.3f  (%6.2f%%)\n", _135, _132, _134);
+  if (i_175 == 5)
+    goto <bb 42>;
+  else
+    goto <bb 43>;
+
+  <bb 42>:
+  _137 = trecs[2];
+  _138 = trecs[3];
+  _139 = _137 + _138;
+  _140 = trecs[4];
+  t_141 = _139 + _140;
+  _142 = t_141 * 1.0e+2;
+  _143 = _142 / tmax_7;
+  printf ("    --> %8s:%9.3f  (%6.2f%%)\n", "sub-rhs", t_141, _143);
+  _145 = trecs[5];
+  t_146 = _145 - t_141;
+  _147 = t_146 * 1.0e+2;
+  _148 = _147 / tmax_7;
+  printf ("    --> %8s:%9.3f  (%6.2f%%)\n", "rest-rhs", t_146, _148);
+  goto <bb 50>;
+
+  <bb 43>:
+  if (i_175 == 8)
+    goto <bb 44>;
+  else
+    goto <bb 45>;
+
+  <bb 44>:
+  _150 = trecs[8];
+  _151 = trecs[9];
+  _152 = _150 - _151;
+  _153 = trecs[10];
+  t_154 = _152 - _153;
+  _155 = t_154 * 1.0e+2;
+  _156 = _155 / tmax_7;
+  printf ("    --> %8s:%9.3f  (%6.2f%%)\n", "sub-zsol", t_154, _156);
+  goto <bb 50>;
+
+  <bb 45>:
+  if (i_175 == 10)
+    goto <bb 46>;
+  else
+    goto <bb 47>;
+
+  <bb 46>:
+  _158 = trecs[9];
+  _159 = trecs[10];
+  t_160 = _158 + _159;
+  _161 = t_160 * 1.0e+2;
+  _162 = _161 / tmax_7;
+  printf ("    --> %8s:%9.3f  (%6.2f%%)\n", "redist", t_160, _162);
+  goto <bb 50>;
+
+  <bb 47>:
+  i_164 = i_175 + 1;
+  if (i_164 != 16)
+    goto <bb 40>;
+  else
+    goto <bb 34>;
+
+  <bb 48>:
+  niter ={v} {CLOBBER};
+  trecs ={v} {CLOBBER};
+  verified ={v} {CLOBBER};
+  Class ={v} {CLOBBER};
+  t_names ={v} {CLOBBER};
+  return 0;
+
+  <bb 49>:
+  goto <bb 36>;
+
+  <bb 50>:
+  i_5 = i_175 + 1;
+  goto <bb 40>;
+
+}
+
+

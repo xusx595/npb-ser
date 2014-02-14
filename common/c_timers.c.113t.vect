@@ -1,0 +1,70 @@
+
+;; Function timer_clear (timer_clear, funcdef_no=10, decl_uid=2758, symbol_order=12)
+
+timer_clear (int n)
+{
+  <bb 2>:
+  elapsed[n_2(D)] = 0.0;
+  return;
+
+}
+
+
+
+;; Function timer_start (timer_start, funcdef_no=11, decl_uid=2761, symbol_order=13)
+
+timer_start (int n)
+{
+  double t;
+  double _5;
+
+  <bb 2>:
+  wtime_ (&t);
+  _5 = t;
+  t ={v} {CLOBBER};
+  start[n_3(D)] = _5;
+  return;
+
+}
+
+
+
+;; Function timer_stop (timer_stop, funcdef_no=12, decl_uid=2764, symbol_order=14)
+
+timer_stop (int n)
+{
+  double t;
+  double t;
+  double _4;
+  double _6;
+  double _7;
+  double _9;
+
+  <bb 2>:
+  wtime_ (&t);
+  _9 = t;
+  t ={v} {CLOBBER};
+  _4 = start[n_3(D)];
+  t_5 = _9 - _4;
+  _6 = elapsed[n_3(D)];
+  _7 = _6 + t_5;
+  elapsed[n_3(D)] = _7;
+  return;
+
+}
+
+
+
+;; Function timer_read (timer_read, funcdef_no=13, decl_uid=2769, symbol_order=15)
+
+timer_read (int n)
+{
+  double _3;
+
+  <bb 2>:
+  _3 = elapsed[n_2(D)];
+  return _3;
+
+}
+
+
