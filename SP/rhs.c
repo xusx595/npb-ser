@@ -33,6 +33,34 @@
 
 #include <math.h>
 #include "header.h"
+static inline void interleave(
+__m256d * vA,
+__m256d * vB,
+__m256d * vC,
+__m256d * vD)
+{
+// B2A2 B0A0
+// D2C2 D0C0
+// B3A3 B1A1
+// D3C3 D1C1
+// B2A2 B0A0
+__m256d v0 = _mm256_unpacklo_pd(*vA, *vB);
+// D2C2 D0C0
+__m256d v1 = _mm256_unpacklo_pd(*vC, *vD);
+// B3A3 B1A1
+__m256d v2 = _mm256_unpackhi_pd(*vA, *vB);
+// D3C3 D1C1
+__m256d v3 = _mm256_unpackhi_pd(*vC, *vD);
+
+// D0C0 B0A0
+*vA = _mm256_permute2f128_pd(v0, v1, 0x20);
+// D1C1 B1A1
+*vB = _mm256_permute2f128_pd(v2, v3, 0x20);
+// D2C2 B2A2
+*vC = _mm256_permute2f128_pd(v0, v1, 0x31);
+// D3C3 B3A3
+*vD = _mm256_permute2f128_pd(v2, v3, 0x31);
+}
 
 void compute_rhs()
 {
@@ -47,8 +75,79 @@ void compute_rhs()
   //---------------------------------------------------------------------
   for (k = 0; k <= grid_points[2]-1; k++) {
     for (j = 0; j <= grid_points[1]-1; j++) {
-#pragma simd
-      for (i = 0; i <= grid_points[0]-1; i++) {
+      int new_i_upper = (grid_points[0]-1)/4*4;
+      for (i = 0; i < 4; i++) {
+        rho_inv = 1.0/u1[k][j][i];
+        rho_i[k][j][i] = rho_inv;
+        us[k][j][i] = u[k][j][i][0] * rho_inv;
+        vs[k][j][i] = u[k][j][i][1] * rho_inv;
+        ws[k][j][i] = u[k][j][i][2] * rho_inv;
+        square[k][j][i] = 0.5* (
+            u[k][j][i][0]*u[k][j][i][0] + 
+            u[k][j][i][1]*u[k][j][i][1] +
+            u[k][j][i][2]*u[k][j][i][2] ) * rho_inv;
+        qs[k][j][i] = square[k][j][i] * rho_inv;
+        //-------------------------------------------------------------------
+        // (don't need speed and ainx until the lhs computation)
+        //-------------------------------------------------------------------
+        aux = c1c2*rho_inv* (u[k][j][i][3] - square[k][j][i]);
+        speed[k][j][i] = sqrt(aux);
+      }
+      /* SIMD loops */
+      for (i = 4; i <new_i_upper; i+=4) {
+        /*rho_inv = 1.0/u1[k][j][i];*/
+        __m256d vrho_ivn = _mm256_div_pd(_mm256_set1_pd(1.0f),
+                                                                _mm256_loadu_pd(&u1[k][j][i]));
+        /*rho_i[k][j][i] = rho_inv;*/
+        _mm256_storeu_pd(&rho_i[k][j][i], vrho_ivn);
+
+        /* load u*/
+        __m256d u0 = _mm256_load_pd(&u[k][j][i][0]);
+        __m256d u1 = _mm256_load_pd(&u[k][j][i+1][0]);
+        __m256d u2 = _mm256_load_pd(&u[k][j][i+2][0]);
+        __m256d u3 = _mm256_load_pd(&u[k][j][i+3][0]);
+        interleave (&u0, &u1, &u2, &u3);
+
+        /*us[k][j][i] = u[k][j][i][0] * rho_inv;*/
+        _mm256_storeu_pd(&us[k][j][i], _mm256_mul_pd(u0, vrho_ivn));
+        /*vs[k][j][i] = u[k][j][i][1] * rho_inv;*/
+        _mm256_storeu_pd(&vs[k][j][i], _mm256_mul_pd(u1, vrho_ivn));
+        
+        /*ws[k][j][i] = u[k][j][i][2] * rho_inv;*/
+        _mm256_storeu_pd(&ws[k][j][i], _mm256_mul_pd(u2, vrho_ivn));
+
+        __m256d tmp0 = _mm256_mul_pd(u0, u0);
+        __m256d tmp1 = _mm256_mul_pd(u1, u1);
+        __m256d tmp2 = _mm256_mul_pd(u2, u2);
+
+        tmp0 = _mm256_add_pd(tmp0, tmp1);
+        tmp0 = _mm256_add_pd(tmp0, tmp2);
+
+        tmp0 = _mm256_mul_pd(_mm256_set1_pd(0.5f), tmp0);
+        tmp0 = _mm256_mul_pd(tmp0, vrho_ivn);
+
+        _mm256_storeu_pd(&square[k][j][i], tmp0);
+        
+        /*square[k][j][i] = 0.5* (
+            u[k][j][i][0]*u[k][j][i][0] + 
+            u[k][j][i][1]*u[k][j][i][1] +
+            u[k][j][i][2]*u[k][j][i][2] ) * rho_inv;*/
+        
+        /*qs[k][j][i] = square[k][j][i] * rho_inv;*/
+        _mm256_storeu_pd(&qs[k][j][i], _mm256_mul_pd(tmp0, vrho_ivn));
+        //-------------------------------------------------------------------
+        // (don't need speed and ainx until the lhs computation)
+        //-------------------------------------------------------------------
+        //aux = c1c2*rho_inv* (u[k][j][i][3] - square[k][j][i]);
+        tmp1 = _mm256_sub_pd(u3, tmp0);
+        tmp2 = _mm256_mul_pd(_mm256_set1_pd(c1c2), vrho_ivn);
+        tmp2 = _mm256_mul_pd(tmp2, tmp1);
+        
+        /*speed[k][j][i] = sqrt(aux);*/
+        _mm256_storeu_pd(&speed[k][j][i], _mm256_sqrt_pd(tmp2));
+      }
+
+      for (i = new_i_upper; i <= grid_points[0]-1; i++) {
         rho_inv = 1.0/u1[k][j][i];
         rho_i[k][j][i] = rho_inv;
         us[k][j][i] = u[k][j][i][0] * rho_inv;
@@ -75,7 +174,32 @@ void compute_rhs()
   //---------------------------------------------------------------------
   for (k = 0; k <= grid_points[2]-1; k++) {
     for (j = 0; j <= grid_points[1]-1; j++) {
-#pragma simd
+      int new_i_upper = (grid_points[0]-1)/4*4;
+      for (i = 0; i < 4; i++) {
+        /*for (m = 0; m < 5; m++) {
+          rhs[k][j][i][m] = forcing[k][j][i][m];
+        }*/
+        rhs1[k][j][i] = forcing1[k][j][i];
+        rhs[k][j][i][0] = forcing[k][j][i][0];
+        rhs[k][j][i][1] = forcing[k][j][i][1];
+        rhs[k][j][i][2] = forcing[k][j][i][2];
+        rhs[k][j][i][3] = forcing[k][j][i][3];
+      }
+      for (i = 4; i < new_i_upper; i+=4) {
+        /*for (m = 0; m < 5; m++) {
+          rhs[k][j][i][m] = forcing[k][j][i][m];
+        }*/
+        /*rhs1[k][j][i] = forcing1[k][j][i];*/
+        _mm256_storeu_pd(&rhs1[k][j][i], _mm256_loadu_pd(&forcing1[k][j][i]));
+        /*rhs[k][j][i][0] = forcing[k][j][i][0];
+        rhs[k][j][i][1] = forcing[k][j][i][1];
+        rhs[k][j][i][2] = forcing[k][j][i][2];
+        rhs[k][j][i][3] = forcing[k][j][i][3];*/
+        _mm256_storeu_pd(&rhs[k][j][i][0], _mm256_loadu_pd(&forcing[k][j][i][0]));
+        _mm256_storeu_pd(&rhs[k][j][i+1][0], _mm256_loadu_pd(&forcing[k][j][i+1][0]));
+        _mm256_storeu_pd(&rhs[k][j][i+2][0], _mm256_loadu_pd(&forcing[k][j][i+2][0]));
+        _mm256_storeu_pd(&rhs[k][j][i+3][0], _mm256_loadu_pd(&forcing[k][j][i+3][0]));
+      }
       for (i = 0; i <= grid_points[0]-1; i++) {
         /*for (m = 0; m < 5; m++) {
           rhs[k][j][i][m] = forcing[k][j][i][m];
