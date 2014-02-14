@@ -43,8 +43,52 @@ void add()
   if (timeron) timer_start(t_add);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
-      for (i = 1; i <= nx2; i++) {
+      int new_i_upper = nx2/4*4;
+      for (i = 1; i < 4; i++) {
+        //for (m = 0; m < 5; m++) {
+        u1[k][j][i] = u1[k][j][i] + rhs1[k][j][i];
+        u[k][j][i][0] = u[k][j][i][0] + rhs[k][j][i][0];
+        u[k][j][i][1] = u[k][j][i][1] + rhs[k][j][i][1];
+        u[k][j][i][2] = u[k][j][i][2] + rhs[k][j][i][2];
+        u[k][j][i][3] = u[k][j][i][3] + rhs[k][j][i][3];
+        //}
+      }
+      
+      for (i = 4; i <new_i_upper; i+=4) {
+        //for (m = 0; m < 5; m++) {
+        /*u1[k][j][i] = u1[k][j][i] + rhs1[k][j][i];*/
+        __m256d vu = _mm256_loadu_pd(&u1[k][j][i]);
+        __m256d vrhs = _mm256_loadu_pd(&rhs1[k][j][i]);
+        vu = _mm256_add_pd(vu, vrhs);
+        _mm256_storeu_pd(&u1[k][j][i], vu);
+        
+        /*u[k][j][i][0] = u[k][j][i][0] + rhs[k][j][i][0];
+        u[k][j][i][1] = u[k][j][i][1] + rhs[k][j][i][1];
+        u[k][j][i][2] = u[k][j][i][2] + rhs[k][j][i][2];
+        u[k][j][i][3] = u[k][j][i][3] + rhs[k][j][i][3];*/
+        __m256d vu0 = _mm256_load_pd(&u[k][j][i][0]);
+        __m256d vu1 = _mm256_load_pd(&u[k][j][i+1][0]);
+        __m256d vu2 = _mm256_load_pd(&u[k][j][i+2][0]);
+        __m256d vu3 = _mm256_load_pd(&u[k][j][i+3][0]);
+
+        __m256d vrhs0 = _mm256_load_pd(&rhs[k][j][i][0]);
+        __m256d vrhs1 = _mm256_load_pd(&rhs[k][j][i+1][0]);
+        __m256d vrhs2 = _mm256_load_pd(&rhs[k][j][i+2][0]);
+        __m256d vrhs3 = _mm256_load_pd(&rhs[k][j][i+3][0]);
+
+        vu0 = _mm256_add_pd(vu0, vrhs0);
+        vu1 = _mm256_add_pd(vu1, vrhs1);
+        vu2 = _mm256_add_pd(vu2, vrhs2);
+        vu3 = _mm256_add_pd(vu3, vrhs3);
+
+        _mm256_store_pd(&u[k][j][i][0], vu0);
+        _mm256_store_pd(&u[k][j][i+1][0], vu1);
+        _mm256_store_pd(&u[k][j][i+2][0], vu2);
+        _mm256_store_pd(&u[k][j][i+3][0], vu3);
+        //}
+      }
+      
+      for (i = new_i_upper; i <= nx2; i++) {
         //for (m = 0; m < 5; m++) {
         u1[k][j][i] = u1[k][j][i] + rhs1[k][j][i];
         u[k][j][i][0] = u[k][j][i][0] + rhs[k][j][i][0];

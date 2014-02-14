@@ -92,13 +92,13 @@ void pinvr()
         rhs[k][j][i][2] = -t1 + t2;
         rhs[k][j][i][3] =  t1 + t2;
       }
-#ifdef _AVX_VEC_
+#if 0
       for (i = 4; i <new_i_upper; i++) {
-        /*r1 = rhs1[k][j][i];
+        r1 = rhs1[k][j][i];
         r2 = rhs[k][j][i][0];
         r3 = rhs[k][j][i][1];
         r4 = rhs[k][j][i][2];
-        r5 = rhs[k][j][i][3];*/
+        r5 = rhs[k][j][i][3];
         
 
         t1 = bt * r1;
@@ -110,7 +110,7 @@ void pinvr()
         rhs[k][j][i][2] = -t1 + t2;
         rhs[k][j][i][3] =  t1 + t2;
       }
-#else
+#endif
       for (i = 4; i <new_i_upper; i+=4) {
         /*r1 = rhs1[k][j][i];
         r2 = rhs[k][j][i][0];
@@ -162,7 +162,7 @@ void pinvr()
         _mm256_store_pd(&rhs[k][j][i+2][0] , vrhs2);
         _mm256_store_pd(&rhs[k][j][i+3][0] , vrhs3);
       }
-#endif
+
       for (i = new_i_upper; i <= nx2; i++) {
         r1 = rhs1[k][j][i];
         r2 = rhs[k][j][i][0];

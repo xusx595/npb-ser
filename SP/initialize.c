@@ -50,7 +50,21 @@ void initialize()
   //---------------------------------------------------------------------
   for (k = 0; k <= grid_points[2]-1; k++) {
     for (j = 0; j <= grid_points[1]-1; j++) {
-      for (i = 0; i <= grid_points[0]-1; i++) {
+      int new_i_upper = (grid_points[0]-1)/4*4;
+      for (i = 0; i < new_i_upper; i+=4) {
+        /*u1[k][j][i] = 1.0;*/
+        __m256d allones = _mm256_set1_pd(1.0);
+        __m256d init_value = _mm256_set_pd(1.0, 0.0, 0.0, 0.0);
+        /*u[k][j][i][0] = 0.0;
+        u[k][j][i][1] = 0.0;
+        u[k][j][i][2] = 0.0;
+        u[k][j][i][3] = 1.0;*/
+        _mm256_store_pd(&u[k][j][i][0], init_value);
+        _mm256_store_pd(&u[k][j][i+1][0], init_value);
+        _mm256_store_pd(&u[k][j][i+2][0], init_value);
+        _mm256_store_pd(&u[k][j][i+3][0], init_value);
+      }
+      for (i = new_i_upper; i <= grid_points[0]-1; i++) {
         u1[k][j][i] = 1.0;
         u[k][j][i][0] = 0.0;
         u[k][j][i][1] = 0.0;
