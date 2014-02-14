@@ -44,10 +44,10 @@
 #include "type.h"
 
 #include "timers.h"
-
+#include "immintrin.h"
 
 /* common /global/ */
-extern int grid_points[3], nx2, ny2, nz2;
+extern int grid_points[3];//, nx2, ny2, nz2;
 extern logical timeron;
 
 /* common /constants/ */
@@ -72,44 +72,49 @@ extern double tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3,
 #define IMAXP   (IMAX/2*2)
 #define JMAXP   (JMAX/2*2)
 
+#define nx2 (PROBLEM_SIZE-2)
+#define ny2 (PROBLEM_SIZE-2)
+#define nz2 (PROBLEM_SIZE-2)
 //---------------------------------------------------------------------
 // To improve cache performance, grid dimensions padded by 1 
 // for even number sizes only
 //---------------------------------------------------------------------
 /* common /fields/ */
-extern double u1      [KMAX][JMAXP+1][IMAXP+1];
-extern double u      [KMAX][JMAXP+1][IMAXP+1][4];
-extern double us     [KMAX][JMAXP+1][IMAXP+1];
-extern double vs     [KMAX][JMAXP+1][IMAXP+1];
-extern double ws     [KMAX][JMAXP+1][IMAXP+1];
-extern double qs     [KMAX][JMAXP+1][IMAXP+1];
-extern double rho_i  [KMAX][JMAXP+1][IMAXP+1];
-extern double speed  [KMAX][JMAXP+1][IMAXP+1];
-extern double square [KMAX][JMAXP+1][IMAXP+1];
-extern double rhs1    [KMAX][JMAXP+1][IMAXP+1];
-extern double rhs    [KMAX][JMAXP+1][IMAXP+1][4];
-extern double forcing1[KMAX][JMAXP+1][IMAXP+1];
-extern double forcing[KMAX][JMAXP+1][IMAXP+1][4];
+#define align(n) __attribute__((aligned(n)))
+
+extern double align(32) u1      [KMAX][JMAXP+1][IMAXP+1];
+extern double align(32) u      [KMAX][JMAXP+1][IMAXP+1][4];
+extern double align(32) us     [KMAX][JMAXP+1][IMAXP+1];
+extern double align(32) vs     [KMAX][JMAXP+1][IMAXP+1];
+extern double align(32) ws     [KMAX][JMAXP+1][IMAXP+1];
+extern double align(32) qs     [KMAX][JMAXP+1][IMAXP+1];
+extern double align(32) rho_i  [KMAX][JMAXP+1][IMAXP+1];
+extern double align(32) speed  [KMAX][JMAXP+1][IMAXP+1];
+extern double align(32) square [KMAX][JMAXP+1][IMAXP+1];
+extern double align(32) rhs1    [KMAX][JMAXP+1][IMAXP+1];
+extern double align(32) rhs    [KMAX][JMAXP+1][IMAXP+1][4];
+extern double align(32) forcing1[KMAX][JMAXP+1][IMAXP+1];
+extern double align(32) forcing[KMAX][JMAXP+1][IMAXP+1][4];
 
 /* common /work_1d/ */
-extern double cv  [PROBLEM_SIZE];
-extern double rhon[PROBLEM_SIZE];
-extern double rhos[PROBLEM_SIZE];
-extern double rhoq[PROBLEM_SIZE];
-extern double cuf [PROBLEM_SIZE];
-extern double q   [PROBLEM_SIZE];
-extern double ue1 [PROBLEM_SIZE];
-extern double ue [PROBLEM_SIZE][4];
-extern double buf1[PROBLEM_SIZE];
-extern double buf[PROBLEM_SIZE][4];
+extern align(32) double cv  [PROBLEM_SIZE];
+extern align(32) double rhon[PROBLEM_SIZE];
+extern align(32) double rhos[PROBLEM_SIZE];
+extern align(32) double rhoq[PROBLEM_SIZE];
+extern align(32) double cuf [PROBLEM_SIZE];
+extern align(32) double q   [PROBLEM_SIZE];
+extern align(32) double ue1 [PROBLEM_SIZE];
+extern align(32) double ue [PROBLEM_SIZE][4];
+extern align(32) double buf1[PROBLEM_SIZE];
+extern align(32) double buf[PROBLEM_SIZE][4];
 
 /* common /work_lhs/ */
-extern double lhs1 [IMAXP+1][IMAXP+1];
-extern double lhs [IMAXP+1][IMAXP+1][4];
-extern double lhsp1[IMAXP+1][IMAXP+1];
-extern double lhsp[IMAXP+1][IMAXP+1][4];
-extern double lhsm1[IMAXP+1][IMAXP+1];
-extern double lhsm[IMAXP+1][IMAXP+1][4];
+extern align(32) double lhs1 [IMAXP+1][IMAXP+1];
+extern align(32) double lhs [IMAXP+1][IMAXP+1][4];
+extern align(32) double lhsp1[IMAXP+1][IMAXP+1];
+extern align(32) double lhsp[IMAXP+1][IMAXP+1][4];
+extern align(32) double lhsm1[IMAXP+1][IMAXP+1];
+extern align(32) double lhsm[IMAXP+1][IMAXP+1][4];
 
 //-----------------------------------------------------------------------
 // Timer constants

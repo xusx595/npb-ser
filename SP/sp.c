@@ -42,7 +42,7 @@
 #include "print_results.h"
 
 /* common /global/ */
-int grid_points[3], nx2, ny2, nz2;
+int grid_points[3];//, nx2, ny2, nz2;
 logical timeron;
 
 /* common /constants/ */
@@ -63,46 +63,46 @@ double tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3,
 
 /* common /fields/ */
 /* split u info 1:4 */
-double u1      [KMAX][JMAXP+1][IMAXP+1];
-double u      [KMAX][JMAXP+1][IMAXP+1][4];
-double us     [KMAX][JMAXP+1][IMAXP+1];
-double vs     [KMAX][JMAXP+1][IMAXP+1];
-double ws     [KMAX][JMAXP+1][IMAXP+1];
-double qs     [KMAX][JMAXP+1][IMAXP+1];
-double rho_i  [KMAX][JMAXP+1][IMAXP+1];
-double speed  [KMAX][JMAXP+1][IMAXP+1];
-double square [KMAX][JMAXP+1][IMAXP+1];
+double align(32) u1      [KMAX][JMAXP+1][IMAXP+1];
+double align(32) u      [KMAX][JMAXP+1][IMAXP+1][4];
+double align(32) us     [KMAX][JMAXP+1][IMAXP+1];
+double align(32) vs     [KMAX][JMAXP+1][IMAXP+1];
+double align(32) ws     [KMAX][JMAXP+1][IMAXP+1];
+double align(32) qs     [KMAX][JMAXP+1][IMAXP+1];
+double align(32) rho_i  [KMAX][JMAXP+1][IMAXP+1];
+double align(32) speed  [KMAX][JMAXP+1][IMAXP+1];
+double align(32) square [KMAX][JMAXP+1][IMAXP+1];
 /* split rhs into 1:4 */
-double rhs1    [KMAX][JMAXP+1][IMAXP+1];
-double rhs    [KMAX][JMAXP+1][IMAXP+1][4];
+double align(32) rhs1    [KMAX][JMAXP+1][IMAXP+1];
+double align(32) rhs    [KMAX][JMAXP+1][IMAXP+1][4];
 /* split forcing into 1:4 */
-double forcing1[KMAX][JMAXP+1][IMAXP+1];
-double forcing[KMAX][JMAXP+1][IMAXP+1][4];
+double align(32) forcing1[KMAX][JMAXP+1][IMAXP+1];
+double align(32) forcing[KMAX][JMAXP+1][IMAXP+1][4];
 
 /* common /work_1d/ */
-double cv  [PROBLEM_SIZE];
-double rhon[PROBLEM_SIZE];
-double rhos[PROBLEM_SIZE];
-double rhoq[PROBLEM_SIZE];
-double cuf [PROBLEM_SIZE];
-double q   [PROBLEM_SIZE];
+double align(32) cv  [PROBLEM_SIZE];
+double align(32) rhon[PROBLEM_SIZE];
+double align(32) rhos[PROBLEM_SIZE];
+double align(32) rhoq[PROBLEM_SIZE];
+double align(32) cuf [PROBLEM_SIZE];
+double align(32) q   [PROBLEM_SIZE];
 /* split ue into 1:4. */
-double ue1 [PROBLEM_SIZE];
-double ue [PROBLEM_SIZE][4];
+double align(32) ue1 [PROBLEM_SIZE];
+double align(32) ue [PROBLEM_SIZE][4];
 /* split buf into 1:4 */
-double buf1[PROBLEM_SIZE];
-double buf[PROBLEM_SIZE][4];
+double align(32) buf1[PROBLEM_SIZE];
+double align(32) buf[PROBLEM_SIZE][4];
 
 /* common /work_lhs/ */
 /* split lhs into 1:4*/
-double lhs1 [IMAXP+1][IMAXP+1];
-double lhs [IMAXP+1][IMAXP+1][4];
+double align(32) lhs1 [IMAXP+1][IMAXP+1];
+double align(32) lhs [IMAXP+1][IMAXP+1][4];
 /* split lhsp into 1:4 */
-double lhsp1[IMAXP+1][IMAXP+1];
-double lhsp[IMAXP+1][IMAXP+1][4];
+double align(32) lhsp1[IMAXP+1][IMAXP+1];
+double align(32) lhsp[IMAXP+1][IMAXP+1][4];
 /* split lhsm into 1:4 */
-double lhsm1[IMAXP+1][IMAXP+1];
-double lhsm[IMAXP+1][IMAXP+1][4];
+double align(32) lhsm1[IMAXP+1][IMAXP+1];
+double align(32) lhsm[IMAXP+1][IMAXP+1][4];
 
 
 int main(int argc, char *argv[])
@@ -172,9 +172,9 @@ int main(int argc, char *argv[])
     printf(" Problem size too big for compiled array sizes\n");
     return 0;
   }
-  nx2 = grid_points[0] - 2;
-  ny2 = grid_points[1] - 2;
-  nz2 = grid_points[2] - 2;
+  //nx2 = grid_points[0] - 2;
+  //ny2 = grid_points[1] - 2;
+  //nz2 = grid_points[2] - 2;
 
   set_constants();
 
