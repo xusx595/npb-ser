@@ -33,7 +33,7 @@
 
 #include "header.h"
 
-void interleave(
+static inline void interleave(
 __m256d * vA,
 __m256d * vB,
 __m256d * vC,

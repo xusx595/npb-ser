@@ -36,6 +36,35 @@
 //---------------------------------------------------------------------
 // block-diagonal matrix-vector multiplication                       
 //---------------------------------------------------------------------
+static inline void interleave(
+__m256d * vA,
+__m256d * vB,
+__m256d * vC,
+__m256d * vD)
+{
+// B2A2 B0A0
+// D2C2 D0C0
+// B3A3 B1A1
+// D3C3 D1C1
+// B2A2 B0A0
+__m256d v0 = _mm256_unpacklo_pd(*vA, *vB);
+// D2C2 D0C0
+__m256d v1 = _mm256_unpacklo_pd(*vC, *vD);
+// B3A3 B1A1
+__m256d v2 = _mm256_unpackhi_pd(*vA, *vB);
+// D3C3 D1C1
+__m256d v3 = _mm256_unpackhi_pd(*vC, *vD);
+
+// D0C0 B0A0
+*vA = _mm256_permute2f128_pd(v0, v1, 0x20);
+// D1C1 B1A1
+*vB = _mm256_permute2f128_pd(v2, v3, 0x20);
+// D2C2 B2A2
+*vC = _mm256_permute2f128_pd(v0, v1, 0x31);
+// D3C3 B3A3
+*vD = _mm256_permute2f128_pd(v2, v3, 0x31);
+}
+
 void tzetar()
 {
   int i, j, k;
@@ -45,8 +74,130 @@ void tzetar()
   if (timeron) timer_start(t_tzetar);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
-      for (i = 1; i <= nx2; i++) {
+      int new_i_upper = nx2 / 4 * 4;
+      for (i = 1; i < 4; i++) {
+        xvel = us[k][j][i];
+        yvel = vs[k][j][i];
+        zvel = ws[k][j][i];
+        ac   = speed[k][j][i];
+
+        ac2u = ac*ac;
+
+        r1 = rhs1[k][j][i];
+        r2 = rhs[k][j][i][0];
+        r3 = rhs[k][j][i][1];
+        r4 = rhs[k][j][i][2];
+        r5 = rhs[k][j][i][3];     
+
+        uzik1 = u1[k][j][i];
+        btuz  = bt * uzik1;
+
+        t1 = btuz/ac * (r4 + r5);
+        t2 = r3 + t1;
+        t3 = btuz * (r4 - r5);
+
+
+        rhs1[k][j][i] = t2;
+        rhs[k][j][i][0] = -uzik1*r2 + xvel*t2;
+        rhs[k][j][i][1] =  uzik1*r1 + yvel*t2;
+        rhs[k][j][i][2] =  zvel*t2  + t3;
+        rhs[k][j][i][3] =  uzik1*(-xvel*r2 + yvel*r1) + 
+                           qs[k][j][i]*t2 + c2iv*ac2u*t1 + zvel*t3;
+      }
+      
+      for (i = 4; i < new_i_upper; i+=4) {
+        /*xvel = us[k][j][i];*/
+        __m256d vxvel = _mm256_loadu_pd(&us[k][j][i]);
+        /*yvel = vs[k][j][i];*/
+        __m256d vyvel = _mm256_loadu_pd(&vs[k][j][i]);
+        /*zvel = ws[k][j][i];*/
+        __m256d vzvel = _mm256_loadu_pd(&ws[k][j][i]);
+        /*ac   = speed[k][j][i];*/
+        __m256d vac = _mm256_loadu_pd(&speed[k][j][i]);
+
+        /*ac2u = ac*ac;*/
+        __m256d vac2u = _mm256_mul_pd(vac, vac);
+
+        /*r1 = rhs1[k][j][i];*/
+        __m256d vr1 = _mm256_loadu_pd(&rhs1[k][j][i]);
+        
+        /*r2 = rhs[k][j][i][0];
+        r3 = rhs[k][j][i][1];
+        r4 = rhs[k][j][i][2];
+        r5 = rhs[k][j][i][3];*/     
+        __m256d vr2 = _mm256_loadu_pd(&rhs[k][j][i][0]);
+        __m256d vr3 = _mm256_loadu_pd(&rhs[k][j][i+1][0]);
+        __m256d vr4 = _mm256_loadu_pd(&rhs[k][j][i+2][0]);
+        __m256d vr5 = _mm256_loadu_pd(&rhs[k][j][i+3][0]);
+
+        interleave(&vr2, &vr3, &vr4, &vr5);
+
+        /*uzik1 = u1[k][j][i];*/
+        __m256d vuzik1 = _mm256_loadu_pd(&u1[k][j][i]);
+        
+        /*btuz  = bt * uzik1;*/
+        __m256d vbt = _mm256_set1_pd(bt);
+        __m256d vbtuz = _mm256_mul_pd(vbt, vuzik1);
+
+        /*t1 = btuz/ac * (r4 + r5);*/
+        __m256d tmp1 = _mm256_div_pd(vbtuz, vac);
+        __m256d tmp2 = _mm256_add_pd(vr4, vr5);
+        __m256d vt1 = _mm256_mul_pd(tmp1, tmp2);
+        
+        /*t2 = r3 + t1;*/
+        __m256d vt2 = _mm256_add_pd(vr3, vt1);
+        
+        /*t3 = btuz * (r4 - r5);*/
+        tmp1 = _mm256_sub_pd(vr4, vr5);
+        __m256d vt3 = _mm256_mul_pd(vbtuz, tmp1);
+
+        /*rhs1[k][j][i] = t2;*/
+        _mm256_storeu_pd(&rhs1[k][j][i], vt2);
+
+        __m256d zeros = _mm256_setzero_pd();
+        
+        /*rhs[k][j][i][0] = -uzik1*r2 + xvel*t2;*/
+        tmp1 = _mm256_sub_pd(zeros, vuzik1);
+        tmp1 = _mm256_mul_pd(tmp1, vr2);
+        tmp2 = _mm256_mul_pd(vxvel, vt2);
+        __m256d vrhs0 = _mm256_add_pd(tmp1, tmp2);
+        
+        /*rhs[k][j][i][1] =  uzik1*r1 + yvel*t2;*/
+        tmp1 = _mm256_mul_pd(vuzik1, vr1);
+        tmp2 = _mm256_mul_pd(vyvel, vt2);
+        __m256d vrhs1 = _mm256_add_pd(tmp1, tmp2);
+        
+        /*rhs[k][j][i][2] =  zvel*t2  + t3;*/
+        tmp1 = _mm256_mul_pd(vzvel, vt2);
+        __m256d vrhs2 = _mm256_add_pd(tmp1, vt3);
+        
+        /*rhs[k][j][i][3] =  uzik1*(-xvel*r2 + yvel*r1) + 
+                           qs[k][j][i]*t2 + c2iv*ac2u*t1 + zvel*t3;*/
+        tmp1 = _mm256_sub_pd(zeros, vxvel);
+        tmp1 = _mm256_mul_pd(tmp1, vr2);
+        tmp2 = _mm256_mul_pd(vyvel, vr1);
+        tmp1 = _mm256_add_pd(tmp1, tmp2);
+        tmp1 = _mm256_mul_pd(vuzik1, tmp1);
+        tmp2 = _mm256_loadu_pd(&qs[k][j][i]);
+        tmp2 = _mm256_mul_pd(tmp2, vt2);
+        tmp1 = _mm256_add_pd(tmp1, tmp2);
+        tmp2 = _mm256_mul_pd(_mm256_set1_pd(c2iv), vac2u);
+        tmp2 = _mm256_mul_pd(tmp2, vt1);
+        tmp1 = _mm256_add_pd(tmp1, tmp2);
+        tmp2 = _mm256_mul_pd(vzvel, vt3);
+        __m256d vrhs3 = _mm256_add_pd(tmp1, tmp2);
+
+        /* transpose*/
+        interleave(&vrhs0, &vrhs1, &vrhs2, &vrhs3);
+
+        /* write data back, always aligned. */
+        _mm256_store_pd(&rhs[k][j][i][0], vrhs0);
+        _mm256_store_pd(&rhs[k][j][i+1][0], vrhs1);
+        _mm256_store_pd(&rhs[k][j][i+2][0], vrhs2);
+        _mm256_store_pd(&rhs[k][j][i+3][0], vrhs3);
+      }
+      
+      for (i = new_i_upper; i <= nx2; i++) {
         xvel = us[k][j][i];
         yvel = vs[k][j][i];
         zvel = ws[k][j][i];
