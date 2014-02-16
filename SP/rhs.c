@@ -530,7 +530,6 @@ void compute_rhs()
     //---------------------------------------------------------------------
     // add fourth order xi-direction dissipation               
     //---------------------------------------------------------------------
-#pragma simd
     for (j = 1; j <= ny2; j++) {
       i = 1;
       /*for (m = 0; m < 5; m++) {
@@ -539,14 +538,27 @@ void compute_rhs()
       }*/
       rhs1[k][j][i] = rhs1[k][j][i]- dssp * 
           (5.0*u1[k][j][i] - 4.0*u1[k][j][i+1] + u1[k][j][i+2]);
-      rhs[k][j][i][0] = rhs[k][j][i][0]- dssp * 
+      /*rhs[k][j][i][0] = rhs[k][j][i][0]- dssp * 
           (5.0*u[k][j][i][0] - 4.0*u[k][j][i+1][0] + u[k][j][i+2][0]);
       rhs[k][j][i][1] = rhs[k][j][i][1]- dssp * 
           (5.0*u[k][j][i][1] - 4.0*u[k][j][i+1][1] + u[k][j][i+2][1]);
       rhs[k][j][i][2] = rhs[k][j][i][2]- dssp * 
           (5.0*u[k][j][i][2] - 4.0*u[k][j][i+1][2] + u[k][j][i+2][2]);
       rhs[k][j][i][3] = rhs[k][j][i][3]- dssp * 
-          (5.0*u[k][j][i][3] - 4.0*u[k][j][i+1][3] + u[k][j][i+2][3]);
+          (5.0*u[k][j][i][3] - 4.0*u[k][j][i+1][3] + u[k][j][i+2][3]);*/
+      {
+      __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+      __m256d vu_0 = _mm256_load_pd(&u[k][j][i][0]);
+      __m256d vu_1 = _mm256_load_pd(&u[k][j][i+1][0]);
+      __m256d vu_2 = _mm256_load_pd(&u[k][j][i+2][0]);
+      __m256d tmp1 = _mm256_mul_pd(_mm256_set1_pd(5.0), vu_0);
+      __m256d tmp2 = _mm256_mul_pd(_mm256_set1_pd(4.0), vu_1);
+      tmp1 = _mm256_sub_pd(tmp1, tmp2);
+      tmp1 = _mm256_add_pd(tmp1, vu_2);
+      tmp1 = _mm256_mul_pd(_mm256_set1_pd(dssp), tmp1);
+      tmp1 = _mm256_sub_pd(vrhs, tmp1);
+      _mm256_store_pd(&rhs[k][j][i][0], tmp1);
+        }
 
       i = 2;
       /*for (m = 0; m < 5; m++) {
@@ -557,7 +569,7 @@ void compute_rhs()
       rhs1[k][j][i] = rhs1[k][j][i] - dssp * 
           (-4.0*u1[k][j][i-1] + 6.0*u1[k][j][i] -
             4.0*u1[k][j][i+1] + u1[k][j][i+2]);
-      rhs[k][j][i][0] = rhs[k][j][i][0] - dssp * 
+      /*rhs[k][j][i][0] = rhs[k][j][i][0] - dssp * 
           (-4.0*u[k][j][i-1][0] + 6.0*u[k][j][i][0] -
             4.0*u[k][j][i+1][0] + u[k][j][i+2][0]);
       rhs[k][j][i][1] = rhs[k][j][i][1] - dssp * 
@@ -568,11 +580,29 @@ void compute_rhs()
             4.0*u[k][j][i+1][2] + u[k][j][i+2][2]);
       rhs[k][j][i][3] = rhs[k][j][i][3] - dssp * 
           (-4.0*u[k][j][i-1][3] + 6.0*u[k][j][i][3] -
-            4.0*u[k][j][i+1][3] + u[k][j][i+2][3]);
+            4.0*u[k][j][i+1][3] + u[k][j][i+2][3]);*/
+      {
+      __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+      __m256d vu_m1 = _mm256_load_pd(&u[k][j][i-1][0]);
+      __m256d vu_0 = _mm256_load_pd(&u[k][j][i][0]);
+      __m256d vu_1 = _mm256_load_pd(&u[k][j][i+1][0]);
+      __m256d vu_2 = _mm256_load_pd(&u[k][j][i+2][0]);
+      __m256d tmp1 = _mm256_mul_pd(_mm256_set1_pd(-4.0), vu_m1);
+      __m256d tmp2 = _mm256_mul_pd(_mm256_set1_pd(6.0), vu_0);
+      __m256d tmp3 = _mm256_mul_pd(_mm256_set1_pd(4.0), vu_1);
+      tmp1 = _mm256_add_pd(tmp1, tmp2);
+      tmp1 = _mm256_sub_pd(tmp1, tmp3);
+      tmp1 = _mm256_add_pd(tmp1, vu_2);
+      tmp1 = _mm256_mul_pd(_mm256_set1_pd(dssp), tmp1);
+      tmp1 = _mm256_sub_pd(vrhs, tmp1);
+      
+      _mm256_store_pd(&rhs[k][j][i][0], tmp1);
+        }
+      
     }
 
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 3; i <= nx2-2; i++) {
         /*for (m = 0; m < 5; m++) {
           rhs[k][j][i][m] = rhs[k][j][i][m] - dssp * 
@@ -584,7 +614,7 @@ void compute_rhs()
             ( u1[k][j][i-2] - 4.0*u1[k][j][i-1] + 
             6.0*u1[k][j][i] - 4.0*u1[k][j][i+1] + 
               u1[k][j][i+2] );
-        rhs[k][j][i][0] = rhs[k][j][i][0] - dssp * 
+        /*rhs[k][j][i][0] = rhs[k][j][i][0] - dssp * 
             ( u[k][j][i-2][0] - 4.0*u[k][j][i-1][0] + 
             6.0*u[k][j][i][0] - 4.0*u[k][j][i+1][0] + 
               u[k][j][i+2][0] );
@@ -599,11 +629,31 @@ void compute_rhs()
         rhs[k][j][i][3] = rhs[k][j][i][3] - dssp * 
             ( u[k][j][i-2][3] - 4.0*u[k][j][i-1][3] + 
             6.0*u[k][j][i][3] - 4.0*u[k][j][i+1][3] + 
-              u[k][j][i+2][3] );
+              u[k][j][i+2][3] );*/
+
+      {
+      __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+      __m256d vu_m2 = _mm256_load_pd(&u[k][j][i-2][0]);
+      __m256d vu_m1 = _mm256_load_pd(&u[k][j][i-1][0]);
+      __m256d vu_0 = _mm256_load_pd(&u[k][j][i][0]);
+      __m256d vu_1 = _mm256_load_pd(&u[k][j][i+1][0]);
+      __m256d vu_2 = _mm256_load_pd(&u[k][j][i+2][0]);
+      __m256d tmp1 = _mm256_mul_pd(_mm256_set1_pd(4.0), vu_m1);
+      __m256d tmp2 = _mm256_mul_pd(_mm256_set1_pd(6.0), vu_0);
+      __m256d tmp3 = _mm256_mul_pd(_mm256_set1_pd(4.0), vu_1);
+      tmp1 = _mm256_sub_pd(vu_m2, tmp1);
+      tmp1 = _mm256_add_pd(tmp1, tmp2);
+      tmp1 = _mm256_sub_pd(tmp1, tmp3);
+      tmp1 = _mm256_add_pd(tmp1, vu_2);
+      tmp1 = _mm256_mul_pd(_mm256_set1_pd(dssp), tmp1);
+      tmp1 = _mm256_sub_pd(vrhs, tmp1);
+      
+      _mm256_store_pd(&rhs[k][j][i][0], tmp1);
+        }
 
       }
     }
-#pragma simd
+ 
     for (j = 1; j <= ny2; j++) {
       i = nx2-1;
       /*for (m = 0; m < 5; m++) {
@@ -614,7 +664,7 @@ void compute_rhs()
       rhs1[k][j][i] = rhs1[k][j][i] - dssp *
           ( u1[k][j][i-2] - 4.0*u1[k][j][i-1] + 
           6.0*u1[k][j][i] - 4.0*u1[k][j][i+1] );
-      rhs[k][j][i][0] = rhs[k][j][i][0] - dssp *
+      /*rhs[k][j][i][0] = rhs[k][j][i][0] - dssp *
           ( u[k][j][i-2][0] - 4.0*u[k][j][i-1][0] + 
           6.0*u[k][j][i][0] - 4.0*u[k][j][i+1][0] );
       rhs[k][j][i][1] = rhs[k][j][i][1] - dssp *
@@ -625,7 +675,24 @@ void compute_rhs()
           6.0*u[k][j][i][2] - 4.0*u[k][j][i+1][2] );
       rhs[k][j][i][3] = rhs[k][j][i][3] - dssp *
           ( u[k][j][i-2][3] - 4.0*u[k][j][i-1][3] + 
-          6.0*u[k][j][i][3] - 4.0*u[k][j][i+1][3] );
+          6.0*u[k][j][i][3] - 4.0*u[k][j][i+1][3] );*/
+      {
+      __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+      __m256d vu_m2 = _mm256_load_pd(&u[k][j][i-2][0]);
+      __m256d vu_m1 = _mm256_load_pd(&u[k][j][i-1][0]);
+      __m256d vu_0 = _mm256_load_pd(&u[k][j][i][0]);
+      __m256d vu_1 = _mm256_load_pd(&u[k][j][i+1][0]);
+      __m256d tmp1 = _mm256_mul_pd(_mm256_set1_pd(4.0), vu_m1);
+      __m256d tmp2 = _mm256_mul_pd(_mm256_set1_pd(6.0), vu_0);
+      __m256d tmp3 = _mm256_mul_pd(_mm256_set1_pd(4.0), vu_1);
+      tmp1 = _mm256_sub_pd(vu_m2, tmp1);
+      tmp1 = _mm256_add_pd(tmp1, tmp2);
+      tmp1 = _mm256_sub_pd(tmp1, tmp3);
+      tmp1 = _mm256_mul_pd(_mm256_set1_pd(dssp), tmp1);
+      tmp1 = _mm256_sub_pd(vrhs, tmp1);
+      
+      _mm256_store_pd(&rhs[k][j][i][0], tmp1);
+        }
 
       i = nx2;
       /*for (m = 0; m < 5; m++) {
@@ -634,14 +701,30 @@ void compute_rhs()
       }*/
       rhs1[k][j][i] = rhs1[k][j][i] - dssp *
           ( u1[k][j][i-2] - 4.0*u1[k][j][i-1] + 5.0*u1[k][j][i]);
-      rhs[k][j][i][0] = rhs[k][j][i][0] - dssp *
+      /*rhs[k][j][i][0] = rhs[k][j][i][0] - dssp *
           ( u[k][j][i-2][0] - 4.0*u[k][j][i-1][0] + 5.0*u[k][j][i][0] );
       rhs[k][j][i][1] = rhs[k][j][i][1] - dssp *
           ( u[k][j][i-2][1] - 4.0*u[k][j][i-1][1] + 5.0*u[k][j][i][1] );
       rhs[k][j][i][2] = rhs[k][j][i][2] - dssp *
           ( u[k][j][i-2][2] - 4.0*u[k][j][i-1][2] + 5.0*u[k][j][i][2] );
       rhs[k][j][i][3] = rhs[k][j][i][3] - dssp *
-          ( u[k][j][i-2][3] - 4.0*u[k][j][i-1][3] + 5.0*u[k][j][i][3] );
+          ( u[k][j][i-2][3] - 4.0*u[k][j][i-1][3] + 5.0*u[k][j][i][3] );*/
+     {
+      __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+      __m256d vu_m2 = _mm256_load_pd(&u[k][j][i-2][0]);
+      __m256d vu_m1 = _mm256_load_pd(&u[k][j][i-1][0]);
+      __m256d vu_0 = _mm256_load_pd(&u[k][j][i][0]);
+
+      __m256d tmp1 = _mm256_mul_pd(_mm256_set1_pd(4.0), vu_m1);
+      __m256d tmp2 = _mm256_mul_pd(_mm256_set1_pd(5.0), vu_0);
+
+      tmp1 = _mm256_sub_pd(vu_m2, tmp1);
+      tmp1 = _mm256_add_pd(tmp1, tmp2);
+      tmp1 = _mm256_mul_pd(_mm256_set1_pd(dssp), tmp1);
+      tmp1 = _mm256_sub_pd(vrhs, tmp1);
+      
+      _mm256_store_pd(&rhs[k][j][i][0], tmp1);
+        }
     }
   }
   if (timeron) timer_stop(t_rhsx);
@@ -652,8 +735,82 @@ void compute_rhs()
   if (timeron) timer_start(t_rhsy);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
-      for (i = 1; i <= nx2; i++) {
+      int new_i_upper = nx2/4*4;
+      for (i = 1; i < 4; i++) {
+        vijk = vs[k][j][i];
+        vp1  = vs[k][j+1][i];
+        vm1  = vs[k][j-1][i];
+
+        rhs1[k][j][i] = rhs1[k][j][i] + dy1ty1 * 
+          (u1[k][j+1][i] - 2.0*u1[k][j][i] + u1[k][j-1][i]) -
+          ty2 * (u[k][j+1][i][1] - u[k][j-1][i][1]);
+
+        rhs[k][j][i][0] = rhs[k][j][i][0] + dy2ty1 * 
+          (u[k][j+1][i][0] - 2.0*u[k][j][i][0] + u[k][j-1][i][0]) +
+          yycon2 * (us[k][j+1][i] - 2.0*us[k][j][i] + us[k][j-1][i]) -
+          ty2 * (u[k][j+1][i][0]*vp1 - u[k][j-1][i][0]*vm1);
+
+        rhs[k][j][i][1] = rhs[k][j][i][1] + dy3ty1 * 
+          (u[k][j+1][i][1] - 2.0*u[k][j][i][1] + u[k][j-1][i][1]) +
+          yycon2*con43 * (vp1 - 2.0*vijk + vm1) -
+          ty2 * (u[k][j+1][i][1]*vp1 - u[k][j-1][i][1]*vm1 +
+                (u[k][j+1][i][3] - square[k][j+1][i] - 
+                 u[k][j-1][i][3] + square[k][j-1][i]) * c2);
+
+        rhs[k][j][i][2] = rhs[k][j][i][2] + dy4ty1 * 
+          (u[k][j+1][i][2] - 2.0*u[k][j][i][2] + u[k][j-1][i][2]) +
+          yycon2 * (ws[k][j+1][i] - 2.0*ws[k][j][i] + ws[k][j-1][i]) -
+          ty2 * (u[k][j+1][i][2]*vp1 - u[k][j-1][i][2]*vm1);
+
+        rhs[k][j][i][3] = rhs[k][j][i][3] + dy5ty1 * 
+          (u[k][j+1][i][3] - 2.0*u[k][j][i][3] + u[k][j-1][i][3]) +
+          yycon3 * (qs[k][j+1][i] - 2.0*qs[k][j][i] + qs[k][j-1][i]) +
+          yycon4 * (vp1*vp1       - 2.0*vijk*vijk + vm1*vm1) +
+          yycon5 * (u[k][j+1][i][3]*rho_i[k][j+1][i] - 
+                  2.0*u[k][j][i][3]*rho_i[k][j][i] +
+                    u[k][j-1][i][3]*rho_i[k][j-1][i]) -
+          ty2 * ((c1*u[k][j+1][i][3] - c2*square[k][j+1][i]) * vp1 -
+                 (c1*u[k][j-1][i][3] - c2*square[k][j-1][i]) * vm1);
+      }
+
+      for (i = 4; i < new_i_upper; i++) {
+        vijk = vs[k][j][i];
+        vp1  = vs[k][j+1][i];
+        vm1  = vs[k][j-1][i];
+
+        rhs1[k][j][i] = rhs1[k][j][i] + dy1ty1 * 
+          (u1[k][j+1][i] - 2.0*u1[k][j][i] + u1[k][j-1][i]) -
+          ty2 * (u[k][j+1][i][1] - u[k][j-1][i][1]);
+
+        rhs[k][j][i][0] = rhs[k][j][i][0] + dy2ty1 * 
+          (u[k][j+1][i][0] - 2.0*u[k][j][i][0] + u[k][j-1][i][0]) +
+          yycon2 * (us[k][j+1][i] - 2.0*us[k][j][i] + us[k][j-1][i]) -
+          ty2 * (u[k][j+1][i][0]*vp1 - u[k][j-1][i][0]*vm1);
+
+        rhs[k][j][i][1] = rhs[k][j][i][1] + dy3ty1 * 
+          (u[k][j+1][i][1] - 2.0*u[k][j][i][1] + u[k][j-1][i][1]) +
+          yycon2*con43 * (vp1 - 2.0*vijk + vm1) -
+          ty2 * (u[k][j+1][i][1]*vp1 - u[k][j-1][i][1]*vm1 +
+                (u[k][j+1][i][3] - square[k][j+1][i] - 
+                 u[k][j-1][i][3] + square[k][j-1][i]) * c2);
+
+        rhs[k][j][i][2] = rhs[k][j][i][2] + dy4ty1 * 
+          (u[k][j+1][i][2] - 2.0*u[k][j][i][2] + u[k][j-1][i][2]) +
+          yycon2 * (ws[k][j+1][i] - 2.0*ws[k][j][i] + ws[k][j-1][i]) -
+          ty2 * (u[k][j+1][i][2]*vp1 - u[k][j-1][i][2]*vm1);
+
+        rhs[k][j][i][3] = rhs[k][j][i][3] + dy5ty1 * 
+          (u[k][j+1][i][3] - 2.0*u[k][j][i][3] + u[k][j-1][i][3]) +
+          yycon3 * (qs[k][j+1][i] - 2.0*qs[k][j][i] + qs[k][j-1][i]) +
+          yycon4 * (vp1*vp1       - 2.0*vijk*vijk + vm1*vm1) +
+          yycon5 * (u[k][j+1][i][3]*rho_i[k][j+1][i] - 
+                  2.0*u[k][j][i][3]*rho_i[k][j][i] +
+                    u[k][j-1][i][3]*rho_i[k][j-1][i]) -
+          ty2 * ((c1*u[k][j+1][i][3] - c2*square[k][j+1][i]) * vp1 -
+                 (c1*u[k][j-1][i][3] - c2*square[k][j-1][i]) * vm1);
+      }
+
+      for (i = new_i_upper; i <= nx2; i++) {
         vijk = vs[k][j][i];
         vp1  = vs[k][j+1][i];
         vm1  = vs[k][j-1][i];
@@ -695,7 +852,7 @@ void compute_rhs()
     // add fourth order eta-direction dissipation         
     //---------------------------------------------------------------------
     j = 1;
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i]- dssp * 
@@ -712,7 +869,7 @@ void compute_rhs()
     }
 
     j = 2;
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i] - dssp * 
@@ -734,7 +891,7 @@ void compute_rhs()
     }
 
     for (j = 3; j <= ny2-2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         //for (m = 0; m < 5; m++) {
           rhs1[k][j][i]= rhs1[k][j][i] - dssp * 
@@ -762,7 +919,7 @@ void compute_rhs()
     }
 
     j = ny2-1;
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i] - dssp *
@@ -784,7 +941,7 @@ void compute_rhs()
     }
 
     j = ny2;
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i] - dssp *
@@ -808,7 +965,7 @@ void compute_rhs()
   if (timeron) timer_start(t_rhsz);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         wijk = ws[k][j][i];
         wp1  = ws[k+1][j][i];
@@ -853,7 +1010,7 @@ void compute_rhs()
   //---------------------------------------------------------------------
   k = 1;
   for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i]- dssp * 
@@ -872,7 +1029,7 @@ void compute_rhs()
 
   k = 2;
   for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
         rhs1[k][j][i] = rhs1[k][j][i] - dssp * 
@@ -896,7 +1053,7 @@ void compute_rhs()
 
   for (k = 3; k <= nz2-2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         //for (m = 0; m < 5; m++) {
         rhs1[k][j][i] = rhs1[k][j][i] - dssp * 
@@ -926,7 +1083,7 @@ void compute_rhs()
 
   k = nz2-1;
   for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
         rhs1[k][j][i] = rhs1[k][j][i] - dssp *
@@ -950,7 +1107,7 @@ void compute_rhs()
 
   k = nz2;
   for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i] - dssp *
@@ -970,7 +1127,7 @@ void compute_rhs()
 
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         //for (m = 0; m < 5; m++) {
         rhs1[k][j][i] = rhs1[k][j][i] * dt;

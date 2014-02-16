@@ -46,7 +46,7 @@ void exact_rhs()
   //---------------------------------------------------------------------
   for (k = 0; k <= grid_points[2]-1; k++) {
     for (j = 0; j <= grid_points[1]-1; j++) {
-#pragma simd
+ 
       for (i = 0; i <= grid_points[0]-1; i++) {
         //for (m = 0; m < 4; m++) {
           forcing1[k][j][i] = 0.0;
@@ -66,7 +66,7 @@ void exact_rhs()
     zeta = (double)k * dnzm1;
     for (j = 1; j <= grid_points[1]-2; j++) {
       eta = (double)j * dnym1;
-#pragma simd
+ 
       for (i = 0; i <= grid_points[0]-1; i++) {
         xi = (double)i * dnxm1;
 
@@ -121,7 +121,7 @@ void exact_rhs()
         q[i] = 0.5*(buf[i][0]*ue[i][0] + buf[i][1]*ue[i][1] +
                     buf[i][2]*ue[i][2]);
       }
-#pragma simd
+ 
       for (i = 1; i <= grid_points[0]-2; i++) {
         im1 = i-1;
         ip1 = i+1;
@@ -177,7 +177,7 @@ void exact_rhs()
           (-4.0*ue[i-1][m] + 6.0*ue[i][m] -
             4.0*ue[i+1][m] +     ue[i+2][m]);
       }
-#pragma simd
+ 
       for (i = 3; i <= grid_points[0]-4; i++) {
         //for (m = 0; m < 5; m++) {
           forcing1[k][j][i] = forcing1[k][j][i] - dssp*
@@ -226,7 +226,7 @@ void exact_rhs()
     zeta = (double)k * dnzm1;
     for (i = 1; i <= grid_points[0]-2; i++) {
       xi = (double)i * dnxm1;
-#pragma simd
+ 
       for (j = 0; j <= grid_points[1]-1; j++) {
         eta = (double)j * dnym1;
 
@@ -278,7 +278,7 @@ void exact_rhs()
                     buf[j][2]*ue[j][2]);
       }
 
-#pragma simd
+ 
       for (j = 1; j <= grid_points[1]-2; j++) {
         jm1 = j-1;
         jp1 = j+1;
@@ -334,7 +334,7 @@ void exact_rhs()
           (-4.0*ue[j-1][m] + 6.0*ue[j][m] -
             4.0*ue[j+1][m] +     ue[j+2][m]);
       }
-#pragma simd
+ 
       for (j = 3; j <= grid_points[1]-4; j++) {
         /* for (m = 0; m < 5; m++) {
           forcing[k][j][i][m] = forcing[k][j][i][m] - dssp*
@@ -387,7 +387,7 @@ void exact_rhs()
     eta = (double)j * dnym1;
     for (i = 1; i <= grid_points[0]-2; i++) {
       xi = (double)i * dnxm1;
-#pragma simd
+ 
       for (k = 0; k <= grid_points[2]-1; k++) {
         zeta = (double)k * dnzm1;
 
@@ -439,7 +439,7 @@ void exact_rhs()
                     buf[k][2]*ue[k][2]);
       }
       
-#pragma simd
+ 
       for (k = 1; k <= grid_points[2]-2; k++) {
         km1 = k-1;
         kp1 = k+1;
@@ -495,7 +495,7 @@ void exact_rhs()
             4.0*ue[k+1][m] +     ue[k+2][m]);
       }
       
-#pragma simd
+ 
       for (k = 3; k <= grid_points[2]-4; k++) {
         //for (m = 0; m < 5; m++) {
           forcing1[k][j][i] = forcing1[k][j][i] - dssp*
@@ -543,7 +543,7 @@ void exact_rhs()
   //---------------------------------------------------------------------
   for (k = 1; k <= grid_points[2]-2; k++) {
     for (j = 1; j <= grid_points[1]-2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= grid_points[0]-2; i++) {
         //for (m = 0; m < 5; m++) {
         forcing1[k][j][i] = -1.0 * forcing1[k][j][i];

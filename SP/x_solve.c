@@ -56,13 +56,13 @@ void x_solve()
     // first fill the lhs for the u-eigenvalue                   
     //---------------------------------------------------------------------
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 0; i <= grid_points[0]-1; i++) {
         ru1 = c3c4*rho_i[k][j][i];
         cv[i] = us[k][j][i];
         rhon[i] = max(max(dx2+con43*ru1,dx5+c1c5*ru1), max(dxmax+ru1,dx1));
       }
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         lhs1[j][i] =  0.0;
         lhs[j][i][0] = -dttx2 * cv[i-1] - dttx1 * rhon[i-1];

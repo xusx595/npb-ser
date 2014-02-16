@@ -56,13 +56,13 @@ void y_solve()
     // first fill the lhs for the u-eigenvalue         
     //---------------------------------------------------------------------
     for (i = 1; i <= grid_points[0]-2; i++) {
-#pragma simd
+ 
       for (j = 0; j <= grid_points[1]-1; j++) {
         ru1 = c3c4*rho_i[k][j][i];
         cv[j] = vs[k][j][i];
         rhoq[j] = max(max(dy3+con43*ru1, dy5+c1c5*ru1), max(dymax+ru1, dy1));
       }
-#pragma simd
+ 
       for (j = 1; j <= grid_points[1]-2; j++) {
         lhs1[j][i] =  0.0;
         lhs[j][i][0] = -dtty2 * cv[j-1] - dtty1 * rhoq[j-1];
@@ -75,7 +75,7 @@ void y_solve()
     //---------------------------------------------------------------------
     // add fourth order dissipation                             
     //---------------------------------------------------------------------
-#pragma simd
+ 
     for (i = 1; i <= grid_points[0]-2; i++) {
       j = 1;
       lhs[j][i][1] = lhs[j][i][1] + comz5;
@@ -89,7 +89,7 @@ void y_solve()
     }
 
     for (j = 3; j <= grid_points[1]-4; j++) {
-#pragma simd
+ 
       for (i = 1; i <= grid_points[0]-2; i++) {
         lhs1[j][i] = lhs1[j][i] + comz1;
         lhs[j][i][0] = lhs[j][i][0] - comz4;
@@ -98,7 +98,7 @@ void y_solve()
         lhs[j][i][3] = lhs[j][i][3] + comz1;
       }
     }
-#pragma simd
+ 
     for (i = 1; i <= grid_points[0]-2; i++) {
       j = grid_points[1]-3;
       lhs1[j][i] = lhs1[j][i] + comz1;
@@ -115,7 +115,7 @@ void y_solve()
     // subsequently, for (the other two factors                    
     //---------------------------------------------------------------------
     for (j = 1; j <= grid_points[1]-2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= grid_points[0]-2; i++) {
         lhsp1[j][i] = lhs1[j][i];
         lhsp[j][i][0] = lhs[j][i][0] - dtty2 * speed[k][j-1][i];
@@ -137,7 +137,7 @@ void y_solve()
     for (j = 0; j <= grid_points[1]-3; j++) {
       j1 = j + 1;
       j2 = j + 2;
-#pragma simd
+ 
       for (i = 1; i <= grid_points[0]-2; i++) {
         fac1 = 1.0/lhs[j][i][1];
         lhs[j][i][2] = fac1*lhs[j][i][2];
@@ -171,7 +171,7 @@ void y_solve()
     //---------------------------------------------------------------------
     j  = grid_points[1]-2;
     j1 = grid_points[1]-1;
-#pragma simd
+ 
     for (i = 1; i <= grid_points[0]-2; i++) {
       fac1 = 1.0/lhs[j][i][1];
       lhs[j][i][2] = fac1*lhs[j][i][2];
@@ -205,7 +205,7 @@ void y_solve()
     for (j = 0; j <= grid_points[1]-3; j++) {
       j1 = j + 1;
       j2 = j + 2;
-#pragma simd
+ 
       for (i = 1; i <= grid_points[0]-2; i++) {
         m = 2;
         fac1 = 1.0/lhsp[j][i][1];
@@ -238,7 +238,7 @@ void y_solve()
     //---------------------------------------------------------------------
     j  = grid_points[1]-2;
     j1 = grid_points[1]-1;
-#pragma simd
+ 
     for (i = 1; i <= grid_points[0]-2; i++) {
       m = 2;
       fac1 = 1.0/lhsp[j][i][1];
@@ -288,7 +288,7 @@ void y_solve()
     for (j = grid_points[1]-3; j >= 0; j--) {
       j1 = j + 1;
       j2 = j + 2;
-#pragma simd
+ 
       for (i = 1; i <= grid_points[0]-2; i++) {
         //for (m = 0; m < 3; m++) {
           rhs1[k][j][i] = rhs1[k][j][i] - 
