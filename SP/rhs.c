@@ -736,7 +736,7 @@ void compute_rhs()
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
       int new_i_upper = nx2/4*4;
-      for (i = 1; i < 4; i++) {
+      for (i = 1; i <= nx2; i++) {
         vijk = vs[k][j][i];
         vp1  = vs[k][j+1][i];
         vm1  = vs[k][j-1][i];
@@ -772,7 +772,7 @@ void compute_rhs()
           ty2 * ((c1*u[k][j+1][i][3] - c2*square[k][j+1][i]) * vp1 -
                  (c1*u[k][j-1][i][3] - c2*square[k][j-1][i]) * vm1);
       }
-
+#if 0
       for (i = 4; i < new_i_upper; i++) {
         vijk = vs[k][j][i];
         vp1  = vs[k][j+1][i];
@@ -846,6 +846,7 @@ void compute_rhs()
           ty2 * ((c1*u[k][j+1][i][3] - c2*square[k][j+1][i]) * vp1 -
                  (c1*u[k][j-1][i][3] - c2*square[k][j-1][i]) * vm1);
       }
+#endif
     }
 
     //---------------------------------------------------------------------
@@ -1124,17 +1125,59 @@ void compute_rhs()
     }
   }
   if (timeron) timer_stop(t_rhsz);
-
+  __m256d vdt = _mm256_set1_pd(dt);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
- 
-      for (i = 1; i <= nx2; i++) {
+      int new_i_upper  = nx2 /4 * 4;
+      for (i = 1; i < 4; i++) {
         //for (m = 0; m < 5; m++) {
         rhs1[k][j][i] = rhs1[k][j][i] * dt;
-        rhs[k][j][i][0] = rhs[k][j][i][0] * dt;
+        /*rhs[k][j][i][0] = rhs[k][j][i][0] * dt;
         rhs[k][j][i][1] = rhs[k][j][i][1] * dt;
         rhs[k][j][i][2] = rhs[k][j][i][2] * dt;
-        rhs[k][j][i][3] = rhs[k][j][i][3] * dt;
+        rhs[k][j][i][3] = rhs[k][j][i][3] * dt;*/
+        __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+        vrhs = _mm256_mul_pd(vrhs, vdt);
+        _mm256_store_pd(&rhs[k][j][i][0], vrhs);
+        //}
+      }
+
+      for (i = 4; i < new_i_upper; i+=4) {
+        //for (m = 0; m < 5; m++) {
+        /*rhs1[k][j][i] = rhs1[k][j][i] * dt;*/
+        __m256d vrhs1 = _mm256_loadu_pd(&rhs1[k][j][i]);
+        vrhs1 = _mm256_mul_pd(vrhs1, vdt);
+        _mm256_storeu_pd(&rhs1[k][j][i], vrhs1);
+        /*rhs[k][j][i][0] = rhs[k][j][i][0] * dt;
+        rhs[k][j][i][1] = rhs[k][j][i][1] * dt;
+        rhs[k][j][i][2] = rhs[k][j][i][2] * dt;
+        rhs[k][j][i][3] = rhs[k][j][i][3] * dt;*/
+        __m256d vrhs_0 = _mm256_load_pd(&rhs[k][j][i][0]);
+        __m256d vrhs_1 = _mm256_load_pd(&rhs[k][j][i+1][0]);
+        __m256d vrhs_2 = _mm256_load_pd(&rhs[k][j][i+2][0]);
+        __m256d vrhs_3 = _mm256_load_pd(&rhs[k][j][i+3][0]);
+        vrhs_0 = _mm256_mul_pd(vrhs_0, vdt);
+        vrhs_1 = _mm256_mul_pd(vrhs_1, vdt);
+        vrhs_2 = _mm256_mul_pd(vrhs_2, vdt);
+        vrhs_3 = _mm256_mul_pd(vrhs_3, vdt);
+        
+        _mm256_store_pd(&rhs[k][j][i][0], vrhs_0);
+        _mm256_store_pd(&rhs[k][j][i+1][0], vrhs_1);
+        _mm256_store_pd(&rhs[k][j][i+2][0], vrhs_2);
+        _mm256_store_pd(&rhs[k][j][i+3][0], vrhs_3);
+        //}
+      }
+
+      for (i = new_i_upper; i <= nx2; i++) {
+        //for (m = 0; m < 5; m++) {
+        rhs1[k][j][i] = rhs1[k][j][i] * dt;
+        /*rhs[k][j][i][0] = rhs[k][j][i][0] * dt;
+        rhs[k][j][i][1] = rhs[k][j][i][1] * dt;
+        rhs[k][j][i][2] = rhs[k][j][i][2] * dt;
+        rhs[k][j][i][3] = rhs[k][j][i][3] * dt;*/
+        __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+        vrhs = _mm256_mul_pd(vrhs, vdt);
+        _mm256_store_pd(&rhs[k][j][i][0], vrhs);
         //}
       }
     }
