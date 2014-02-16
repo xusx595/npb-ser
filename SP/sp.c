@@ -63,20 +63,20 @@ double tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3,
 
 /* common /fields/ */
 /* split u info 1:4 */
-double u1      [KMAX][JMAXP+1][IMAXP+1];
+double u1      [KMAX][JMAXP+1][IMAXP];
 double u      [KMAX][JMAXP+1][IMAXP+1][4];
-double us     [KMAX][JMAXP+1][IMAXP+1];
-double vs     [KMAX][JMAXP+1][IMAXP+1];
-double ws     [KMAX][JMAXP+1][IMAXP+1];
-double qs     [KMAX][JMAXP+1][IMAXP+1];
-double rho_i  [KMAX][JMAXP+1][IMAXP+1];
-double speed  [KMAX][JMAXP+1][IMAXP+1];
-double square [KMAX][JMAXP+1][IMAXP+1];
+double us     [KMAX][JMAXP+1][IMAXP];
+double vs     [KMAX][JMAXP+1][IMAXP];
+double ws     [KMAX][JMAXP+1][IMAXP];
+double qs     [KMAX][JMAXP+1][IMAXP];
+double rho_i  [KMAX][JMAXP+1][IMAXP];
+double speed  [KMAX][JMAXP+1][IMAXP];
+double square [KMAX][JMAXP+1][IMAXP];
 /* split rhs into 1:4 */
-double rhs1    [KMAX][JMAXP+1][IMAXP+1];
+double rhs1    [KMAX][JMAXP+1][IMAXP];
 double rhs    [KMAX][JMAXP+1][IMAXP+1][4];
 /* split forcing into 1:4 */
-double forcing1[KMAX][JMAXP+1][IMAXP+1];
+double forcing1[KMAX][JMAXP+1][IMAXP];
 double forcing[KMAX][JMAXP+1][IMAXP+1][4];
 
 /* common /work_1d/ */
@@ -95,13 +95,13 @@ double buf[PROBLEM_SIZE][4];
 
 /* common /work_lhs/ */
 /* split lhs into 1:4*/
-double lhs1 [IMAXP+1][IMAXP+1];
+double lhs1 [IMAXP+1][IMAXP];
 double lhs [IMAXP+1][IMAXP+1][4];
 /* split lhsp into 1:4 */
-double lhsp1[IMAXP+1][IMAXP+1];
+double lhsp1[IMAXP+1][IMAXP];
 double lhsp[IMAXP+1][IMAXP+1][4];
 /* split lhsm into 1:4 */
-double lhsm1[IMAXP+1][IMAXP+1];
+double lhsm1[IMAXP+1][IMAXP];
 double lhsm[IMAXP+1][IMAXP+1][4];
 
 
