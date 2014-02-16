@@ -63,20 +63,20 @@ double tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3,
 
 /* common /fields/ */
 /* split u info 1:4 */
-double align(32) u1      [KMAX][JMAXP+1][IMAXP+1];
+double align(32) u1      [KMAX][JMAXP+1][IMAXP];
 double align(32) u      [KMAX][JMAXP+1][IMAXP+1][4];
-double align(32) us     [KMAX][JMAXP+1][IMAXP+1];
-double align(32) vs     [KMAX][JMAXP+1][IMAXP+1];
-double align(32) ws     [KMAX][JMAXP+1][IMAXP+1];
-double align(32) qs     [KMAX][JMAXP+1][IMAXP+1];
-double align(32) rho_i  [KMAX][JMAXP+1][IMAXP+1];
-double align(32) speed  [KMAX][JMAXP+1][IMAXP+1];
-double align(32) square [KMAX][JMAXP+1][IMAXP+1];
+double align(32) us     [KMAX][JMAXP+1][IMAXP];
+double align(32) vs     [KMAX][JMAXP+1][IMAXP];
+double align(32) ws     [KMAX][JMAXP+1][IMAXP];
+double align(32) qs     [KMAX][JMAXP+1][IMAXP];
+double align(32) rho_i  [KMAX][JMAXP+1][IMAXP];
+double align(32) speed  [KMAX][JMAXP+1][IMAXP];
+double align(32) square [KMAX][JMAXP+1][IMAXP];
 /* split rhs into 1:4 */
-double align(32) rhs1    [KMAX][JMAXP+1][IMAXP+1];
+double align(32) rhs1    [KMAX][JMAXP+1][IMAXP];
 double align(32) rhs    [KMAX][JMAXP+1][IMAXP+1][4];
 /* split forcing into 1:4 */
-double align(32) forcing1[KMAX][JMAXP+1][IMAXP+1];
+double align(32) forcing1[KMAX][JMAXP+1][IMAXP];
 double align(32) forcing[KMAX][JMAXP+1][IMAXP+1][4];
 
 /* common /work_1d/ */
@@ -95,13 +95,13 @@ double align(32) buf[PROBLEM_SIZE][4];
 
 /* common /work_lhs/ */
 /* split lhs into 1:4*/
-double align(32) lhs1 [IMAXP+1][IMAXP+1];
+double align(32) lhs1 [IMAXP+1][IMAXP];
 double align(32) lhs [IMAXP+1][IMAXP+1][4];
 /* split lhsp into 1:4 */
-double align(32) lhsp1[IMAXP+1][IMAXP+1];
+double align(32) lhsp1[IMAXP+1][IMAXP];
 double align(32) lhsp[IMAXP+1][IMAXP+1][4];
 /* split lhsm into 1:4 */
-double align(32) lhsm1[IMAXP+1][IMAXP+1];
+double align(32) lhsm1[IMAXP+1][IMAXP];
 double align(32) lhsm[IMAXP+1][IMAXP+1][4];
 
 

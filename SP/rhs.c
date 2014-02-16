@@ -97,7 +97,7 @@ void compute_rhs()
       for (i = 4; i <new_i_upper; i+=4) {
         /*rho_inv = 1.0/u1[k][j][i];*/
         __m256d vrho_ivn = _mm256_div_pd(_mm256_set1_pd(1.0f),
-                                                                _mm256_loadu_pd(&u1[k][j][i]));
+                                                                _mm256_load_pd(&u1[k][j][i]));
         /*rho_i[k][j][i] = rho_inv;*/
         _mm256_storeu_pd(&rho_i[k][j][i], vrho_ivn);
 
@@ -190,15 +190,15 @@ void compute_rhs()
           rhs[k][j][i][m] = forcing[k][j][i][m];
         }*/
         /*rhs1[k][j][i] = forcing1[k][j][i];*/
-        _mm256_storeu_pd(&rhs1[k][j][i], _mm256_loadu_pd(&forcing1[k][j][i]));
+        _mm256_storeu_pd(&rhs1[k][j][i], _mm256_load_pd(&forcing1[k][j][i]));
         /*rhs[k][j][i][0] = forcing[k][j][i][0];
         rhs[k][j][i][1] = forcing[k][j][i][1];
         rhs[k][j][i][2] = forcing[k][j][i][2];
         rhs[k][j][i][3] = forcing[k][j][i][3];*/
-        _mm256_storeu_pd(&rhs[k][j][i][0], _mm256_loadu_pd(&forcing[k][j][i][0]));
-        _mm256_storeu_pd(&rhs[k][j][i+1][0], _mm256_loadu_pd(&forcing[k][j][i+1][0]));
-        _mm256_storeu_pd(&rhs[k][j][i+2][0], _mm256_loadu_pd(&forcing[k][j][i+2][0]));
-        _mm256_storeu_pd(&rhs[k][j][i+3][0], _mm256_loadu_pd(&forcing[k][j][i+3][0]));
+        _mm256_storeu_pd(&rhs[k][j][i][0], _mm256_load_pd(&forcing[k][j][i][0]));
+        _mm256_storeu_pd(&rhs[k][j][i+1][0], _mm256_load_pd(&forcing[k][j][i+1][0]));
+        _mm256_storeu_pd(&rhs[k][j][i+2][0], _mm256_load_pd(&forcing[k][j][i+2][0]));
+        _mm256_storeu_pd(&rhs[k][j][i+3][0], _mm256_load_pd(&forcing[k][j][i+3][0]));
       }
       for (i = 0; i <= grid_points[0]-1; i++) {
         /*for (m = 0; m < 5; m++) {
@@ -261,15 +261,15 @@ void compute_rhs()
       for (i = 4; i < new_i_upper; i+=4) {
 
         /*uijk = us[k][j][i];*/
-        __m256d vuijk = _mm256_loadu_pd(&us[k][j][i]);
+        __m256d vuijk = _mm256_load_pd(&us[k][j][i]);
         /* up1  = us[k][j][i+1];*/
-        __m256d vup1 = _mm256_loadu_pd(&us[k][j][i+1]);
+        __m256d vup1 = _mm256_load_pd(&us[k][j][i+1]);
         /*um1  = us[k][j][i-1];*/
-        __m256d vum1 = _mm256_loadu_pd(&us[k][j][i-1]);
+        __m256d vum1 = _mm256_load_pd(&us[k][j][i-1]);
 
-        __m256d u1_1 = _mm256_loadu_pd(&u1[k][j][i+1]);
-        __m256d u1_0 = _mm256_loadu_pd(&u1[k][j][i]);
-        __m256d u1_m1 = _mm256_loadu_pd(&u1[k][j][i-1]);
+        __m256d u1_1 = _mm256_load_pd(&u1[k][j][i+1]);
+        __m256d u1_0 = _mm256_load_pd(&u1[k][j][i]);
+        __m256d u1_m1 = _mm256_load_pd(&u1[k][j][i-1]);
 
         /*deal with u(+1), u(-1) */
         __m256d u_plus_1_0 = _mm256_load_pd(&u[k][j][i+1][0]);
@@ -292,7 +292,7 @@ void compute_rhs()
         _mm256_mul_pd(_mm256_set1_pd(2.0), u1_0));
         __m256d tmp2 = _mm256_add_pd(tmp1, u1_m1);
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dx1tx1), tmp2);
-        __m256d vrhs = _mm256_loadu_pd(&rhs1[k][j][i]);
+        __m256d vrhs = _mm256_load_pd(&rhs1[k][j][i]);
         tmp1 = _mm256_add_pd(vrhs, tmp1);
 
         tmp2 = _mm256_sub_pd(u_plus_1_0, u_minus_1_0);
@@ -337,9 +337,9 @@ void compute_rhs()
         tmp2 = _mm256_mul_pd(u_plus_1_0, vup1);
         tmp2 = _mm256_sub_pd(tmp2, _mm256_mul_pd(u_minus_1_0, vum1));
 
-        tmp3 = _mm256_sub_pd(u_plus_1_3, _mm256_loadu_pd(&square[k][j][i+1]));
+        tmp3 = _mm256_sub_pd(u_plus_1_3, _mm256_load_pd(&square[k][j][i+1]));
         tmp3 = _mm256_sub_pd(tmp3, u_minus_1_3);
-        tmp3 = _mm256_add_pd(tmp3, _mm256_loadu_pd(&square[k][j][i-1]));
+        tmp3 = _mm256_add_pd(tmp3, _mm256_load_pd(&square[k][j][i-1]));
         tmp3 = _mm256_mul_pd(tmp3, _mm256_set1_pd(c2));
 
         tmp2 = _mm256_add_pd(tmp2, tmp3);
@@ -360,10 +360,10 @@ void compute_rhs()
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dx3tx1), tmp1);
         tmp1 = _mm256_add_pd(vrhs_1, tmp1);
 
-        tmp2 = _mm256_sub_pd(_mm256_loadu_pd(&vs[k][j][i+1]),
+        tmp2 = _mm256_sub_pd(_mm256_load_pd(&vs[k][j][i+1]),
                                             _mm256_mul_pd(_mm256_set1_pd(2.0),
-                                                                     _mm256_loadu_pd(&vs[k][j][i]) ));
-        tmp2 = _mm256_add_pd(tmp2, _mm256_loadu_pd(&vs[k][j][i-1]) );
+                                                                     _mm256_load_pd(&vs[k][j][i]) ));
+        tmp2 = _mm256_add_pd(tmp2, _mm256_load_pd(&vs[k][j][i-1]) );
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(xxcon2), tmp2);
 
         tmp1 = _mm256_add_pd(tmp1, tmp2);
@@ -389,10 +389,10 @@ void compute_rhs()
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dx4tx1), tmp1);
         tmp1 = _mm256_add_pd(vrhs_2, tmp1);
 
-        tmp2 = _mm256_sub_pd(_mm256_loadu_pd(&ws[k][j][i+1]),
+        tmp2 = _mm256_sub_pd(_mm256_load_pd(&ws[k][j][i+1]),
                                             _mm256_mul_pd(_mm256_set1_pd(2.0),
-                                                              _mm256_loadu_pd(&ws[k][j][i]) ));
-        tmp2 = _mm256_add_pd(tmp2, _mm256_loadu_pd(&ws[k][j][i-1]) );
+                                                              _mm256_load_pd(&ws[k][j][i]) ));
+        tmp2 = _mm256_add_pd(tmp2, _mm256_load_pd(&ws[k][j][i-1]) );
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(xxcon2), tmp2);
 
         tmp1 = _mm256_add_pd(tmp1, tmp2);
@@ -422,10 +422,10 @@ void compute_rhs()
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dx5tx1), tmp1);
         tmp1 = _mm256_add_pd(vrhs_3, tmp1);
 
-        tmp2 = _mm256_sub_pd(_mm256_loadu_pd(&qs[k][j][i+1]),
+        tmp2 = _mm256_sub_pd(_mm256_load_pd(&qs[k][j][i+1]),
                                             _mm256_mul_pd(_mm256_set1_pd(2.0),
-                                                              _mm256_loadu_pd(&qs[k][j][i]) ));
-        tmp2 = _mm256_add_pd(tmp2, _mm256_loadu_pd(&qs[k][j][i-1]) );
+                                                              _mm256_load_pd(&qs[k][j][i]) ));
+        tmp2 = _mm256_add_pd(tmp2, _mm256_load_pd(&qs[k][j][i-1]) );
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(xxcon3), tmp2);
 
         tmp1 = _mm256_add_pd(tmp1, tmp2);
@@ -444,11 +444,11 @@ void compute_rhs()
         //xxcon5 * (u[k][j][i+1][3]*rho_i[k][j][i+1] - 
         //        2.0*u[k][j][i][3]*rho_i[k][j][i] +
         //            u[k][j][i-1][3]*rho_i[k][j][i-1])
-        tmp2 = _mm256_mul_pd(u_plus_1_3, _mm256_loadu_pd(&rho_i[k][j][i+1]));
+        tmp2 = _mm256_mul_pd(u_plus_1_3, _mm256_load_pd(&rho_i[k][j][i+1]));
         tmp3 = _mm256_mul_pd(_mm256_set1_pd(2.0), u_3);
-        tmp3 = _mm256_mul_pd(tmp3, _mm256_loadu_pd(&rho_i[k][j][i]));
+        tmp3 = _mm256_mul_pd(tmp3, _mm256_load_pd(&rho_i[k][j][i]));
         tmp2 = _mm256_sub_pd(tmp2, tmp3);
-        tmp3 = _mm256_mul_pd(u_minus_1_3, _mm256_loadu_pd(&rho_i[k][j][i-1]));
+        tmp3 = _mm256_mul_pd(u_minus_1_3, _mm256_load_pd(&rho_i[k][j][i-1]));
         tmp2 = _mm256_add_pd(tmp2, tmp3);
 
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(xxcon5), tmp2);
@@ -462,12 +462,12 @@ void compute_rhs()
         __m256d vc1 = _mm256_set1_pd(c1);
         __m256d vc2 = _mm256_set1_pd(c2);
         tmp2 = _mm256_mul_pd(vc1, u_plus_1_3);
-        tmp3 = _mm256_mul_pd(vc2, _mm256_loadu_pd(&square[k][j][i+1]));
+        tmp3 = _mm256_mul_pd(vc2, _mm256_load_pd(&square[k][j][i+1]));
         tmp2 = _mm256_sub_pd(tmp2, tmp3);
         tmp2 = _mm256_mul_pd(tmp2, vup1);
 
         tmp3 = _mm256_mul_pd(vc1, u_minus_1_3);
-        __m256d tmp4 = _mm256_mul_pd(vc2, _mm256_loadu_pd(&square[k][j][i-1]));
+        __m256d tmp4 = _mm256_mul_pd(vc2, _mm256_load_pd(&square[k][j][i-1]));
         tmp3 = _mm256_sub_pd(tmp3, tmp4);
         tmp3 = _mm256_mul_pd(tmp3, vum1);
 
@@ -774,15 +774,15 @@ void compute_rhs()
       }
       for (i = 4; i < new_i_upper; i+=4) {
         /*vijk = vs[k][j][i];*/
-        __m256d vvijk = _mm256_loadu_pd(&vs[k][j][i]);
+        __m256d vvijk = _mm256_load_pd(&vs[k][j][i]);
         /* vp1  = vs[k][j+1][i];*/
-        __m256d vvp1 = _mm256_loadu_pd(&vs[k][j+1][i]);
+        __m256d vvp1 = _mm256_load_pd(&vs[k][j+1][i]);
         /* vm1 = vs[k][j-1][i];*/
-        __m256d vvm1 = _mm256_loadu_pd(&vs[k][j-1][i]);
+        __m256d vvm1 = _mm256_load_pd(&vs[k][j-1][i]);
 
-        __m256d u1_1 = _mm256_loadu_pd(&u1[k][j+1][i]);
-        __m256d u1_0 = _mm256_loadu_pd(&u1[k][j][i]);
-        __m256d u1_m1 = _mm256_loadu_pd(&u1[k][j-1][i]);
+        __m256d u1_1 = _mm256_load_pd(&u1[k][j+1][i]);
+        __m256d u1_0 = _mm256_load_pd(&u1[k][j][i]);
+        __m256d u1_m1 = _mm256_load_pd(&u1[k][j-1][i]);
 
         /*deal with u(+1), u(-1) */
         __m256d u_plus_1_0 = _mm256_load_pd(&u[k][j+1][i][0]);
@@ -806,7 +806,7 @@ void compute_rhs()
         _mm256_mul_pd(_mm256_set1_pd(2.0), u1_0));
         __m256d tmp2 = _mm256_add_pd(tmp1, u1_m1);
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dy1ty1), tmp2);
-        __m256d vrhs = _mm256_loadu_pd(&rhs1[k][j][i]);
+        __m256d vrhs = _mm256_load_pd(&rhs1[k][j][i]);
         tmp1 = _mm256_add_pd(vrhs, tmp1);
 
         tmp2 = _mm256_sub_pd(u_plus_1_1, u_minus_1_1);
@@ -841,10 +841,10 @@ void compute_rhs()
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dy2ty1), tmp1);
         tmp1 = _mm256_add_pd(vrhs_0, tmp1);
 
-        tmp2 = _mm256_sub_pd(_mm256_loadu_pd(&us[k][j+1][i]),
+        tmp2 = _mm256_sub_pd(_mm256_load_pd(&us[k][j+1][i]),
                                             _mm256_mul_pd(_mm256_set1_pd(2.0),
-                                                              _mm256_loadu_pd(&us[k][j][i]) ));
-        tmp2 = _mm256_add_pd(tmp2, _mm256_loadu_pd(&us[k][j-1][i]) );
+                                                              _mm256_load_pd(&us[k][j][i]) ));
+        tmp2 = _mm256_add_pd(tmp2, _mm256_load_pd(&us[k][j-1][i]) );
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(yycon2), tmp2);
 
         tmp1 = _mm256_add_pd(tmp1, tmp2);
@@ -883,9 +883,9 @@ void compute_rhs()
         tmp2 = _mm256_mul_pd(u_plus_1_1, vvp1);
         tmp2 = _mm256_sub_pd(tmp2, _mm256_mul_pd(u_minus_1_1, vvm1));
 
-        tmp3 = _mm256_sub_pd(u_plus_1_3, _mm256_loadu_pd(&square[k][j+1][i]));
+        tmp3 = _mm256_sub_pd(u_plus_1_3, _mm256_load_pd(&square[k][j+1][i]));
         tmp3 = _mm256_sub_pd(tmp3, u_minus_1_3);
-        tmp3 = _mm256_add_pd(tmp3, _mm256_loadu_pd(&square[k][j-1][i]));
+        tmp3 = _mm256_add_pd(tmp3, _mm256_load_pd(&square[k][j-1][i]));
         tmp3 = _mm256_mul_pd(tmp3, _mm256_set1_pd(c2));
 
         tmp2 = _mm256_add_pd(tmp2, tmp3);
@@ -906,10 +906,10 @@ void compute_rhs()
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dy4ty1), tmp1);
         tmp1 = _mm256_add_pd(vrhs_2, tmp1);
 
-        tmp2 = _mm256_sub_pd(_mm256_loadu_pd(&ws[k][j+1][i]),
+        tmp2 = _mm256_sub_pd(_mm256_load_pd(&ws[k][j+1][i]),
                                             _mm256_mul_pd(_mm256_set1_pd(2.0),
-                                                              _mm256_loadu_pd(&ws[k][j][i]) ));
-        tmp2 = _mm256_add_pd(tmp2, _mm256_loadu_pd(&ws[k][j-1][i]) );
+                                                              _mm256_load_pd(&ws[k][j][i]) ));
+        tmp2 = _mm256_add_pd(tmp2, _mm256_load_pd(&ws[k][j-1][i]) );
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(yycon2), tmp2);
 
         tmp1 = _mm256_add_pd(tmp1, tmp2);
@@ -940,10 +940,10 @@ void compute_rhs()
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dy5ty1), tmp1);
         tmp1 = _mm256_add_pd(vrhs_3, tmp1);
 
-        tmp2 = _mm256_sub_pd(_mm256_loadu_pd(&qs[k][j+1][i]),
+        tmp2 = _mm256_sub_pd(_mm256_load_pd(&qs[k][j+1][i]),
                                             _mm256_mul_pd(_mm256_set1_pd(2.0),
-                                                              _mm256_loadu_pd(&qs[k][j][i]) ));
-        tmp2 = _mm256_add_pd(tmp2, _mm256_loadu_pd(&qs[k][j-1][i]) );
+                                                              _mm256_load_pd(&qs[k][j][i]) ));
+        tmp2 = _mm256_add_pd(tmp2, _mm256_load_pd(&qs[k][j-1][i]) );
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(yycon3), tmp2);
 
         tmp1 = _mm256_add_pd(tmp1, tmp2);
@@ -962,11 +962,11 @@ void compute_rhs()
         //xxcon5 * (u[k][j][i+1][3]*rho_i[k][j][i+1] - 
         //        2.0*u[k][j][i][3]*rho_i[k][j][i] +
         //            u[k][j][i-1][3]*rho_i[k][j][i-1])
-        tmp2 = _mm256_mul_pd(u_plus_1_3, _mm256_loadu_pd(&rho_i[k][j+1][i]));
+        tmp2 = _mm256_mul_pd(u_plus_1_3, _mm256_load_pd(&rho_i[k][j+1][i]));
         tmp3 = _mm256_mul_pd(_mm256_set1_pd(2.0), u_3);
-        tmp3 = _mm256_mul_pd(tmp3, _mm256_loadu_pd(&rho_i[k][j][i]));
+        tmp3 = _mm256_mul_pd(tmp3, _mm256_load_pd(&rho_i[k][j][i]));
         tmp2 = _mm256_sub_pd(tmp2, tmp3);
-        tmp3 = _mm256_mul_pd(u_minus_1_3, _mm256_loadu_pd(&rho_i[k][j-1][i]));
+        tmp3 = _mm256_mul_pd(u_minus_1_3, _mm256_load_pd(&rho_i[k][j-1][i]));
         tmp2 = _mm256_add_pd(tmp2, tmp3);
 
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(yycon5), tmp2);
@@ -980,12 +980,12 @@ void compute_rhs()
         __m256d vc1 = _mm256_set1_pd(c1);
         __m256d vc2 = _mm256_set1_pd(c2);
         tmp2 = _mm256_mul_pd(vc1, u_plus_1_3);
-        tmp3 = _mm256_mul_pd(vc2, _mm256_loadu_pd(&square[k][j+1][i]));
+        tmp3 = _mm256_mul_pd(vc2, _mm256_load_pd(&square[k][j+1][i]));
         tmp2 = _mm256_sub_pd(tmp2, tmp3);
         tmp2 = _mm256_mul_pd(tmp2, vvp1);
 
         tmp3 = _mm256_mul_pd(vc1, u_minus_1_3);
-        __m256d tmp4 = _mm256_mul_pd(vc2, _mm256_loadu_pd(&square[k][j-1][i]));
+        __m256d tmp4 = _mm256_mul_pd(vc2, _mm256_load_pd(&square[k][j-1][i]));
         tmp3 = _mm256_sub_pd(tmp3, tmp4);
         tmp3 = _mm256_mul_pd(tmp3, vvm1);
 
@@ -1268,11 +1268,11 @@ void compute_rhs()
       /* for vectorization */
       for (i = 4; i < new_i_upper; i+=4) {
         /*wijk = ws[k][j][i];*/
-        __m256d vwijk = _mm256_loadu_pd(&ws[k][j][i]);
+        __m256d vwijk = _mm256_load_pd(&ws[k][j][i]);
         /*wp1  = ws[k+1][j][i];*/
-        __m256d vwp1 = _mm256_loadu_pd(&ws[k+1][j][i]);
+        __m256d vwp1 = _mm256_load_pd(&ws[k+1][j][i]);
         /*wm1  = ws[k-1][j][i];*/
-        __m256d vwm1 = _mm256_loadu_pd(&ws[k-1][j][i]);
+        __m256d vwm1 = _mm256_load_pd(&ws[k-1][j][i]);
 
         __m256d u_plus1_0 = _mm256_load_pd(&u[k+1][j][i][0]);
         __m256d u_plus1_1 = _mm256_load_pd(&u[k+1][j][i+1][0]);
@@ -1288,10 +1288,10 @@ void compute_rhs()
 
         interleave(&u_minus1_0, &u_minus1_1, &u_minus1_2, &u_minus1_3);
 
-        __m256d vrhs = _mm256_loadu_pd(&rhs1[k][j][i]);
-        __m256d vu1_plus1 = _mm256_loadu_pd(&u1[k+1][j][i]);
-        __m256d vu1 = _mm256_loadu_pd(&u1[k][j][i]);
-        __m256d vu1_minus1 = _mm256_loadu_pd(&u1[k-1][j][i]);
+        __m256d vrhs = _mm256_load_pd(&rhs1[k][j][i]);
+        __m256d vu1_plus1 = _mm256_load_pd(&u1[k+1][j][i]);
+        __m256d vu1 = _mm256_load_pd(&u1[k][j][i]);
+        __m256d vu1_minus1 = _mm256_load_pd(&u1[k-1][j][i]);
 
         __m256d tmp1 = _mm256_sub_pd(vu1_plus1, 
         _mm256_mul_pd(_mm256_set1_pd(2.0), vu1));
@@ -1335,10 +1335,10 @@ void compute_rhs()
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dz2tz1), tmp1);
         tmp1 = _mm256_add_pd(rhs_0, tmp1);
 
-        tmp2 = _mm256_sub_pd(_mm256_loadu_pd(&us[k+1][j][i]),
+        tmp2 = _mm256_sub_pd(_mm256_load_pd(&us[k+1][j][i]),
                                 _mm256_mul_pd(_mm256_set1_pd(2.0),
-                                             _mm256_loadu_pd(&us[k][j][i])));
-        tmp2 = _mm256_add_pd(tmp2, _mm256_loadu_pd(&us[k-1][j][i]));
+                                             _mm256_load_pd(&us[k][j][i])));
+        tmp2 = _mm256_add_pd(tmp2, _mm256_load_pd(&us[k-1][j][i]));
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(zzcon2), tmp2);
         tmp1 = _mm256_add_pd(tmp1, tmp2);
 
@@ -1362,10 +1362,10 @@ void compute_rhs()
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dz3tz1), tmp1);
         tmp1 = _mm256_add_pd(rhs_1, tmp1);
 
-        tmp2 = _mm256_sub_pd(_mm256_loadu_pd(&vs[k+1][j][i]),
+        tmp2 = _mm256_sub_pd(_mm256_load_pd(&vs[k+1][j][i]),
                                 _mm256_mul_pd(_mm256_set1_pd(2.0),
-                                             _mm256_loadu_pd(&vs[k][j][i])));
-        tmp2 = _mm256_add_pd(tmp2, _mm256_loadu_pd(&vs[k-1][j][i]));
+                                             _mm256_load_pd(&vs[k][j][i])));
+        tmp2 = _mm256_add_pd(tmp2, _mm256_load_pd(&vs[k-1][j][i]));
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(zzcon2), tmp2);
         tmp1 = _mm256_add_pd(tmp1, tmp2);
 
@@ -1401,9 +1401,9 @@ void compute_rhs()
         tmp2 = _mm256_mul_pd(u_plus1_2, vwp1);
         tmp2 = _mm256_sub_pd(tmp2, _mm256_mul_pd(u_minus1_2, vwm1));
 
-        tmp3 = _mm256_sub_pd(u_plus1_3, _mm256_loadu_pd(&square[k+1][j][i]));
+        tmp3 = _mm256_sub_pd(u_plus1_3, _mm256_load_pd(&square[k+1][j][i]));
         tmp3 = _mm256_sub_pd(tmp3, u_minus1_3);
-        tmp3 = _mm256_add_pd(tmp3, _mm256_loadu_pd(&square[k-1][j][i]));
+        tmp3 = _mm256_add_pd(tmp3, _mm256_load_pd(&square[k-1][j][i]));
         tmp3 = _mm256_mul_pd(tmp3, _mm256_set1_pd(c2));
 
         tmp2 = _mm256_add_pd(tmp2, tmp3);
@@ -1429,10 +1429,10 @@ void compute_rhs()
         tmp1 = _mm256_mul_pd(_mm256_set1_pd(dz5tz1), tmp1);
         tmp1 = _mm256_add_pd(rhs_3, tmp1);
 
-        tmp2 = _mm256_sub_pd(_mm256_loadu_pd(&qs[k+1][j][i]),
+        tmp2 = _mm256_sub_pd(_mm256_load_pd(&qs[k+1][j][i]),
                                             _mm256_mul_pd(_mm256_set1_pd(2.0),
-                                                              _mm256_loadu_pd(&qs[k][j][i]) ));
-        tmp2 = _mm256_add_pd(tmp2, _mm256_loadu_pd(&qs[k-1][j][i]) );
+                                                              _mm256_load_pd(&qs[k][j][i]) ));
+        tmp2 = _mm256_add_pd(tmp2, _mm256_load_pd(&qs[k-1][j][i]) );
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(zzcon3), tmp2);
 
         tmp1 = _mm256_add_pd(tmp1, tmp2);
@@ -1451,11 +1451,11 @@ void compute_rhs()
         //zzcon5 * (u[k+1][j][i][3]*rho_i[k+1][j][i] - 
         //          2.0*u[k][j][i][3]*rho_i[k][j][i] +
         //            u[k-1][j][i][3]*rho_i[k-1][j][i])
-        tmp2 = _mm256_mul_pd(u_plus1_3, _mm256_loadu_pd(&rho_i[k+1][j][i]));
+        tmp2 = _mm256_mul_pd(u_plus1_3, _mm256_load_pd(&rho_i[k+1][j][i]));
         tmp3 = _mm256_mul_pd(_mm256_set1_pd(2.0), u_3);
-        tmp3 = _mm256_mul_pd(tmp3, _mm256_loadu_pd(&rho_i[k][j][i]));
+        tmp3 = _mm256_mul_pd(tmp3, _mm256_load_pd(&rho_i[k][j][i]));
         tmp2 = _mm256_sub_pd(tmp2, tmp3);
-        tmp3 = _mm256_mul_pd(u_minus1_3, _mm256_loadu_pd(&rho_i[k-1][j][i]));
+        tmp3 = _mm256_mul_pd(u_minus1_3, _mm256_load_pd(&rho_i[k-1][j][i]));
         tmp2 = _mm256_add_pd(tmp2, tmp3);
 
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(zzcon5), tmp2);
@@ -1469,12 +1469,12 @@ void compute_rhs()
         __m256d vc1 = _mm256_set1_pd(c1);
         __m256d vc2 = _mm256_set1_pd(c2);
         tmp2 = _mm256_mul_pd(vc1, u_plus1_3);
-        tmp3 = _mm256_mul_pd(vc2, _mm256_loadu_pd(&square[k+1][j][i]));
+        tmp3 = _mm256_mul_pd(vc2, _mm256_load_pd(&square[k+1][j][i]));
         tmp2 = _mm256_sub_pd(tmp2, tmp3);
         tmp2 = _mm256_mul_pd(tmp2, vwp1);
 
         tmp3 = _mm256_mul_pd(vc1, u_minus1_3);
-        __m256d tmp4 = _mm256_mul_pd(vc2, _mm256_loadu_pd(&square[k-1][j][i]));
+        __m256d tmp4 = _mm256_mul_pd(vc2, _mm256_load_pd(&square[k-1][j][i]));
         tmp3 = _mm256_sub_pd(tmp3, tmp4);
         tmp3 = _mm256_mul_pd(tmp3, vwm1);
 
@@ -1698,7 +1698,7 @@ void compute_rhs()
       for (i = 4; i < new_i_upper; i+=4) {
         //for (m = 0; m < 5; m++) {
         /*rhs1[k][j][i] = rhs1[k][j][i] * dt;*/
-        /*__m256d vrhs1 = _mm256_loadu_pd(&rhs1[k][j][i]);*/
+        /*__m256d vrhs1 = _mm256_load_pd(&rhs1[k][j][i]);*/
         __m128d vrhs1_0 = _mm_load_pd(&rhs1[k][j][i]);
         __m128d vrhs1_1 = _mm_load_pd(&rhs1[k][j][i+2]);
         /*vrhs1 = _mm256_mul_pd(vrhs1, vdt);*/

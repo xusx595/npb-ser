@@ -1,12 +1,12 @@
-/* CLASS = W */
+/* CLASS = B */
 /*
    This file is generated automatically by the setparams utility.
    It sets the number of processors and the class of the NPB
    in this directory. Do not modify it by hand.   
 */
-#define PROBLEM_SIZE   36
+#define PROBLEM_SIZE   102
 #define NITER_DEFAULT  400
-#define DT_DEFAULT     0.0015
+#define DT_DEFAULT     0.001
 
 #define CONVERTDOUBLE  false
 #define COMPILETIME "16 Feb 2014"

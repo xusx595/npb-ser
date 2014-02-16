@@ -57,8 +57,8 @@ void add()
       for (i = 4; i <new_i_upper; i+=4) {
         //for (m = 0; m < 5; m++) {
         /*u1[k][j][i] = u1[k][j][i] + rhs1[k][j][i];*/
-        __m256d vu = _mm256_loadu_pd(&u1[k][j][i]);
-        __m256d vrhs = _mm256_loadu_pd(&rhs1[k][j][i]);
+        __m256d vu = _mm256_load_pd(&u1[k][j][i]);
+        __m256d vrhs = _mm256_load_pd(&rhs1[k][j][i]);
         vu = _mm256_add_pd(vu, vrhs);
         _mm256_storeu_pd(&u1[k][j][i], vu);
         

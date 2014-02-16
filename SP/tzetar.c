@@ -107,33 +107,33 @@ void tzetar()
       
       for (i = 4; i < new_i_upper; i+=4) {
         /*xvel = us[k][j][i];*/
-        __m256d vxvel = _mm256_loadu_pd(&us[k][j][i]);
+        __m256d vxvel = _mm256_load_pd(&us[k][j][i]);
         /*yvel = vs[k][j][i];*/
-        __m256d vyvel = _mm256_loadu_pd(&vs[k][j][i]);
+        __m256d vyvel = _mm256_load_pd(&vs[k][j][i]);
         /*zvel = ws[k][j][i];*/
-        __m256d vzvel = _mm256_loadu_pd(&ws[k][j][i]);
+        __m256d vzvel = _mm256_load_pd(&ws[k][j][i]);
         /*ac   = speed[k][j][i];*/
-        __m256d vac = _mm256_loadu_pd(&speed[k][j][i]);
+        __m256d vac = _mm256_load_pd(&speed[k][j][i]);
 
         /*ac2u = ac*ac;*/
         __m256d vac2u = _mm256_mul_pd(vac, vac);
 
         /*r1 = rhs1[k][j][i];*/
-        __m256d vr1 = _mm256_loadu_pd(&rhs1[k][j][i]);
+        __m256d vr1 = _mm256_load_pd(&rhs1[k][j][i]);
         
         /*r2 = rhs[k][j][i][0];
         r3 = rhs[k][j][i][1];
         r4 = rhs[k][j][i][2];
         r5 = rhs[k][j][i][3];*/     
-        __m256d vr2 = _mm256_loadu_pd(&rhs[k][j][i][0]);
-        __m256d vr3 = _mm256_loadu_pd(&rhs[k][j][i+1][0]);
-        __m256d vr4 = _mm256_loadu_pd(&rhs[k][j][i+2][0]);
-        __m256d vr5 = _mm256_loadu_pd(&rhs[k][j][i+3][0]);
+        __m256d vr2 = _mm256_load_pd(&rhs[k][j][i][0]);
+        __m256d vr3 = _mm256_load_pd(&rhs[k][j][i+1][0]);
+        __m256d vr4 = _mm256_load_pd(&rhs[k][j][i+2][0]);
+        __m256d vr5 = _mm256_load_pd(&rhs[k][j][i+3][0]);
 
         interleave(&vr2, &vr3, &vr4, &vr5);
 
         /*uzik1 = u1[k][j][i];*/
-        __m256d vuzik1 = _mm256_loadu_pd(&u1[k][j][i]);
+        __m256d vuzik1 = _mm256_load_pd(&u1[k][j][i]);
         
         /*btuz  = bt * uzik1;*/
         __m256d vbt = _mm256_set1_pd(bt);
@@ -152,7 +152,7 @@ void tzetar()
         __m256d vt3 = _mm256_mul_pd(vbtuz, tmp1);
 
         /*rhs1[k][j][i] = t2;*/
-        _mm256_storeu_pd(&rhs1[k][j][i], vt2);
+        _mm256_store_pd(&rhs1[k][j][i], vt2);
 
         __m256d zeros = _mm256_setzero_pd();
         
@@ -178,7 +178,7 @@ void tzetar()
         tmp2 = _mm256_mul_pd(vyvel, vr1);
         tmp1 = _mm256_add_pd(tmp1, tmp2);
         tmp1 = _mm256_mul_pd(vuzik1, tmp1);
-        tmp2 = _mm256_loadu_pd(&qs[k][j][i]);
+        tmp2 = _mm256_load_pd(&qs[k][j][i]);
         tmp2 = _mm256_mul_pd(tmp2, vt2);
         tmp1 = _mm256_add_pd(tmp1, tmp2);
         tmp2 = _mm256_mul_pd(_mm256_set1_pd(c2iv), vac2u);

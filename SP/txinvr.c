@@ -101,20 +101,20 @@ void txinvr()
       }
       for (i = 4; i <new_i_upper; i+=4) {
         /*ru1 = rho_i[k][j][i];*/
-        __m256d vru1 = _mm256_loadu_pd(&rho_i[k][j][i]);
+        __m256d vru1 = _mm256_load_pd(&rho_i[k][j][i]);
         /*uu = us[k][j][i];*/
-        __m256d vuu = _mm256_loadu_pd(&us[k][j][i]);
+        __m256d vuu = _mm256_load_pd(&us[k][j][i]);
         /*vv = vs[k][j][i];*/
-        __m256d vvv = _mm256_loadu_pd(&vs[k][j][i]);
+        __m256d vvv = _mm256_load_pd(&vs[k][j][i]);
         /*ww = ws[k][j][i];*/
-        __m256d vww = _mm256_loadu_pd(&ws[k][j][i]);
+        __m256d vww = _mm256_load_pd(&ws[k][j][i]);
         /*ac = speed[k][j][i];*/
-        __m256d vac = _mm256_loadu_pd(&speed[k][j][i]);
+        __m256d vac = _mm256_load_pd(&speed[k][j][i]);
         /*ac2inv = ac*ac;*/
         __m256d vac2inv = _mm256_mul_pd(vac, vac);
 
         /*r1 = rhs1[k][j][i];*/
-        __m256d vr1 = _mm256_loadu_pd(&rhs1[k][j][i]);
+        __m256d vr1 = _mm256_load_pd(&rhs1[k][j][i]);
         /*r2 = rhs[k][j][i][0];
         r3 = rhs[k][j][i][1];
         r4 = rhs[k][j][i][2];
@@ -129,7 +129,7 @@ void txinvr()
         
         /*t1 = c2 / ac2inv * ( qs[k][j][i]*r1 - uu*r2  - vv*r3 - ww*r4 + r5 );*/
 
-        __m256d vqs = _mm256_loadu_pd(&qs[k][j][i]);
+        __m256d vqs = _mm256_load_pd(&qs[k][j][i]);
         __m256d tmp1 = _mm256_mul_pd(vqs, vr1);
         __m256d tmp2 = _mm256_mul_pd(vuu, vr2);
         __m256d tmp3 = _mm256_mul_pd(vvv, vr3);

@@ -117,7 +117,7 @@ void pinvr()
         r3 = rhs[k][j][i][1];
         r4 = rhs[k][j][i][2];
         r5 = rhs[k][j][i][3];*/
-        __m256d vr1 = _mm256_loadu_pd(&rhs1[k][j][i]);
+        __m256d vr1 = _mm256_load_pd(&rhs1[k][j][i]);
         __m256d vr2 = _mm256_load_pd(&rhs[k][j][i][0]);
         __m256d vr3 = _mm256_load_pd(&rhs[k][j][i+1][0]);
         __m256d vr4 = _mm256_load_pd(&rhs[k][j][i+2][0]);
@@ -137,7 +137,7 @@ void pinvr()
         /*rhs1[k][j][i] =  bt * ( r4 - r5 );*/
         tmp1 = _mm256_sub_pd(vr4, vr5);
         __m256d vrhs = _mm256_mul_pd(vbt, tmp1);
-        _mm256_storeu_pd(&rhs1[k][j][i], vrhs);
+        _mm256_store_pd(&rhs1[k][j][i], vrhs);
         
         /*rhs[k][j][i][0] = -r3;*/
         __m256d zeros = _mm256_setzero_pd();
