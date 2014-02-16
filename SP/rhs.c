@@ -1016,14 +1016,24 @@ void compute_rhs()
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i]- dssp * 
           (5.0*u1[k][j][i] - 4.0*u1[k+1][j][i] + u1[k+2][j][i]);
-      rhs[k][j][i][0] = rhs[k][j][i][0]- dssp * 
+/*      rhs[k][j][i][0] = rhs[k][j][i][0]- dssp * 
           (5.0*u[k][j][i][0] - 4.0*u[k+1][j][i][0] + u[k+2][j][i][0]);
       rhs[k][j][i][1] = rhs[k][j][i][1]- dssp * 
           (5.0*u[k][j][i][1] - 4.0*u[k+1][j][i][1] + u[k+2][j][i][1]);
       rhs[k][j][i][2] = rhs[k][j][i][2]- dssp * 
           (5.0*u[k][j][i][2] - 4.0*u[k+1][j][i][2] + u[k+2][j][i][2]);
       rhs[k][j][i][3] = rhs[k][j][i][3]- dssp * 
-          (5.0*u[k][j][i][3] - 4.0*u[k+1][j][i][3] + u[k+2][j][i][3]);
+          (5.0*u[k][j][i][3] - 4.0*u[k+1][j][i][3] + u[k+2][j][i][3]);*/
+      __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+      __m256d vu_minus0 = _mm256_load_pd(&u[k][j][i][0]);
+      __m256d vu_plus1 = _mm256_load_pd(&u[k+1][j][i][0]);
+      __m256d vu_plus2 = _mm256_load_pd(&u[k+2][j][i][0]);
+      __m256d tmp1 = _mm256_mul_pd(_mm256_set1_pd(5.0), vu_minus0);
+      tmp1 = _mm256_sub_pd(tmp1, _mm256_mul_pd(_mm256_set1_pd(4.0), vu_plus1));
+      tmp1 = _mm256_add_pd(tmp1, vu_plus2);
+      tmp1 = _mm256_mul_pd(_mm256_set1_pd(dssp), tmp1);
+      tmp1 = _mm256_sub_pd(vrhs, tmp1);
+      _mm256_store_pd(&rhs[k][j][i][0], tmp1);
       //}
     }
   }
@@ -1036,18 +1046,19 @@ void compute_rhs()
         rhs1[k][j][i] = rhs1[k][j][i] - dssp * 
           (-4.0*u1[k-1][j][i] + 6.0*u1[k][j][i] -
             4.0*u1[k+1][j][i] + u1[k+2][j][i]);
-      rhs[k][j][i][0] = rhs[k][j][i][0] - dssp * 
-          (-4.0*u[k-1][j][i][0] + 6.0*u[k][j][i][0] -
-            4.0*u[k+1][j][i][0] + u[k+2][j][i][0]);
-      rhs[k][j][i][1] = rhs[k][j][i][1] - dssp * 
-          (-4.0*u[k-1][j][i][1] + 6.0*u[k][j][i][1] -
-            4.0*u[k+1][j][i][1] + u[k+2][j][i][1]);
-      rhs[k][j][i][2] = rhs[k][j][i][2] - dssp * 
-          (-4.0*u[k-1][j][i][2] + 6.0*u[k][j][i][2] -
-            4.0*u[k+1][j][i][2] + u[k+2][j][i][2]);
-      rhs[k][j][i][3] = rhs[k][j][i][3] - dssp * 
-          (-4.0*u[k-1][j][i][3] + 6.0*u[k][j][i][3] -
-            4.0*u[k+1][j][i][3] + u[k+2][j][i][3]);
+      __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+      __m256d vu_minus1 = _mm256_load_pd(&u[k-1][j][i][0]);
+      __m256d vu_minus0 = _mm256_load_pd(&u[k][j][i][0]);
+      __m256d vu_plus1 = _mm256_load_pd(&u[k+1][j][i][0]);
+      __m256d vu_plus2 = _mm256_load_pd(&u[k+2][j][i][0]);
+      __m256d tmp1 = _mm256_sub_pd(_mm256_setzero_pd(),
+                                _mm256_mul_pd(_mm256_set1_pd(4.0), vu_minus1));
+      tmp1 = _mm256_add_pd(tmp1, _mm256_mul_pd(_mm256_set1_pd(6.0), vu_minus0));
+      tmp1 = _mm256_sub_pd(tmp1, _mm256_mul_pd(_mm256_set1_pd(4.0), vu_plus1));
+      tmp1 = _mm256_add_pd(tmp1, vu_plus2);
+      tmp1 = _mm256_mul_pd(_mm256_set1_pd(dssp), tmp1);
+      tmp1 = _mm256_sub_pd(vrhs, tmp1);
+      _mm256_store_pd(&rhs[k][j][i][0], tmp1);
       //}
     }
   }
@@ -1061,7 +1072,7 @@ void compute_rhs()
             ( u1[k-2][j][i] - 4.0*u1[k-1][j][i] + 
             6.0*u1[k][j][i] - 4.0*u1[k+1][j][i] + 
               u1[k+2][j][i] );
-        rhs[k][j][i][0] = rhs[k][j][i][0] - dssp * 
+        /*rhs[k][j][i][0] = rhs[k][j][i][0] - dssp * 
             ( u[k-2][j][i][0] - 4.0*u[k-1][j][i][0] + 
             6.0*u[k][j][i][0] - 4.0*u[k+1][j][i][0] + 
               u[k+2][j][i][0] );
@@ -1076,7 +1087,21 @@ void compute_rhs()
         rhs[k][j][i][3] = rhs[k][j][i][3] - dssp * 
             ( u[k-2][j][i][3] - 4.0*u[k-1][j][i][3] + 
             6.0*u[k][j][i][3] - 4.0*u[k+1][j][i][3] + 
-              u[k+2][j][i][3] );
+              u[k+2][j][i][3] );*/
+      __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+      __m256d vu_minus2 = _mm256_load_pd(&u[k-2][j][i][0]);
+      __m256d vu_minus1 = _mm256_load_pd(&u[k-1][j][i][0]);
+      __m256d vu_minus0 = _mm256_load_pd(&u[k][j][i][0]);
+      __m256d vu_plus1 = _mm256_load_pd(&u[k+1][j][i][0]);
+      __m256d vu_plus2 = _mm256_load_pd(&u[k+2][j][i][0]);
+      __m256d tmp1 = _mm256_sub_pd(vu_minus2,
+                                _mm256_mul_pd(_mm256_set1_pd(4.0), vu_minus1));
+      tmp1 = _mm256_add_pd(tmp1, _mm256_mul_pd(_mm256_set1_pd(6.0), vu_minus0));
+      tmp1 = _mm256_sub_pd(tmp1, _mm256_mul_pd(_mm256_set1_pd(4.0), vu_plus1));
+      tmp1 = _mm256_add_pd(tmp1, vu_plus2);
+      tmp1 = _mm256_mul_pd(_mm256_set1_pd(dssp), tmp1);
+      tmp1 = _mm256_sub_pd(vrhs, tmp1);
+      _mm256_store_pd(&rhs[k][j][i][0], tmp1);
         //}
       }
     }
@@ -1090,18 +1115,18 @@ void compute_rhs()
         rhs1[k][j][i] = rhs1[k][j][i] - dssp *
           ( u1[k-2][j][i] - 4.0*u1[k-1][j][i] + 
           6.0*u1[k][j][i] - 4.0*u1[k+1][j][i] );
-      rhs[k][j][i][0] = rhs[k][j][i][0] - dssp *
-          ( u[k-2][j][i][0] - 4.0*u[k-1][j][i][0] + 
-          6.0*u[k][j][i][0] - 4.0*u[k+1][j][i][0] );
-      rhs[k][j][i][1] = rhs[k][j][i][1] - dssp *
-          ( u[k-2][j][i][1] - 4.0*u[k-1][j][i][1] + 
-          6.0*u[k][j][i][1] - 4.0*u[k+1][j][i][1] );
-      rhs[k][j][i][2] = rhs[k][j][i][2] - dssp *
-          ( u[k-2][j][i][2] - 4.0*u[k-1][j][i][2] + 
-          6.0*u[k][j][i][2] - 4.0*u[k+1][j][i][2] );
-      rhs[k][j][i][3] = rhs[k][j][i][3] - dssp *
-          ( u[k-2][j][i][3] - 4.0*u[k-1][j][i][3] + 
-          6.0*u[k][j][i][3] - 4.0*u[k+1][j][i][3] );
+      __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+      __m256d vu_minus2 = _mm256_load_pd(&u[k-2][j][i][0]);
+      __m256d vu_minus1 = _mm256_load_pd(&u[k-1][j][i][0]);
+      __m256d vu_minus0 = _mm256_load_pd(&u[k][j][i][0]);
+      __m256d vu_plus1 = _mm256_load_pd(&u[k+1][j][i][0]);
+      __m256d tmp1 = _mm256_sub_pd(vu_minus2,
+                                _mm256_mul_pd(_mm256_set1_pd(4.0), vu_minus1));
+      tmp1 = _mm256_add_pd(tmp1, _mm256_mul_pd(_mm256_set1_pd(6.0), vu_minus0));
+      tmp1 = _mm256_sub_pd(tmp1, _mm256_mul_pd(_mm256_set1_pd(4.0), vu_plus1));
+      tmp1 = _mm256_mul_pd(_mm256_set1_pd(dssp), tmp1);
+      tmp1 = _mm256_sub_pd(vrhs, tmp1);
+      _mm256_store_pd(&rhs[k][j][i][0], tmp1);
       //}
     }
   }
@@ -1113,14 +1138,16 @@ void compute_rhs()
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i] - dssp *
           ( u1[k-2][j][i] - 4.0*u1[k-1][j][i] + 5.0*u1[k][j][i] );
-      rhs[k][j][i][0] = rhs[k][j][i][0] - dssp *
-          ( u[k-2][j][i][0] - 4.0*u[k-1][j][i][0] + 5.0*u[k][j][i][0] );
-      rhs[k][j][i][1] = rhs[k][j][i][1] - dssp *
-          ( u[k-2][j][i][1] - 4.0*u[k-1][j][i][1] + 5.0*u[k][j][i][1] );
-      rhs[k][j][i][2] = rhs[k][j][i][2] - dssp *
-          ( u[k-2][j][i][2] - 4.0*u[k-1][j][i][2] + 5.0*u[k][j][i][2] );
-      rhs[k][j][i][3] = rhs[k][j][i][3] - dssp *
-          ( u[k-2][j][i][3] - 4.0*u[k-1][j][i][3] + 5.0*u[k][j][i][3] );
+      __m256d vrhs = _mm256_load_pd(&rhs[k][j][i][0]);
+      __m256d vu_minus2 = _mm256_load_pd(&u[k-2][j][i][0]);
+      __m256d vu_minus1 = _mm256_load_pd(&u[k-1][j][i][0]);
+      __m256d vu_minus0 = _mm256_load_pd(&u[k][j][i][0]);
+      __m256d tmp1 = _mm256_sub_pd(vu_minus2,
+                                _mm256_mul_pd(_mm256_set1_pd(4.0), vu_minus1));
+      tmp1 = _mm256_add_pd(tmp1, _mm256_mul_pd(_mm256_set1_pd(5.0), vu_minus0));
+      tmp1 = _mm256_mul_pd(_mm256_set1_pd(dssp), tmp1);
+      tmp1 = _mm256_sub_pd(vrhs, tmp1);
+      _mm256_store_pd(&rhs[k][j][i][0], tmp1);
       //}
     }
   }
@@ -1145,9 +1172,17 @@ void compute_rhs()
       for (i = 4; i < new_i_upper; i+=4) {
         //for (m = 0; m < 5; m++) {
         /*rhs1[k][j][i] = rhs1[k][j][i] * dt;*/
-        __m256d vrhs1 = _mm256_loadu_pd(&rhs1[k][j][i]);
-        vrhs1 = _mm256_mul_pd(vrhs1, vdt);
-        _mm256_storeu_pd(&rhs1[k][j][i], vrhs1);
+        /*__m256d vrhs1 = _mm256_loadu_pd(&rhs1[k][j][i]);*/
+        __m128d vrhs1_0 = _mm_load_pd(&rhs1[k][j][i]);
+        __m128d vrhs1_1 = _mm_load_pd(&rhs1[k][j][i+2]);
+        /*vrhs1 = _mm256_mul_pd(vrhs1, vdt);*/
+        __m128d vdt128 = _mm_set1_pd(dt);
+        vrhs1_0 = _mm_mul_pd(vrhs1_0, vdt128);
+        vrhs1_1 = _mm_mul_pd(vrhs1_1, vdt128);
+        _mm_store_pd(&rhs1[k][j][i], vrhs1_0);
+        _mm_store_pd(&rhs1[k][j][i+2], vrhs1_1);
+        
+        /*_mm256_storeu_pd(&rhs1[k][j][i], vrhs1);*/
         /*rhs[k][j][i][0] = rhs[k][j][i][0] * dt;
         rhs[k][j][i][1] = rhs[k][j][i][1] * dt;
         rhs[k][j][i][2] = rhs[k][j][i][2] * dt;
