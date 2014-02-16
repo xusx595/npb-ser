@@ -44,7 +44,7 @@ void ninvr()
   if (timeron) timer_start(t_ninvr);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
 /* note that, simd for this loop may not be profitable. */
       for (i = 1; i <= nx2; i++) {
         r1 = rhs1[k][j][i];

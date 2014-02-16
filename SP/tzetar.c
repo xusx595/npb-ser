@@ -45,7 +45,7 @@ void tzetar()
   if (timeron) timer_start(t_tzetar);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         xvel = us[k][j][i];
         yvel = vs[k][j][i];

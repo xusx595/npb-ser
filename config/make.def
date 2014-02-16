@@ -110,7 +110,7 @@ C_INC = -I../common
 # _LARGEFILE64_SOURCE - are standard compiler flags which allow to work with 
 # files larger than 2GB.
 #---------------------------------------------------------------------------
-CFLAGS	= -O3 -march=core-avx2 
+CFLAGS	= -O3 -march=corei7-avx 
 #-Wall -O3 -mcmodel=medium -fno-tree-vectorize
 #-mavx2
 

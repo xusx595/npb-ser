@@ -56,13 +56,13 @@ void z_solve()
     // first fill the lhs for the u-eigenvalue                          
     //---------------------------------------------------------------------
     for (i = 1; i <= nx2; i++) {
-#pragma simd
+ 
       for (k = 0; k <= nz2+1; k++) {
         ru1 = c3c4*rho_i[k][j][i];
         cv[k] = ws[k][j][i];
         rhos[k] = max(max(dz4+con43*ru1, dz5+c1c5*ru1), max(dzmax+ru1, dz1));
       }
-#pragma simd
+ 
       for (k = 1; k <= nz2; k++) {
         lhs1[k][i] =  0.0;
         lhs[k][i][0] = -dttz2 * cv[k-1] - dttz1 * rhos[k-1];
@@ -75,7 +75,7 @@ void z_solve()
     //---------------------------------------------------------------------
     // add fourth order dissipation                                  
     //---------------------------------------------------------------------
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       k = 1;
       lhs[k][i][1] = lhs[k][i][1] + comz5;
@@ -90,7 +90,7 @@ void z_solve()
     }
 
     for (k = 3; k <= nz2-2; k++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         lhs1[k][i] = lhs1[k][i] + comz1;
         lhs[k][i][0] = lhs[k][i][0] - comz4;
@@ -99,7 +99,7 @@ void z_solve()
         lhs[k][i][3] = lhs[k][i][3] + comz1;
       }
     }
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       k = nz2-1;
       lhs1[k][i] = lhs1[k][i] + comz1;
@@ -117,7 +117,7 @@ void z_solve()
     // subsequently, fill the other factors (u+c), (u-c) 
     //---------------------------------------------------------------------
     for (k = 1; k <= nz2; k++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         lhsp1[k][i] = lhs1[k][i];
         lhsp[k][i][0] = lhs[k][i][0] - dttz2 * speed[k-1][j][i];
@@ -139,7 +139,7 @@ void z_solve()
     for (k = 0; k <= grid_points[2]-3; k++) {
       k1 = k + 1;
       k2 = k + 2;
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         fac1 = 1.0/lhs[k][i][1];
         lhs[k][i][2] = fac1*lhs[k][i][2];
@@ -173,7 +173,7 @@ void z_solve()
     //---------------------------------------------------------------------
     k  = grid_points[2]-2;
     k1 = grid_points[2]-1;
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       fac1 = 1.0/lhs[k][i][1];
       lhs[k][i][2] = fac1*lhs[k][i][2];
@@ -240,7 +240,7 @@ void z_solve()
     //---------------------------------------------------------------------
     k  = grid_points[2]-2;
     k1 = grid_points[2]-1;
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       m = 2;
       fac1 = 1.0/lhsp[k][i][1];
@@ -296,7 +296,7 @@ void z_solve()
     for (k = grid_points[2]-3; k >= 0; k--) {
       k1 = k + 1;
       k2 = k + 2;
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         //for (m = 0; m < 3; m++) {
           rhs1[k][j][i] = rhs1[k][j][i] - 

@@ -43,7 +43,7 @@ void add()
   if (timeron) timer_start(t_add);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         //for (m = 0; m < 5; m++) {
         u1[k][j][i] = u1[k][j][i] + rhs1[k][j][i];

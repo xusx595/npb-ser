@@ -47,7 +47,7 @@ void compute_rhs()
   //---------------------------------------------------------------------
   for (k = 0; k <= grid_points[2]-1; k++) {
     for (j = 0; j <= grid_points[1]-1; j++) {
-#pragma simd
+ 
       for (i = 0; i <= grid_points[0]-1; i++) {
         rho_inv = 1.0/u1[k][j][i];
         rho_i[k][j][i] = rho_inv;
@@ -75,7 +75,7 @@ void compute_rhs()
   //---------------------------------------------------------------------
   for (k = 0; k <= grid_points[2]-1; k++) {
     for (j = 0; j <= grid_points[1]-1; j++) {
-#pragma simd
+ 
       for (i = 0; i <= grid_points[0]-1; i++) {
         /*for (m = 0; m < 5; m++) {
           rhs[k][j][i][m] = forcing[k][j][i][m];
@@ -95,7 +95,7 @@ void compute_rhs()
   if (timeron) timer_start(t_rhsx);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         uijk = us[k][j][i];
         up1  = us[k][j][i+1];
@@ -137,7 +137,7 @@ void compute_rhs()
     //---------------------------------------------------------------------
     // add fourth order xi-direction dissipation               
     //---------------------------------------------------------------------
-#pragma simd
+ 
     for (j = 1; j <= ny2; j++) {
       i = 1;
       /*for (m = 0; m < 5; m++) {
@@ -179,7 +179,7 @@ void compute_rhs()
     }
 
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 3; i <= nx2-2; i++) {
         /*for (m = 0; m < 5; m++) {
           rhs[k][j][i][m] = rhs[k][j][i][m] - dssp * 
@@ -210,7 +210,7 @@ void compute_rhs()
 
       }
     }
-#pragma simd
+ 
     for (j = 1; j <= ny2; j++) {
       i = nx2-1;
       /*for (m = 0; m < 5; m++) {
@@ -259,7 +259,7 @@ void compute_rhs()
   if (timeron) timer_start(t_rhsy);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         vijk = vs[k][j][i];
         vp1  = vs[k][j+1][i];
@@ -302,7 +302,7 @@ void compute_rhs()
     // add fourth order eta-direction dissipation         
     //---------------------------------------------------------------------
     j = 1;
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i]- dssp * 
@@ -319,7 +319,7 @@ void compute_rhs()
     }
 
     j = 2;
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i] - dssp * 
@@ -341,7 +341,7 @@ void compute_rhs()
     }
 
     for (j = 3; j <= ny2-2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         //for (m = 0; m < 5; m++) {
           rhs1[k][j][i]= rhs1[k][j][i] - dssp * 
@@ -369,7 +369,7 @@ void compute_rhs()
     }
 
     j = ny2-1;
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i] - dssp *
@@ -391,7 +391,7 @@ void compute_rhs()
     }
 
     j = ny2;
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i] - dssp *
@@ -415,7 +415,7 @@ void compute_rhs()
   if (timeron) timer_start(t_rhsz);
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         wijk = ws[k][j][i];
         wp1  = ws[k+1][j][i];
@@ -460,7 +460,7 @@ void compute_rhs()
   //---------------------------------------------------------------------
   k = 1;
   for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i]- dssp * 
@@ -479,7 +479,7 @@ void compute_rhs()
 
   k = 2;
   for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
         rhs1[k][j][i] = rhs1[k][j][i] - dssp * 
@@ -503,7 +503,7 @@ void compute_rhs()
 
   for (k = 3; k <= nz2-2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         //for (m = 0; m < 5; m++) {
         rhs1[k][j][i] = rhs1[k][j][i] - dssp * 
@@ -533,7 +533,7 @@ void compute_rhs()
 
   k = nz2-1;
   for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
         rhs1[k][j][i] = rhs1[k][j][i] - dssp *
@@ -557,7 +557,7 @@ void compute_rhs()
 
   k = nz2;
   for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
     for (i = 1; i <= nx2; i++) {
       //for (m = 0; m < 5; m++) {
       rhs1[k][j][i] = rhs1[k][j][i] - dssp *
@@ -577,7 +577,7 @@ void compute_rhs()
 
   for (k = 1; k <= nz2; k++) {
     for (j = 1; j <= ny2; j++) {
-#pragma simd
+ 
       for (i = 1; i <= nx2; i++) {
         //for (m = 0; m < 5; m++) {
         rhs1[k][j][i] = rhs1[k][j][i] * dt;
