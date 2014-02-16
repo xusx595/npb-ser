@@ -9,12 +9,12 @@
 #define DT_DEFAULT     0.0015
 
 #define CONVERTDOUBLE  false
-#define COMPILETIME "14 Feb 2014"
+#define COMPILETIME "16 Feb 2014"
 #define NPBVERSION "3.3.1"
 #define CS1 "icc"
 #define CS2 "$(CC)"
 #define CS3 "-lm"
 #define CS4 "-I../common"
-#define CS5 "-O3 -march=core-avx2 -vec- "
+#define CS5 "-O3 -march=corei7-avx -vec- "
 #define CS6 "-O3 -mcmodel=medium"
 #define CS7 "randdp"
