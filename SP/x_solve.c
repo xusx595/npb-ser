@@ -303,29 +303,55 @@ void x_solve()
       i  = grid_points[0]-2;
       i1 = grid_points[0]-1;
       fac1 = 1.0/lhs[j][i][1];
-      lhs[j][i][2] = fac1*lhs[j][i][2];
-      lhs[j][i][3] = fac1*lhs[j][i][3];
+      __m128d vfac1 = _mm_set1_pd(fac1);
+      
+      /*lhs[j][i][2] = fac1*lhs[j][i][2];
+      lhs[j][i][3] = fac1*lhs[j][i][3];*/
+        __m128d vlhs = _mm_load_pd(&lhs[j][i][2]);
+        vlhs = _mm_mul_pd(vfac1, vlhs);
+        _mm_store_pd(&lhs[j][i][2], vlhs);
+        
       //for (m = 0; m < 3; m++) {
       rhs1[k][j][i] = fac1*rhs1[k][j][i];
-      rhs[k][j][i][0] = fac1*rhs[k][j][i][0];
-      rhs[k][j][i][1] = fac1*rhs[k][j][i][1];
-      //}
-      lhs[j][i1][1] = lhs[j][i1][1] - lhs[j][i1][0]*lhs[j][i][2];
-      lhs[j][i1][2] = lhs[j][i1][2] - lhs[j][i1][0]*lhs[j][i][3];
+      /*rhs[k][j][i][0] = fac1*rhs[k][j][i][0];
+      rhs[k][j][i][1] = fac1*rhs[k][j][i][1];*/
+        __m128d vrhs = _mm_load_pd(&rhs[k][j][i][0]);
+        vrhs = _mm_mul_pd(vfac1, vrhs);
+        _mm_store_pd(&rhs[k][j][i][0], vrhs);
+
+      __m128d lhs_i1_0 = _mm_set1_pd(lhs[j][i1][0]);
+      
+      /*lhs[j][i1][1] = lhs[j][i1][1] - lhs[j][i1][0]*lhs[j][i][2];
+      lhs[j][i1][2] = lhs[j][i1][2] - lhs[j][i1][0]*lhs[j][i][3];*/
+        __m128d vlhs_i1 = _mm_loadu_pd(&lhs[j][i1][1]);
+        __m128d vlhs_i = _mm_loadu_pd(&lhs[j][i][2]);
+        vlhs_i = _mm_mul_pd(lhs_i1_0, vlhs_i);
+        vlhs_i1 = _mm_sub_pd(vlhs_i1, vlhs_i);
+        _mm_storeu_pd(&lhs[j][i1][1], vlhs_i1);
+        
       //for (m = 0; m < 3; m++) {
       rhs1[k][j][i1] = rhs1[k][j][i1] - lhs[j][i1][0]*rhs1[k][j][i];
-      rhs[k][j][i1][0] = rhs[k][j][i1][0] - lhs[j][i1][0]*rhs[k][j][i][0];
-      rhs[k][j][i1][1] = rhs[k][j][i1][1] - lhs[j][i1][0]*rhs[k][j][i][1];
+      /*rhs[k][j][i1][0] = rhs[k][j][i1][0] - lhs[j][i1][0]*rhs[k][j][i][0];
+      rhs[k][j][i1][1] = rhs[k][j][i1][1] - lhs[j][i1][0]*rhs[k][j][i][1];*/
+        __m128d vrhs_i1 = _mm_load_pd(&rhs[k][j][i1][0]);
+        __m128d vrhs_i = _mm_load_pd(&rhs[k][j][i][0]);
+        vrhs_i = _mm_mul_pd(lhs_i1_0, vrhs_i);
+        vrhs_i1 = _mm_sub_pd(vrhs_i1, vrhs_i);
+        _mm_storeu_pd(&rhs[k][j][i1][0], vrhs_i1);
       //}
 
       //---------------------------------------------------------------------
       // scale the last row immediately 
       //---------------------------------------------------------------------
       fac2 = 1.0/lhs[j][i1][1];
+      __m128d vfac2 = _mm_set1_pd(fac2);
       //for (m = 0; m < 3; m++) {
       rhs1[k][j][i1] = fac2*rhs1[k][j][i1];
-      rhs[k][j][i1][0] = fac2*rhs[k][j][i1][0];
-      rhs[k][j][i1][1] = fac2*rhs[k][j][i1][1];
+      /*rhs[k][j][i1][0] = fac2*rhs[k][j][i1][0];
+      rhs[k][j][i1][1] = fac2*rhs[k][j][i1][1];*/
+       vrhs = _mm_load_pd(&rhs[k][j][i1][0]);
+       vrhs = _mm_mul_pd(vfac1, vrhs);
+        _mm_store_pd(&rhs[k][j][i1][0], vrhs);
       //}
     }
 
@@ -339,26 +365,70 @@ void x_solve()
 
         m = 2;
         fac1 = 1.0/lhsp[j][i][1];
-        lhsp[j][i][2]    = fac1*lhsp[j][i][2];
-        lhsp[j][i][3]    = fac1*lhsp[j][i][3];
+        __m128d vfac1 = _mm_set1_pd(fac1);
+        
+        /*lhsp[j][i][2]    = fac1*lhsp[j][i][2];
+        lhsp[j][i][3]    = fac1*lhsp[j][i][3];*/
+        __m128d vlhsp = _mm_load_pd(&lhsp[j][i][2]);
+        vlhsp = _mm_mul_pd(vfac1, vlhsp);
+        _mm_store_pd(&lhsp[j][i][2], vlhsp);
+        
         rhs[k][j][i][m]  = fac1*rhs[k][j][i][m];
         lhsp[j][i1][1]   = lhsp[j][i1][1] - lhsp[j][i1][0]*lhsp[j][i][2];
         lhsp[j][i1][2]   = lhsp[j][i1][2] - lhsp[j][i1][0]*lhsp[j][i][3];
+        /*__m128d vlhsp_i = vlhsp;
+        __m128d vlhsp_i1 = _mm_loadu_pd(&lhsp[j][i1][0]);
+        __m128d vlhsp_i1_1 = _mm_loadu_pd(&lhsp[j][i1][1]);
+        vlhsp_i1 = _mm_mul_pd(vlhsp_i1, vlhsp_i);
+        vlhsp_i1_1 = _mm_sub_pd(vlhsp_i1_1, vlhsp_i1);
+        _mm_storeu_pd(&lhsp[j][i1][1], vlhsp_i1_1);*/
+        
         rhs[k][j][i1][m] = rhs[k][j][i1][m] - lhsp[j][i1][0]*rhs[k][j][i][m];
-        lhsp[j][i2][0]   = lhsp[j][i2][0] - lhsp1[j][i2]*lhsp[j][i][2];
-        lhsp[j][i2][1]   = lhsp[j][i2][1] - lhsp1[j][i2]*lhsp[j][i][3];
+        /*lhsp[j][i2][0]   = lhsp[j][i2][0] - lhsp1[j][i2]*lhsp[j][i][2];
+        lhsp[j][i2][1]   = lhsp[j][i2][1] - lhsp1[j][i2]*lhsp[j][i][3];*/
+        __m128d vlhsp1_i2 = _mm_set1_pd(lhsp1[j][i2]);
+        __m128d vlhsp_i = _mm_load_pd(&lhsp[j][i][2]);
+        __m128d vlhsp_i2 = _mm_load_pd(&lhsp[j][i2][0]);
+        vlhsp1_i2 = _mm_mul_pd(vlhsp1_i2, vlhsp_i);
+        vlhsp_i2 = _mm_sub_pd(vlhsp_i2, vlhsp1_i2);
+        _mm_storeu_pd(&lhsp[j][i2][0], vlhsp_i2);
+        
         rhs[k][j][i2][m] = rhs[k][j][i2][m] - lhsp1[j][i2]*rhs[k][j][i][m];
 
         m = 3;
         fac1 = 1.0/lhsm[j][i][1];
-        lhsm[j][i][2]    = fac1*lhsm[j][i][2];
-        lhsm[j][i][3]    = fac1*lhsm[j][i][3];
+        vfac1 = _mm_set1_pd(fac1);
+        
+        /*lhsm[j][i][2]    = fac1*lhsm[j][i][2];
+        lhsm[j][i][3]    = fac1*lhsm[j][i][3];*/
+        __m128d vlhsm = _mm_load_pd(&lhsm[j][i][2]);
+        vlhsm = _mm_mul_pd(vfac1, vlhsm);
+        _mm_store_pd(&lhsm[j][i][2], vlhsm);
+        
         rhs[k][j][i][m]  = fac1*rhs[k][j][i][m];
+        
         lhsm[j][i1][1]   = lhsm[j][i1][1] - lhsm[j][i1][0]*lhsm[j][i][2];
         lhsm[j][i1][2]   = lhsm[j][i1][2] - lhsm[j][i1][0]*lhsm[j][i][3];
+       /*__m128d vlhsm_i = _mm_load_pd(&lhsm[j][i][2]);
+        __m128d vlhsm_i1 = _mm_load_pd(&lhsm[j][i1][0]);
+        vlhsm_i1 = _mm_mul_pd(vlhsm_i1, vlhsm_i);
+        
+        __m128d vlhsm_i1_1 = _mm_loadu_pd(&lhsm[j][i1][1]);
+        
+        vlhsm_i1_1 = _mm_sub_pd(vlhsm_i1_1, vlhsm_i1);
+        _mm_storeu_pd(&lhsm[j][i1][1], vlhsm_i1_1);*/
+        
+        
         rhs[k][j][i1][m] = rhs[k][j][i1][m] - lhsm[j][i1][0]*rhs[k][j][i][m];
-        lhsm[j][i2][0]   = lhsm[j][i2][0] - lhsm1[j][i2]*lhsm[j][i][2];
-        lhsm[j][i2][1]   = lhsm[j][i2][1] - lhsm1[j][i2]*lhsm[j][i][3];
+        /*lhsm[j][i2][0]   = lhsm[j][i2][0] - lhsm1[j][i2]*lhsm[j][i][2];
+        lhsm[j][i2][1]   = lhsm[j][i2][1] - lhsm1[j][i2]*lhsm[j][i][3];*/
+        __m128d vlhsm1_i2 = _mm_set1_pd(lhsm1[j][i2]);
+        __m128d vlhsm_i = _mm_load_pd(&lhsm[j][i][2]);
+        __m128d vlhsm_i2 = _mm_load_pd(&lhsm[j][i2][0]);
+        vlhsm1_i2 = _mm_mul_pd(vlhsm1_i2, vlhsm_i);
+        vlhsm_i2 = _mm_sub_pd(vlhsm_i2, vlhsm1_i2);
+        _mm_store_pd(&lhsm[j][i2][0], vlhsm_i2);
+
         rhs[k][j][i2][m] = rhs[k][j][i2][m] - lhsm1[j][i2]*rhs[k][j][i][m];
       }
     }
