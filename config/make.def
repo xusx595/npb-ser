@@ -111,7 +111,7 @@ C_INC = -I../common
 # files larger than 2GB.
 #---------------------------------------------------------------------------
 CFLAGS	= -O3 -march=corei7-avx -vec- 
-#-Wall -O3 -mcmodel=medium -fno-tree-vectorize
+#-Wall -O3  -fno-tree-vectorize
 #-mavx2
 
 #---------------------------------------------------------------------------
