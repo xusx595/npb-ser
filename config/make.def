@@ -78,7 +78,7 @@ FLINKFLAGS = -O3
 #---------------------------------------------------------------------------
 # This is the C compiler used for C programs
 #---------------------------------------------------------------------------
-CC = icc
+CC = gcc
 
 #---------------------------------------------------------------------------
 # This links C programs; usually the same as ${CC}
@@ -110,8 +110,7 @@ C_INC = -I../common
 # _LARGEFILE64_SOURCE - are standard compiler flags which allow to work with 
 # files larger than 2GB.
 #---------------------------------------------------------------------------
-CFLAGS	= -O3 -march=corei7-avx 
-#-Wall -O3 -mcmodel=medium -fno-tree-vectorize
+CFLAGS	= -march=core-avx2 -Wall -O3 -mcmodel=medium -fno-tree-vectorize
 #-mavx2
 
 #---------------------------------------------------------------------------
