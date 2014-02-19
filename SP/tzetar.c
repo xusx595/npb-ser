@@ -39,8 +39,8 @@
 void tzetar()
 {
   int i, j, k;
-  double t1, t2, t3, ac, xvel, yvel, zvel, r1, r2, r3, r4, r5;
-  double btuz, ac2u, uzik1;
+  float t1, t2, t3, ac, xvel, yvel, zvel, r1, r2, r3, r4, r5;
+  float btuz, ac2u, uzik1;
 
   if (timeron) timer_start(t_tzetar);
   for (k = 1; k <= nz2; k++) {
@@ -55,10 +55,10 @@ void tzetar()
         ac2u = ac*ac;
 
         r1 = rhs1[k][j][i];
-        r2 = rhs[k][j][i][0];
-        r3 = rhs[k][j][i][1];
-        r4 = rhs[k][j][i][2];
-        r5 = rhs[k][j][i][3];     
+        r2 = rhs2[k][j][i][0];
+        r3 = rhs2[k][j][i][1];
+        r4 = rhs3[k][j][i][0];
+        r5 = rhs3[k][j][i][1];     
 
         uzik1 = u1[k][j][i];
         btuz  = bt * uzik1;
@@ -69,10 +69,10 @@ void tzetar()
 
 
         rhs1[k][j][i] = t2;
-        rhs[k][j][i][0] = -uzik1*r2 + xvel*t2;
-        rhs[k][j][i][1] =  uzik1*r1 + yvel*t2;
-        rhs[k][j][i][2] =  zvel*t2  + t3;
-        rhs[k][j][i][3] =  uzik1*(-xvel*r2 + yvel*r1) + 
+        rhs2[k][j][i][0] = -uzik1*r2 + xvel*t2;
+        rhs2[k][j][i][1] =  uzik1*r1 + yvel*t2;
+        rhs3[k][j][i][0] =  zvel*t2  + t3;
+        rhs3[k][j][i][1] =  uzik1*(-xvel*r2 + yvel*r1) + 
                            qs[k][j][i]*t2 + c2iv*ac2u*t1 + zvel*t3;
       }
     }

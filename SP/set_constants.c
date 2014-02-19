@@ -112,11 +112,11 @@ void set_constants()
   c4 = 1.0;
   c5 = 1.4;
 
-  bt = sqrt(0.5);
+  bt = sqrtf(0.5);
 
-  dnxm1 = 1.0 / (double)(grid_points[0]-1);
-  dnym1 = 1.0 / (double)(grid_points[1]-1);
-  dnzm1 = 1.0 / (double)(grid_points[2]-1);
+  dnxm1 = 1.0 / (float)(grid_points[0]-1);
+  dnym1 = 1.0 / (float)(grid_points[1]-1);
+  dnzm1 = 1.0 / (float)(grid_points[2]-1);
 
   c1c2 = c1 * c2;
   c1c5 = c1 * c5;

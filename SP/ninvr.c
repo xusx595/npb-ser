@@ -39,7 +39,7 @@
 void ninvr()
 {
   int i, j, k;
-  double r1, r2, r3, r4, r5, t1, t2;
+  float r1, r2, r3, r4, r5, t1, t2;
 
   if (timeron) timer_start(t_ninvr);
   for (k = 1; k <= nz2; k++) {
@@ -48,19 +48,19 @@ void ninvr()
 /* note that, simd for this loop may not be profitable. */
       for (i = 1; i <= nx2; i++) {
         r1 = rhs1[k][j][i];
-        r2 = rhs[k][j][i][0];
-        r3 = rhs[k][j][i][1];
-        r4 = rhs[k][j][i][2];
-        r5 = rhs[k][j][i][3];
+        r2 = rhs2[k][j][i][0];
+        r3 = rhs2[k][j][i][1];
+        r4 = rhs3[k][j][i][0];
+        r5 = rhs3[k][j][i][1];
 
         t1 = bt * r3;
         t2 = 0.5 * ( r4 + r5 );
 
         rhs1[k][j][i] = -r2;
-        rhs[k][j][i][0] =  r1;
-        rhs[k][j][i][1] = bt * ( r4 - r5 );
-        rhs[k][j][i][2] = -t1 + t2;
-        rhs[k][j][i][3] =  t1 + t2;
+        rhs2[k][j][i][0] =  r1;
+        rhs2[k][j][i][1] = bt * ( r4 - r5 );
+        rhs3[k][j][i][0] = -t1 + t2;
+        rhs3[k][j][i][1] =  t1 + t2;
       }
     }
   }

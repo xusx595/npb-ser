@@ -40,7 +40,7 @@
 void initialize()
 {
   int i, j, k, m, ix, iy, iz;
-  double xi, eta, zeta, Pface[2][3][5], Pxi, Peta, Pzeta, temp[5];
+  float xi, eta, zeta, Pface[2][3][5], Pxi, Peta, Pzeta, temp[5];
 
   //---------------------------------------------------------------------
   //  Later (in compute_rhs) we compute 1/u for every element. A few of 
@@ -52,10 +52,10 @@ void initialize()
     for (j = 0; j <= grid_points[1]-1; j++) {
       for (i = 0; i <= grid_points[0]-1; i++) {
         u1[k][j][i] = 1.0;
-        u[k][j][i][0] = 0.0;
-        u[k][j][i][1] = 0.0;
-        u[k][j][i][2] = 0.0;
-        u[k][j][i][3] = 1.0;
+        u2[k][j][i][0] = 0.0;
+        u2[k][j][i][1] = 0.0;
+        u3[k][j][i][0] = 0.0;
+        u3[k][j][i][1] = 1.0;
       }
     }
   }
@@ -64,24 +64,24 @@ void initialize()
   // first store the "interpolated" values everywhere on the grid    
   //---------------------------------------------------------------------
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (j = 0; j <= grid_points[1]-1; j++) {
-      eta = (double)j * dnym1;
+      eta = (float)j * dnym1;
       for (i = 0; i <= grid_points[0]-1; i++) {
-        xi = (double)i * dnxm1;
+        xi = (float)i * dnxm1;
 
         for (ix = 0; ix < 2; ix++) {
-          Pxi = (double)ix;
+          Pxi = (float)ix;
           exact_solution(Pxi, eta, zeta, &Pface[ix][0][0]);
         }
 
         for (iy = 0; iy < 2; iy++) {
-          Peta = (double)iy;
+          Peta = (float)iy;
           exact_solution(xi, Peta, zeta, &Pface[iy][1][0]);
         }
 
         for (iz = 0; iz < 2; iz++) {
-          Pzeta = (double)iz;
+          Pzeta = (float)iz;
           exact_solution(xi, eta, Pzeta, &Pface[iz][2][0]);
         }
 
@@ -96,12 +96,21 @@ void initialize()
                           Pxi*Peta*Pzeta;
         //}
 
-        for (m = 1; m < 5; m++) {
+        for (m = 1; m < 3; m++) {
           Pxi   = xi   * Pface[1][0][m] + (1.0-xi)   * Pface[0][0][m];
           Peta  = eta  * Pface[1][1][m] + (1.0-eta)  * Pface[0][1][m];
           Pzeta = zeta * Pface[1][2][m] + (1.0-zeta) * Pface[0][2][m];
 
-          u[k][j][i][m-1] = Pxi + Peta + Pzeta - 
+          u2[k][j][i][m-1] = Pxi + Peta + Pzeta - 
+                          Pxi*Peta - Pxi*Pzeta - Peta*Pzeta + 
+                          Pxi*Peta*Pzeta;
+        }
+         for (m = 3; m < 5; m++) {
+          Pxi   = xi   * Pface[1][0][m] + (1.0-xi)   * Pface[0][0][m];
+          Peta  = eta  * Pface[1][1][m] + (1.0-eta)  * Pface[0][1][m];
+          Pzeta = zeta * Pface[1][2][m] + (1.0-zeta) * Pface[0][2][m];
+
+          u3[k][j][i][m -3] = Pxi + Peta + Pzeta - 
                           Pxi*Peta - Pxi*Pzeta - Peta*Pzeta + 
                           Pxi*Peta*Pzeta;
         }
@@ -120,15 +129,18 @@ void initialize()
   xi = 0.0;
   i  = 0;
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (j = 0; j <= grid_points[1]-1; j++) {
-      eta = (double)j * dnym1;
+      eta = (float)j * dnym1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
       //}
-      for (m = 0; m < 4; m++) {
-        u[k][j][i][m] = temp[m+1];
+      for (m = 0; m < 2; m++) {
+        u2[k][j][i][m] = temp[m+1];
+      }
+     for (m = 2; m < 4; m++) {
+        u3[k][j][i][m-2] = temp[m+1];
       }
     }
   }
@@ -139,15 +151,18 @@ void initialize()
   xi = 1.0;
   i  = grid_points[0]-1;
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (j = 0; j <= grid_points[1]-1; j++) {
-      eta = (double)j * dnym1;
+      eta = (float)j * dnym1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
       //}
-      for (m = 0; m < 4; m++) {
-        u[k][j][i][m] = temp[m+1];
+      for (m = 0; m < 2; m++) {
+        u2[k][j][i][m] = temp[m+1];
+      }
+     for (m = 2; m < 4; m++) {
+        u3[k][j][i][m-2] = temp[m+1];
       }
     }
   }
@@ -158,15 +173,18 @@ void initialize()
   eta = 0.0;
   j   = 0;
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (i = 0; i <= grid_points[0]-1; i++) {
-      xi = (double)i * dnxm1;
+      xi = (float)i * dnxm1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
       //}
-      for (m = 0; m < 4; m++) {
-        u[k][j][i][m] = temp[m+1];
+      for (m = 0; m < 2; m++) {
+        u2[k][j][i][m] = temp[m+1];
+      }
+     for (m = 2; m < 4; m++) {
+        u3[k][j][i][m-2] = temp[m+1];
       }
     }
   }
@@ -177,15 +195,18 @@ void initialize()
   eta = 1.0;
   j   = grid_points[1]-1;
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (i = 0; i <= grid_points[0]-1; i++) {
-      xi = (double)i * dnxm1;
+      xi = (float)i * dnxm1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
       //}
-      for (m = 0; m < 4; m++) {
-        u[k][j][i][m] = temp[m+1];
+      for (m = 0; m < 2; m++) {
+        u2[k][j][i][m] = temp[m+1];
+      }
+     for (m = 2; m < 4; m++) {
+        u3[k][j][i][m-2] = temp[m+1];
       }
     }
   }
@@ -196,15 +217,18 @@ void initialize()
   zeta = 0.0;
   k    = 0;
   for (j = 0; j <= grid_points[1]-1; j++) {
-    eta = (double)j * dnym1;
+    eta = (float)j * dnym1;
     for (i =0; i <= grid_points[0]-1; i++) {
-      xi = (double)i * dnxm1;
+      xi = (float)i * dnxm1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
       //}
-      for (m = 0; m < 4; m++) {
-        u[k][j][i][m] = temp[m+1];
+      for (m = 0; m < 2; m++) {
+        u2[k][j][i][m] = temp[m+1];
+      }
+     for (m = 2; m < 4; m++) {
+        u3[k][j][i][m-2] = temp[m+1];
       }
     }
   }
@@ -215,15 +239,18 @@ void initialize()
   zeta = 1.0;
   k    = grid_points[2]-1;
   for (j = 0; j <= grid_points[1]-1; j++) {
-    eta = (double)j * dnym1;
+    eta = (float)j * dnym1;
     for (i =0; i <= grid_points[0]-1; i++) {
-      xi = (double)i * dnxm1;
+      xi = (float)i * dnxm1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
       //}
-      for (m = 0; m < 4; m++) {
-        u[k][j][i][m] = temp[m+1];
+      for (m = 0; m < 2; m++) {
+        u2[k][j][i][m] = temp[m+1];
+      }
+     for (m = 2; m < 4; m++) {
+        u3[k][j][i][m-2] = temp[m+1];
       }
     }
   }
@@ -247,20 +274,28 @@ void lhsinit(int ni, int nj)
       lhsp1[j][ni] = 0.0;
       lhsm1[j][ni] = 0.0;
     //}
-    for (m = 0; m < 4; m++) {
-      lhs [j][0][m] = 0.0;
-      lhsp[j][0][m] = 0.0;
-      lhsm[j][0][m] = 0.0;
-      lhs [j][ni][m] = 0.0;
-      lhsp[j][ni][m] = 0.0;
-      lhsm[j][ni][m] = 0.0;
+    for (m = 0; m < 2; m++) {
+      lhs2 [j][0][m] = 0.0;
+      lhsp2[j][0][m] = 0.0;
+      lhsm2[j][0][m] = 0.0;
+      lhs2 [j][ni][m] = 0.0;
+      lhsp2[j][ni][m] = 0.0;
+      lhsm2[j][ni][m] = 0.0;
     }
-    lhs [j][0][1] = 1.0;
-    lhsp[j][0][1] = 1.0;
-    lhsm[j][0][1] = 1.0;
-    lhs [j][ni][1] = 1.0;
-    lhsp[j][ni][1] = 1.0;
-    lhsm[j][ni][1] = 1.0;
+     for (m = 2; m < 4; m++) {
+      lhs3 [j][0][m-2] = 0.0;
+      lhsp3[j][0][m-2] = 0.0;
+      lhsm3[j][0][m-2] = 0.0;
+      lhs3 [j][ni][m-2] = 0.0;
+      lhsp3[j][ni][m-2] = 0.0;
+      lhsm3[j][ni][m-2] = 0.0;
+    }
+    lhs2 [j][0][1] = 1.0;
+    lhsp2[j][0][1] = 1.0;
+    lhsm2[j][0][1] = 1.0;
+    lhs2 [j][ni][1] = 1.0;
+    lhsp2[j][ni][1] = 1.0;
+    lhsm2[j][ni][1] = 1.0;
   }
 }
 
@@ -282,19 +317,27 @@ void lhsinitj(int nj, int ni)
       lhsp1[nj][i] = 0.0;
       lhsm1[nj][i] = 0.0;
     //}
-    for (m = 0; m < 4; m++) {
-      lhs [0][i][m] = 0.0;
-      lhsp[0][i][m] = 0.0;
-      lhsm[0][i][m] = 0.0;
-      lhs [nj][i][m] = 0.0;
-      lhsp[nj][i][m] = 0.0;
-      lhsm[nj][i][m] = 0.0;
+    for (m = 0; m < 2; m++) {
+      lhs2 [0][i][m] = 0.0;
+      lhsp2[0][i][m] = 0.0;
+      lhsm2[0][i][m] = 0.0;
+      lhs2 [nj][i][m] = 0.0;
+      lhsp2[nj][i][m] = 0.0;
+      lhsm2[nj][i][m] = 0.0;
     }
-    lhs [0][i][1] = 1.0;
-    lhsp[0][i][1] = 1.0;
-    lhsm[0][i][1] = 1.0;
-    lhs [nj][i][1] = 1.0;
-    lhsp[nj][i][1] = 1.0;
-    lhsm[nj][i][1] = 1.0;
+    for (m = 2; m < 4; m++) {
+      lhs3 [0][i][m-2] = 0.0;
+      lhsp3[0][i][m-2] = 0.0;
+      lhsm3[0][i][m-2] = 0.0;
+      lhs3 [nj][i][m-2] = 0.0;
+      lhsp3[nj][i][m-2] = 0.0;
+      lhsm3[nj][i][m-2] = 0.0;
+    }
+    lhs2 [0][i][1] = 1.0;
+    lhsp2[0][i][1] = 1.0;
+    lhsm2[0][i][1] = 1.0;
+    lhs2 [nj][i][1] = 1.0;
+    lhsp2[nj][i][1] = 1.0;
+    lhsm2[nj][i][1] = 1.0;
   }
 }

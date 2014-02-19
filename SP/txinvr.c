@@ -39,7 +39,7 @@
 void txinvr()
 {
   int i, j, k;
-  double t1, t2, t3, ac, ru1, uu, vv, ww, r1, r2, r3, r4, r5, ac2inv;
+  float t1, t2, t3, ac, ru1, uu, vv, ww, r1, r2, r3, r4, r5, ac2inv;
 
   if (timeron) timer_start(t_txinvr);
   for (k = 1; k <= nz2; k++) {
@@ -54,20 +54,20 @@ void txinvr()
         ac2inv = ac*ac;
 
         r1 = rhs1[k][j][i];
-        r2 = rhs[k][j][i][0];
-        r3 = rhs[k][j][i][1];
-        r4 = rhs[k][j][i][2];
-        r5 = rhs[k][j][i][3];
+        r2 = rhs2[k][j][i][0];
+        r3 = rhs2[k][j][i][1];
+        r4 = rhs3[k][j][i][0];
+        r5 = rhs3[k][j][i][1];
 
         t1 = c2 / ac2inv * ( qs[k][j][i]*r1 - uu*r2  - vv*r3 - ww*r4 + r5 );
         t2 = bt * ru1 * ( uu * r1 - r2 );
         t3 = ( bt * ru1 * ac ) * t1;
 
         rhs1[k][j][i] = r1 - t1;
-        rhs[k][j][i][0] = - ru1 * ( ww*r1 - r4 );
-        rhs[k][j][i][1] =   ru1 * ( vv*r1 - r3 );
-        rhs[k][j][i][2] = - t2 + t3;
-        rhs[k][j][i][3] =   t2 + t3;
+        rhs2[k][j][i][0] = - ru1 * ( ww*r1 - r4 );
+        rhs2[k][j][i][1] =   ru1 * ( vv*r1 - r3 );
+        rhs3[k][j][i][0] = - t2 + t3;
+        rhs3[k][j][i][1] =   t2 + t3;
       }
     }
   }

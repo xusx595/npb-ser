@@ -41,8 +41,8 @@
 //---------------------------------------------------------------------
 void verify(int no_time_steps, char *Class, logical *verified)
 {
-  double xcrref[5], xceref[5], xcrdif[5], xcedif[5];
-  double epsilon, xce[5], xcr[5], dtref = 0.0;
+  float xcrref[5], xceref[5], xcrdif[5], xcedif[5];
+  float epsilon, xce[5], xcr[5], dtref = 0.0;
   int m;
 
   //---------------------------------------------------------------------

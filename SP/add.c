@@ -47,10 +47,10 @@ void add()
       for (i = 1; i <= nx2; i++) {
         //for (m = 0; m < 5; m++) {
         u1[k][j][i] = u1[k][j][i] + rhs1[k][j][i];
-        u[k][j][i][0] = u[k][j][i][0] + rhs[k][j][i][0];
-        u[k][j][i][1] = u[k][j][i][1] + rhs[k][j][i][1];
-        u[k][j][i][2] = u[k][j][i][2] + rhs[k][j][i][2];
-        u[k][j][i][3] = u[k][j][i][3] + rhs[k][j][i][3];
+        u2[k][j][i][0] = u2[k][j][i][0] + rhs2[k][j][i][0];
+        u2[k][j][i][1] = u2[k][j][i][1] + rhs2[k][j][i][1];
+        u3[k][j][i][0] = u3[k][j][i][0] + rhs3[k][j][i][0];
+        u3[k][j][i][1] = u3[k][j][i][1] + rhs3[k][j][i][1];
         //}
       }
     }

@@ -38,28 +38,32 @@
 // this function computes the norm of the difference between the
 // computed solution and the exact solution
 //---------------------------------------------------------------------
-void error_norm(double rms[5])
+void error_norm(float rms[5])
 {
   int i, j, k, m, d;
-  double xi, eta, zeta, u_exact[5], add;
+  float xi, eta, zeta, u_exact[5], add;
 
   for (m = 0; m < 5; m++) {
     rms[m] = 0.0;
   }
 
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (j = 0; j <= grid_points[1]-1; j++) {
-      eta = (double)j * dnym1;
+      eta = (float)j * dnym1;
       for (i = 0; i <= grid_points[0]-1; i++) {
-        xi = (double)i * dnxm1;
+        xi = (float)i * dnxm1;
         exact_solution(xi, eta, zeta, u_exact);
         //for (m = 0; m < 5; m++) {
           add = u1[k][j][i]-u_exact[0];
           rms[0] = rms[0] + add*add;
         //}
-        for (m = 1; m < 5; m++) {
-          add = u[k][j][i][m-1]-u_exact[m];
+        for (m = 1; m < 3; m++) {
+          add = u2[k][j][i][m-1]-u_exact[m];
+          rms[m] = rms[m] + add*add;
+        }
+        for (m = 3; m < 5; m++) {
+          add = u3[k][j][i][m-3]-u_exact[m];
           rms[m] = rms[m] + add*add;
         }
       }
@@ -68,17 +72,17 @@ void error_norm(double rms[5])
 
   for (m = 0; m < 5; m++) {
     for (d = 0; d < 3; d++) {
-      rms[m] = rms[m] / (double)(grid_points[d]-2);
+      rms[m] = rms[m] / (float)(grid_points[d]-2);
     }
-    rms[m] = sqrt(rms[m]);
+    rms[m] = sqrtf(rms[m]);
   }
 }
 
 
-void rhs_norm(double rms[5])
+void rhs_norm(float rms[5])
 {
   int i, j, k, d, m;
-  double add;
+  float add;
 
   for (m = 0; m < 5; m++) {
     rms[m] = 0.0;
@@ -91,8 +95,12 @@ void rhs_norm(double rms[5])
           add = rhs1[k][j][i];
           rms[0] = rms[0] + add*add;
         //} 
-        for (m = 1; m < 5; m++) {
-          add = rhs[k][j][i][m-1];
+        for (m = 1; m < 3; m++) {
+          add = rhs2[k][j][i][m-1];
+          rms[m] = rms[m] + add*add;
+        } 
+        for (m = 3; m < 5; m++) {
+          add = rhs3[k][j][i][m-3];
           rms[m] = rms[m] + add*add;
         } 
       } 
@@ -101,16 +109,16 @@ void rhs_norm(double rms[5])
 
    //for (m = 0; m < 5; m++) {
     for (d = 0; d < 3; d++) {
-      rms[0] = rms[0] / (double)(grid_points[d]-2);
+      rms[0] = rms[0] / (float)(grid_points[d]-2);
     }
-    rms[0] = sqrt(rms[0]);
+    rms[0] = sqrtf(rms[0]);
   //}
 
   for (m = 1; m < 5; m++) {
     for (d = 0; d < 3; d++) {
-      rms[m] = rms[m] / (double)(grid_points[d]-2);
+      rms[m] = rms[m] / (float)(grid_points[d]-2);
     }
-    rms[m] = sqrt(rms[m]);
+    rms[m] = sqrtf(rms[m]);
   }
 }
 

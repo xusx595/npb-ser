@@ -46,7 +46,7 @@ int grid_points[3], nx2, ny2, nz2;
 logical timeron;
 
 /* common /constants/ */
-double tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3, 
+float tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3, 
        dx1, dx2, dx3, dx4, dx5, dy1, dy2, dy3, dy4, 
        dy5, dz1, dz2, dz3, dz4, dz5, dssp, dt, 
        ce[5][13], dxmax, dymax, dzmax, xxcon1, xxcon2, 
@@ -63,52 +63,60 @@ double tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3,
 
 /* common /fields/ */
 /* split u info 1:4 */
-double u1      [KMAX][JMAXP+1][IMAXP];
-double u      [KMAX][JMAXP+1][IMAXP+1][4];
-double us     [KMAX][JMAXP+1][IMAXP];
-double vs     [KMAX][JMAXP+1][IMAXP];
-double ws     [KMAX][JMAXP+1][IMAXP];
-double qs     [KMAX][JMAXP+1][IMAXP];
-double rho_i  [KMAX][JMAXP+1][IMAXP];
-double speed  [KMAX][JMAXP+1][IMAXP];
-double square [KMAX][JMAXP+1][IMAXP];
+float u1      [KMAX][JMAXP+1][IMAXP];
+float u2      [KMAX][JMAXP+1][IMAXP+1][2];
+float u3      [KMAX][JMAXP+1][IMAXP+1][2];
+float us     [KMAX][JMAXP+1][IMAXP];
+float vs     [KMAX][JMAXP+1][IMAXP];
+float ws     [KMAX][JMAXP+1][IMAXP];
+float qs     [KMAX][JMAXP+1][IMAXP];
+float rho_i  [KMAX][JMAXP+1][IMAXP];
+float speed  [KMAX][JMAXP+1][IMAXP];
+float square [KMAX][JMAXP+1][IMAXP];
 /* split rhs into 1:4 */
-double rhs1    [KMAX][JMAXP+1][IMAXP];
-double rhs    [KMAX][JMAXP+1][IMAXP+1][4];
+float rhs1    [KMAX][JMAXP+1][IMAXP];
+float rhs2    [KMAX][JMAXP+1][IMAXP+1][2];
+float rhs3    [KMAX][JMAXP+1][IMAXP+1][2];
 /* split forcing into 1:4 */
-double forcing1[KMAX][JMAXP+1][IMAXP];
-double forcing[KMAX][JMAXP+1][IMAXP+1][4];
+float forcing1[KMAX][JMAXP+1][IMAXP];
+float forcing2[KMAX][JMAXP+1][IMAXP+1][2];
+float forcing3[KMAX][JMAXP+1][IMAXP+1][2];
 
 /* common /work_1d/ */
-double cv  [PROBLEM_SIZE];
-double rhon[PROBLEM_SIZE];
-double rhos[PROBLEM_SIZE];
-double rhoq[PROBLEM_SIZE];
-double cuf [PROBLEM_SIZE];
-double q   [PROBLEM_SIZE];
+float cv  [PROBLEM_SIZE];
+float rhon[PROBLEM_SIZE];
+float rhos[PROBLEM_SIZE];
+float rhoq[PROBLEM_SIZE];
+float cuf [PROBLEM_SIZE];
+float q   [PROBLEM_SIZE];
 /* split ue into 1:4. */
-double ue1 [PROBLEM_SIZE];
-double ue [PROBLEM_SIZE][4];
+float ue1 [PROBLEM_SIZE];
+float ue2 [PROBLEM_SIZE][2];
+float ue3 [PROBLEM_SIZE][2];
 /* split buf into 1:4 */
-double buf1[PROBLEM_SIZE];
-double buf[PROBLEM_SIZE][4];
+float buf1[PROBLEM_SIZE];
+float buf2[PROBLEM_SIZE][2];
+float buf3[PROBLEM_SIZE][2];
 
 /* common /work_lhs/ */
 /* split lhs into 1:4*/
-double lhs1 [IMAXP+1][IMAXP];
-double lhs [IMAXP+1][IMAXP+1][4];
+float lhs1 [IMAXP+1][IMAXP];
+float lhs2 [IMAXP+1][IMAXP+1][2];
+float lhs3 [IMAXP+1][IMAXP+1][2];
 /* split lhsp into 1:4 */
-double lhsp1[IMAXP+1][IMAXP];
-double lhsp[IMAXP+1][IMAXP+1][4];
+float lhsp1[IMAXP+1][IMAXP];
+float lhsp2[IMAXP+1][IMAXP+1][2];
+float lhsp3[IMAXP+1][IMAXP+1][2];
 /* split lhsm into 1:4 */
-double lhsm1[IMAXP+1][IMAXP];
-double lhsm[IMAXP+1][IMAXP+1][4];
+float lhsm1[IMAXP+1][IMAXP];
+float lhsm2[IMAXP+1][IMAXP+1][2];
+float lhsm3[IMAXP+1][IMAXP+1][2];
 
 
 int main(int argc, char *argv[])
 {
   int i, niter, step, n3;
-  double mflops, t, tmax, trecs[t_last+1];
+  float mflops, t, tmax, trecs[t_last+1];
   logical verified;
   char Class;
   char *t_names[t_last+1];
@@ -213,10 +221,10 @@ int main(int argc, char *argv[])
   if (tmax != 0.0) {
     n3 = grid_points[0]*grid_points[1]*grid_points[2];
     t = (grid_points[0]+grid_points[1]+grid_points[2])/3.0;
-    mflops = (881.174 * (double)n3
+    mflops = (881.174 * (float)n3
              - 4683.91 * (t * t)
              + 11484.5 * t
-             - 19272.4) * (double)niter / (tmax*1000000.0);
+             - 19272.4) * (float)niter / (tmax*1000000.0);
   } else {
     mflops = 0.0;
   }
