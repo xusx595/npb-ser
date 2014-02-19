@@ -51,7 +51,7 @@ extern int grid_points[3], nx2, ny2, nz2;
 extern logical timeron;
 
 /* common /constants/ */
-extern double tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3, 
+extern float tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3, 
               dx1, dx2, dx3, dx4, dx5, dy1, dy2, dy3, dy4, 
               dy5, dz1, dz2, dz3, dz4, dz5, dssp, dt, 
               ce[5][13], dxmax, dymax, dzmax, xxcon1, xxcon2, 
@@ -77,39 +77,39 @@ extern double tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3,
 // for even number sizes only
 //---------------------------------------------------------------------
 /* common /fields/ */
-extern double u1      [KMAX][JMAXP+1][IMAXP];
-extern double u      [KMAX][JMAXP+1][IMAXP+1][4];
-extern double us     [KMAX][JMAXP+1][IMAXP];
-extern double vs     [KMAX][JMAXP+1][IMAXP];
-extern double ws     [KMAX][JMAXP+1][IMAXP];
-extern double qs     [KMAX][JMAXP+1][IMAXP];
-extern double rho_i  [KMAX][JMAXP+1][IMAXP];
-extern double speed  [KMAX][JMAXP+1][IMAXP];
-extern double square [KMAX][JMAXP+1][IMAXP];
-extern double rhs1    [KMAX][JMAXP+1][IMAXP];
-extern double rhs    [KMAX][JMAXP+1][IMAXP+1][4];
-extern double forcing1[KMAX][JMAXP+1][IMAXP];
-extern double forcing[KMAX][JMAXP+1][IMAXP+1][4];
+extern float u1      [KMAX][JMAXP+1][IMAXP];
+extern float u      [KMAX][JMAXP+1][IMAXP+1][4];
+extern float us     [KMAX][JMAXP+1][IMAXP];
+extern float vs     [KMAX][JMAXP+1][IMAXP];
+extern float ws     [KMAX][JMAXP+1][IMAXP];
+extern float qs     [KMAX][JMAXP+1][IMAXP];
+extern float rho_i  [KMAX][JMAXP+1][IMAXP];
+extern float speed  [KMAX][JMAXP+1][IMAXP];
+extern float square [KMAX][JMAXP+1][IMAXP];
+extern float rhs1    [KMAX][JMAXP+1][IMAXP];
+extern float rhs    [KMAX][JMAXP+1][IMAXP+1][4];
+extern float forcing1[KMAX][JMAXP+1][IMAXP];
+extern float forcing[KMAX][JMAXP+1][IMAXP+1][4];
 
 /* common /work_1d/ */
-extern double cv  [PROBLEM_SIZE];
-extern double rhon[PROBLEM_SIZE];
-extern double rhos[PROBLEM_SIZE];
-extern double rhoq[PROBLEM_SIZE];
-extern double cuf [PROBLEM_SIZE];
-extern double q   [PROBLEM_SIZE];
-extern double ue1 [PROBLEM_SIZE];
-extern double ue [PROBLEM_SIZE][4];
-extern double buf1[PROBLEM_SIZE];
-extern double buf[PROBLEM_SIZE][4];
+extern float cv  [PROBLEM_SIZE];
+extern float rhon[PROBLEM_SIZE];
+extern float rhos[PROBLEM_SIZE];
+extern float rhoq[PROBLEM_SIZE];
+extern float cuf [PROBLEM_SIZE];
+extern float q   [PROBLEM_SIZE];
+extern float ue1 [PROBLEM_SIZE];
+extern float ue [PROBLEM_SIZE][4];
+extern float buf1[PROBLEM_SIZE];
+extern float buf[PROBLEM_SIZE][4];
 
 /* common /work_lhs/ */
-extern double lhs1 [IMAXP+1][IMAXP];
-extern double lhs [IMAXP+1][IMAXP+1][4];
-extern double lhsp1[IMAXP+1][IMAXP];
-extern double lhsp[IMAXP+1][IMAXP+1][4];
-extern double lhsm1[IMAXP+1][IMAXP];
-extern double lhsm[IMAXP+1][IMAXP+1][4];
+extern float lhs1 [IMAXP+1][IMAXP];
+extern float lhs [IMAXP+1][IMAXP+1][4];
+extern float lhsp1[IMAXP+1][IMAXP];
+extern float lhsp[IMAXP+1][IMAXP+1][4];
+extern float lhsm1[IMAXP+1][IMAXP];
+extern float lhsm[IMAXP+1][IMAXP+1][4];
 
 //-----------------------------------------------------------------------
 // Timer constants
@@ -136,7 +136,7 @@ extern double lhsm[IMAXP+1][IMAXP+1][4];
 void initialize();
 void lhsinit(int ni, int nj);
 void lhsinitj(int nj, int ni);
-void exact_solution(double xi, double eta, double zeta, double dtemp[5]);
+void exact_solution(float xi, float eta, float zeta, float dtemp[5]);
 void exact_rhs();
 void set_constants();
 void adi();
@@ -149,7 +149,7 @@ void z_solve();
 void tzetar();
 void add();
 void txinvr();
-void error_norm(double rms[5]);
-void rhs_norm(double rms[5]);
+void error_norm(float rms[5]);
+void rhs_norm(float rms[5]);
 void verify(int no_time_steps, char *Class, logical *verified);
 

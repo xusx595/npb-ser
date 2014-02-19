@@ -38,7 +38,7 @@
 //---------------------------------------------------------------------
 void exact_rhs()
 {
-  double dtemp1, dtemp[4], xi, eta, zeta, dtpp;
+  float dtemp1, dtemp[4], xi, eta, zeta, dtpp;
   int m, i, j, k, ip1, im1, jp1, jm1, km1, kp1;
 
   //---------------------------------------------------------------------
@@ -63,12 +63,12 @@ void exact_rhs()
   // xi-direction flux differences                      
   //---------------------------------------------------------------------
   for (k = 1; k <= grid_points[2]-2; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (j = 1; j <= grid_points[1]-2; j++) {
-      eta = (double)j * dnym1;
+      eta = (float)j * dnym1;
  
       for (i = 0; i <= grid_points[0]-1; i++) {
-        xi = (double)i * dnxm1;
+        xi = (float)i * dnxm1;
 
         /* TODO inline exact_solution. */
         //exact_solution(xi, eta, zeta, dtemp);
@@ -223,12 +223,12 @@ void exact_rhs()
   // eta-direction flux differences             
   //---------------------------------------------------------------------
   for (k = 1; k <= grid_points[2]-2; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (i = 1; i <= grid_points[0]-2; i++) {
-      xi = (double)i * dnxm1;
+      xi = (float)i * dnxm1;
  
       for (j = 0; j <= grid_points[1]-1; j++) {
-        eta = (double)j * dnym1;
+        eta = (float)j * dnym1;
 
         //exact_solution(xi, eta, zeta, dtemp);
         dtemp1 = ce[0][0] +
@@ -384,12 +384,12 @@ void exact_rhs()
   // zeta-direction flux differences                      
   //---------------------------------------------------------------------
   for (j = 1; j <= grid_points[1]-2; j++) {
-    eta = (double)j * dnym1;
+    eta = (float)j * dnym1;
     for (i = 1; i <= grid_points[0]-2; i++) {
-      xi = (double)i * dnxm1;
+      xi = (float)i * dnxm1;
  
       for (k = 0; k <= grid_points[2]-1; k++) {
-        zeta = (double)k * dnzm1;
+        zeta = (float)k * dnzm1;
 
         //exact_solution(xi, eta, zeta, dtemp);
         dtemp1 = ce[0][0] +

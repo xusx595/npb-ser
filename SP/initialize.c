@@ -40,7 +40,7 @@
 void initialize()
 {
   int i, j, k, m, ix, iy, iz;
-  double xi, eta, zeta, Pface[2][3][5], Pxi, Peta, Pzeta, temp[5];
+  float xi, eta, zeta, Pface[2][3][5], Pxi, Peta, Pzeta, temp[5];
 
   //---------------------------------------------------------------------
   //  Later (in compute_rhs) we compute 1/u for every element. A few of 
@@ -64,24 +64,24 @@ void initialize()
   // first store the "interpolated" values everywhere on the grid    
   //---------------------------------------------------------------------
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (j = 0; j <= grid_points[1]-1; j++) {
-      eta = (double)j * dnym1;
+      eta = (float)j * dnym1;
       for (i = 0; i <= grid_points[0]-1; i++) {
-        xi = (double)i * dnxm1;
+        xi = (float)i * dnxm1;
 
         for (ix = 0; ix < 2; ix++) {
-          Pxi = (double)ix;
+          Pxi = (float)ix;
           exact_solution(Pxi, eta, zeta, &Pface[ix][0][0]);
         }
 
         for (iy = 0; iy < 2; iy++) {
-          Peta = (double)iy;
+          Peta = (float)iy;
           exact_solution(xi, Peta, zeta, &Pface[iy][1][0]);
         }
 
         for (iz = 0; iz < 2; iz++) {
-          Pzeta = (double)iz;
+          Pzeta = (float)iz;
           exact_solution(xi, eta, Pzeta, &Pface[iz][2][0]);
         }
 
@@ -120,9 +120,9 @@ void initialize()
   xi = 0.0;
   i  = 0;
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (j = 0; j <= grid_points[1]-1; j++) {
-      eta = (double)j * dnym1;
+      eta = (float)j * dnym1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
@@ -139,9 +139,9 @@ void initialize()
   xi = 1.0;
   i  = grid_points[0]-1;
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (j = 0; j <= grid_points[1]-1; j++) {
-      eta = (double)j * dnym1;
+      eta = (float)j * dnym1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
@@ -158,9 +158,9 @@ void initialize()
   eta = 0.0;
   j   = 0;
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (i = 0; i <= grid_points[0]-1; i++) {
-      xi = (double)i * dnxm1;
+      xi = (float)i * dnxm1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
@@ -177,9 +177,9 @@ void initialize()
   eta = 1.0;
   j   = grid_points[1]-1;
   for (k = 0; k <= grid_points[2]-1; k++) {
-    zeta = (double)k * dnzm1;
+    zeta = (float)k * dnzm1;
     for (i = 0; i <= grid_points[0]-1; i++) {
-      xi = (double)i * dnxm1;
+      xi = (float)i * dnxm1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
@@ -196,9 +196,9 @@ void initialize()
   zeta = 0.0;
   k    = 0;
   for (j = 0; j <= grid_points[1]-1; j++) {
-    eta = (double)j * dnym1;
+    eta = (float)j * dnym1;
     for (i =0; i <= grid_points[0]-1; i++) {
-      xi = (double)i * dnxm1;
+      xi = (float)i * dnxm1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];
@@ -215,9 +215,9 @@ void initialize()
   zeta = 1.0;
   k    = grid_points[2]-1;
   for (j = 0; j <= grid_points[1]-1; j++) {
-    eta = (double)j * dnym1;
+    eta = (float)j * dnym1;
     for (i =0; i <= grid_points[0]-1; i++) {
-      xi = (double)i * dnxm1;
+      xi = (float)i * dnxm1;
       exact_solution(xi, eta, zeta, temp);
       //for (m = 0; m < 5; m++) {
         u1[k][j][i] = temp[0];

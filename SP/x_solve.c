@@ -42,7 +42,7 @@
 void x_solve()
 {
   int i, j, k, i1, i2, m;
-  double ru1, fac1, fac2;
+  float ru1, fac1, fac2;
 
   if (timeron) timer_start(t_xsolve);
   for (k = 1; k <= nz2; k++) {

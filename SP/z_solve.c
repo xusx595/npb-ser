@@ -42,7 +42,7 @@
 void z_solve()
 {
   int i, j, k, k1, k2, m;
-  double ru1, fac1, fac2;
+  float ru1, fac1, fac2;
 
   if (timeron) timer_start(t_zsolve);
   for (j = 1; j <= ny2; j++) {

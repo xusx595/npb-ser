@@ -42,7 +42,7 @@
 void y_solve()
 {
   int i, j, k, j1, j2, m;
-  double ru1, fac1, fac2;
+  float ru1, fac1, fac2;
 
   if (timeron) timer_start(t_ysolve);
   for (k = 1; k <= grid_points[2]-2; k++) {

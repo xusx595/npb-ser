@@ -39,8 +39,8 @@
 void tzetar()
 {
   int i, j, k;
-  double t1, t2, t3, ac, xvel, yvel, zvel, r1, r2, r3, r4, r5;
-  double btuz, ac2u, uzik1;
+  float t1, t2, t3, ac, xvel, yvel, zvel, r1, r2, r3, r4, r5;
+  float btuz, ac2u, uzik1;
 
   if (timeron) timer_start(t_tzetar);
   for (k = 1; k <= nz2; k++) {

@@ -39,7 +39,7 @@
 void ninvr()
 {
   int i, j, k;
-  double r1, r2, r3, r4, r5, t1, t2;
+  float r1, r2, r3, r4, r5, t1, t2;
 
   if (timeron) timer_start(t_ninvr);
   for (k = 1; k <= nz2; k++) {

@@ -39,7 +39,7 @@
 void txinvr()
 {
   int i, j, k;
-  double t1, t2, t3, ac, ru1, uu, vv, ww, r1, r2, r3, r4, r5, ac2inv;
+  float t1, t2, t3, ac, ru1, uu, vv, ww, r1, r2, r3, r4, r5, ac2inv;
 
   if (timeron) timer_start(t_txinvr);
   for (k = 1; k <= nz2; k++) {

@@ -37,7 +37,7 @@
 void compute_rhs()
 {
   int i, j, k, m;
-  double aux, rho_inv, uijk, up1, um1, vijk, vp1, vm1, wijk, wp1, wm1;
+  float aux, rho_inv, uijk, up1, um1, vijk, vp1, vm1, wijk, wp1, wm1;
 
 
   if (timeron) timer_start(t_rhs);
@@ -63,7 +63,7 @@ void compute_rhs()
         // (don't need speed and ainx until the lhs computation)
         //-------------------------------------------------------------------
         aux = c1c2*rho_inv* (u[k][j][i][3] - square[k][j][i]);
-        speed[k][j][i] = sqrt(aux);
+        speed[k][j][i] = sqrtf(aux);
       }
     }
   }
